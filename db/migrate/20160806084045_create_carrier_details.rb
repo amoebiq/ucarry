@@ -1,0 +1,16 @@
+class CreateCarrierDetails < ActiveRecord::Migration
+  def change
+    create_table :carrier_details do |t|
+      t.string :carrier_id
+      t.string :email_id
+      t.string :first_name
+      t.string :last_name
+      t.string :img_link
+      t.string :phone
+      t.string :status
+      t.date :deleted_at
+
+      t.timestamps null: false
+    end
+  end
+end
