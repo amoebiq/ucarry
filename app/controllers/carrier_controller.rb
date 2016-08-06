@@ -12,7 +12,7 @@ class CarrierController < ApplicationController
 
       carrier = CarrierHelper.create_new_carrier params
       #format.html  # index.html.erb
-      format.json  { render :json => carrier }
+      format.json  { render :json => carrier ,:status => :created}
     end
 
   end
@@ -27,6 +27,19 @@ class CarrierController < ApplicationController
       all_carriers = CarrierHelper.get_all_carriers
       #format.html  # index.html.erb
       format.json  { render :json => all_carriers }
+    end
+
+  end
+
+
+  def deactivate
+
+    p params
+    msg = CarrierHelper.deactivate_carrier params[:id]
+    respond_to do |format|
+
+      format.json { render :json => msg}
+
     end
 
   end

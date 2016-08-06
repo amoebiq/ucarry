@@ -28,6 +28,14 @@ module CarrierHelper
 
   end
 
+  def self.deactivate_carrier carrierd_id
+    @carrier = CarrierDetail.where(:carrier_id => carrierd_id).first
+    @carrier.status='inactive'
+    @carrier.save!
+
+    'Successfully Deactivate the carrier'.to_json
+  end
+
 
   def self.carrier_params params
     params.require(:carrier_detail).permit(:email_id, :first_name, :last_name, :img_link, :phone)
