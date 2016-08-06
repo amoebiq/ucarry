@@ -10,18 +10,31 @@ module CarrierHelper
 
     @carrier.save!
 
+    @carrier
 
   end
 
   def self.get_all_carriers
 
-    CarrierDetail.all
+    CarrierDetail.where(:status => 'active')
+
+
+  end
+
+  def self.update_carrier_details carrier_id
+
+    @carrier = CarrierDetail.find(carrier_id)
+    p @carrier
 
   end
 
 
   def self.carrier_params params
     params.require(:carrier_detail).permit(:email_id, :first_name, :last_name, :img_link, :phone)
+  end
+
+  def self.carrier_params_details params
+    params.require(:carrier_detail).permit(:email_id,:img_link, :phone)
   end
 
 end

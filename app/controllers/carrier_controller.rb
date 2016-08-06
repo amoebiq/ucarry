@@ -10,9 +10,9 @@ class CarrierController < ApplicationController
     respond_to do |format|
 
 
-      all_carriers = CarrierHelper.create_new_carrier params
+      carrier = CarrierHelper.create_new_carrier params
       #format.html  # index.html.erb
-      format.json  { render :json => all_carriers }
+      format.json  { render :json => carrier }
     end
 
   end
