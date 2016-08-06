@@ -1,12 +1,24 @@
 class CarrierController < ApplicationController
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
+  before_action :validate_params
+
     include CarrierHelper
+
+  ActionController::Parameters.action_on_unpermitted_parameters = :raise
+
+  rescue_from(ActionController::UnpermittedParameters) do |pme|
+    logger.debug "Some unwanted params"
+    render json: { error:  { unknown_parameters: pme.params } },
+        status: :bad_request
+  end
 
   def new
 
 
 
+
+    begin
     respond_to do |format|
 
 
@@ -14,6 +26,13 @@ class CarrierController < ApplicationController
       #format.html  # index.html.erb
       format.json  { render :json => carrier ,:status => :created}
     end
+
+    rescue Exception=>e
+      p "--Error --- #{e}"
+      render json:  {error: e.message ,:status=>400}
+    end
+
+
 
   end
 
@@ -43,5 +62,14 @@ class CarrierController < ApplicationController
     end
 
   end
+
+
+  protected
+      def validate_params
+      logger.debug "in validate_params"
+        p params
+
+      end
+
 
 end

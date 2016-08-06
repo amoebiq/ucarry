@@ -8,11 +8,14 @@ module CarrierHelper
     @carrier.carrier_id=CarrierUtility.generate_id params
     @carrier.status='active'
 
+
     @carrier.save!
 
     @carrier
 
-  end
+
+
+    end
 
   def self.get_all_carriers
 
