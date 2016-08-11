@@ -50,6 +50,12 @@ class CarrierController < ApplicationController
 
   end
 
+  def create_carrier_schdule
+
+    p params
+
+
+  end
 
   def deactivate
 
@@ -63,6 +69,20 @@ class CarrierController < ApplicationController
 
   end
 
+  def create_carrier_schedule
+
+    logger.debug "in create carrier schedule"
+    logger.debug params
+
+    schedule = CarrierHelper.create_carrier_schedule params[:id] , params[:carrier]
+
+    respond_to do |format|
+
+      format.json { render :json => schedule}
+
+    end
+
+  end
 
   protected
       def validate_params

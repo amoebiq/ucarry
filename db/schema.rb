@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160806084045) do
+ActiveRecord::Schema.define(version: 20160809151555) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -24,6 +24,19 @@ ActiveRecord::Schema.define(version: 20160806084045) do
     t.date     "deleted_at"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "carrier_schedules", force: :cascade do |t|
+    t.string   "schedule_id",  limit: 255
+    t.string   "carrier_id",   limit: 255
+    t.string   "from_loc",     limit: 255
+    t.string   "to_loc",       limit: 255
+    t.decimal  "from_geo_lat",             precision: 10, scale: 6
+    t.decimal  "to_goe_lat",               precision: 10, scale: 6
+    t.string   "status",       limit: 255
+    t.string   "comments",     limit: 255
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
   end
 
   create_table "sender_details", force: :cascade do |t|

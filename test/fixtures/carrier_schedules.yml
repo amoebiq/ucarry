@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  schedule_id: MyString
+  carrier_id: MyString
+  from_loc: MyString
+  to_loc: MyString
+  from_geo_lat: 9.99
+  to_goe_lat: 9.99
+  status: MyString
+  comments: MyString
+
+two:
+  schedule_id: MyString
+  carrier_id: MyString
+  from_loc: MyString
+  to_loc: MyString
+  from_geo_lat: 9.99
+  to_goe_lat: 9.99
+  status: MyString
+  comments: MyString

@@ -8,8 +8,13 @@ module CarrierHelper
     @carrier.carrier_id=CarrierUtility.generate_id params
     @carrier.status='active'
 
+    ActiveRecord::Base.transaction do
+
+
 
     @carrier.save!
+
+    end
 
     @carrier
 
@@ -39,6 +44,20 @@ module CarrierHelper
     'Successfully Deactivate the carrier'.to_json
   end
 
+  def self.create_carrier_schedule carrier_id ,params
+
+    ActiveRecord::Base.transaction do
+
+        @carrier_schedule = CarrierSchedule.new(carrier_schedule_params(params))
+        @carrier_schedule.schedule_id = CarrierUtility.generate_carrier_schedule_id
+        @carrier_schedule.carrier_id = carrier_id
+        @carrier_schedule.status = 'active'
+        @carrier_schedule.save!
+
+      @carrier_schedule
+    end
+
+  end
 
   def self.carrier_params params
     params.require(:carrier_detail).permit(:email_id, :first_name, :last_name, :img_link, :phone)
@@ -46,6 +65,10 @@ module CarrierHelper
 
   def self.carrier_params_details params
     params.require(:carrier_detail).permit(:email_id,:img_link, :phone)
+  end
+
+  def self.carrier_schedule_params params
+    params.require(:carrier_schedule).permit!
   end
 
 end
