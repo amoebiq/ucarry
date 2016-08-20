@@ -71,7 +71,7 @@ class CarrierController < ApplicationController
 
     respond_to do |format|
 
-      format.json { render :json => schedule}
+      format.json { render :json => schedule ,:status => :created}
 
     end
 
