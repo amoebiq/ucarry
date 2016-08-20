@@ -13,7 +13,7 @@ class CarrierUtility
       first_name = carrier[CARRIER_DETAILS]["first_name"]
       last_name = carrier[CARRIER_DETAILS]["last_name"]
 
-      "carrier"+first_name+last_name
+      CARRIER + Time.now.to_i.to_s
 
   end
 
