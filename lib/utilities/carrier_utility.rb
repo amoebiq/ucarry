@@ -20,4 +20,6 @@ class CarrierUtility
   def self.generate_carrier_schedule_id
        SCHEDULE + Time.now.to_i.to_s
   end
+
+
 end

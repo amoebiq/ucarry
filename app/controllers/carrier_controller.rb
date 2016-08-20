@@ -5,13 +5,13 @@ class CarrierController < ApplicationController
 
     include CarrierHelper
 
-  ActionController::Parameters.action_on_unpermitted_parameters = :raise
-
-  rescue_from(ActionController::UnpermittedParameters) do |pme|
-    logger.debug "Some unwanted params"
-    render json: { error:  { unknown_parameters: pme.params } },
-        status: :bad_request
-  end
+  # ActionController::Parameters.action_on_unpermitted_parameters = :raise
+  #
+  # rescue_from(ActionController::UnpermittedParameters) do |pme|
+  #   logger.debug "Some unwanted params"
+  #   render json: { error:  { unknown_parameters: pme.params } },
+  #       status: :bad_request
+  # end
 
   def new
 
@@ -47,13 +47,6 @@ class CarrierController < ApplicationController
       #format.html  # index.html.erb
       format.json  { render :json => all_carriers }
     end
-
-  end
-
-  def create_carrier_schdule
-
-    p params
-
 
   end
 

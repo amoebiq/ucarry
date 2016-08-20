@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  schedule_id: MyString
+  start_time: 2016-08-12 02:07:25
+  end_time: 2016-08-12 02:07:25
+  mode: MyString
+  capacity: MyString
+
+two:
+  schedule_id: MyString
+  start_time: 2016-08-12 02:07:25
+  end_time: 2016-08-12 02:07:25
+  mode: MyString
+  capacity: MyString

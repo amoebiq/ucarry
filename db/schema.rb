@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809151555) do
+ActiveRecord::Schema.define(version: 20160811203725) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 20160809151555) do
     t.date     "deleted_at"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "carrier_schedule_details", force: :cascade do |t|
+    t.string   "schedule_id", limit: 255
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "mode",        limit: 255
+    t.string   "capacity",    limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "carrier_schedules", force: :cascade do |t|
