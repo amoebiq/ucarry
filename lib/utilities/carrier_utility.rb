@@ -10,9 +10,6 @@ class CarrierUtility
 
   def self.generate_id carrier
 
-      first_name = carrier[CARRIER_DETAILS]["first_name"]
-      last_name = carrier[CARRIER_DETAILS]["last_name"]
-
       CARRIER + Time.now.to_i.to_s
 
   end
