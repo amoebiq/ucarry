@@ -91,6 +91,15 @@ module CarrierHelper
 
   end
 
+
+  def self.get_all_carrier_schedules carrier_id
+
+    carriers = CarrierSchedule.where(:carrier_id => carrier_id).where(:status=>'active')
+
+    carriers.to_json(:include => :carrier_schedule_detail)
+
+  end
+
   def self.carrier_params params
     params.require(:carrier_detail).permit(:email_id, :first_name, :last_name, :img_link, :phone)
   end
