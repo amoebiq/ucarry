@@ -77,6 +77,23 @@ class CarrierController < ApplicationController
 
   end
 
+  def cancel_carrier_schedule
+
+    logger.debug "in create carrier schedule"
+    logger.debug params
+
+    status = CarrierHelper.cancel_carrier_schedule params[:id],params[:schedule_id]
+
+
+    respond_to do |format|
+
+      format.json { render :json => status}
+
+    end
+
+
+  end
+
   protected
       def validate_params
       logger.debug "in validate_params"

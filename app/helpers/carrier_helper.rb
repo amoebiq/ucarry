@@ -61,7 +61,25 @@ module CarrierHelper
 
 
 
-      @carrier_schedule
+       @carrier_schedule.to_json(:include => :carrier_schedule_detail)
+
+
+    end
+
+  end
+
+  def self.cancel_carrier_schedule carrier_id , schedule_id
+
+    ActiveRecord::Base.transaction do
+
+      carrier_schedule = CarrierSchedule.find_by_schedule_id(schedule_id)
+      carrier_schedule.status = 'cancel'
+      carrier_schedule.save!
+
+      message = {}
+      message['status'] = 'cancelled the schedule'
+      message
+
     end
 
   end
