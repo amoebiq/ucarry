@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     get '/sender/all', to: 'sender#all'
 
 
+   ######### schedule #########################
 
+   get '/schedules/place' , to: 'schedule#to_location'
 
 end
