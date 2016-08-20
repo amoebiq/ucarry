@@ -70,9 +70,13 @@ module CarrierHelper
 
   def self.cancel_carrier_schedule carrier_id , schedule_id
 
+
     ActiveRecord::Base.transaction do
 
       carrier_schedule = CarrierSchedule.find_by_schedule_id(schedule_id)
+      if carrier_schedule.nil?
+        raise ActiveRecord::RecordNotFound
+      end
       carrier_schedule.status = 'cancel'
       carrier_schedule.save!
 
@@ -81,6 +85,9 @@ module CarrierHelper
       message
 
     end
+
+
+
 
   end
 
