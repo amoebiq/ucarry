@@ -10,7 +10,7 @@ class SenderController < ApplicationController
       respond_to do |format|
 
         #format.html #sender.html
-        format.json { render :json => sender}
+        format.json { render :json => sender ,:status => :created}
 
       end
 
