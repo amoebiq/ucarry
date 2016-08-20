@@ -29,4 +29,16 @@ class SenderController < ApplicationController
 
   end
 
+  def details
+
+    details = SenderHelper.get_sender_details params[:id]
+
+    respond_to do |format|
+
+      format.json { render :json => details}
+
+    end
+
+  end
+
 end

@@ -100,6 +100,11 @@ module CarrierHelper
 
   end
 
+  def self.get_carrier_details carrier_id
+    details = CarrierDetail.where(:carrier_id => carrier_id).first
+    details
+  end
+
   def self.carrier_params params
     params.require(:carrier_detail).permit(:email_id, :first_name, :last_name, :img_link, :phone)
   end

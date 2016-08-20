@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
     ######### carrier crud operations ##########
+    get '/carrier/:id' , to: 'carrier#details'
     post '/carrier', to: 'carrier#new'
     get '/carrier/all', to: 'carrier#all'
     put '/carrier/deactivate/:id' , to: 'carrier#deactivate'
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
 
 
     ######### sender crud operations ###########
+    get '/sender/:id' , to: 'sender#details'
     post '/sender', to: 'sender#new'
     get '/sender/all', to: 'sender#all'
 

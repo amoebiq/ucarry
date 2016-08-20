@@ -19,6 +19,10 @@ module SenderHelper
 
   end
 
+  def self.get_sender_details sender_id
+    SenderDetail.where(:sender_id => sender_id)
+  end
+
 
   def self.carrier_params params
     params.require(:sender_detail).permit(:email_id, :first_name, :last_name, :img_link, :phone)

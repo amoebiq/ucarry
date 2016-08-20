@@ -109,6 +109,13 @@ class CarrierController < ApplicationController
 
   end
 
+  def details
+    details = CarrierHelper.get_carrier_details params[:id]
+    respond_to do |format|
+      format.json { render :json => details}
+    end
+  end
+
 
 
   protected
