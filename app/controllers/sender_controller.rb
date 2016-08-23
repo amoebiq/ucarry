@@ -41,4 +41,19 @@ class SenderController < ApplicationController
 
   end
 
+  def new_order
+    logger.debug "in create new order for a sender"
+    logger.debug params
+
+
+    order = SenderHelper.new_order params[:id] , params
+
+    respond_to do |format|
+
+      format.json { render :json => order ,:status=>:created}
+
+    end
+
+  end
+
 end
