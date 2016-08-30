@@ -56,4 +56,9 @@ class SenderController < ApplicationController
 
   end
 
+  def all_active_orders
+    logger.debug "in get all active order"
+
+  end
+
 end

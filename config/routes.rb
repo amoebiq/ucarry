@@ -1,3 +1,5 @@
+require 'resque/server'
+
 Rails.application.routes.draw do
 
     ######### carrier crud operations ##########
@@ -27,5 +29,14 @@ Rails.application.routes.draw do
    ######### schedule #########################
 
    get '/schedules/place' , to: 'schedule#to_location'
+
+
+    #################### orchestrator ##################
+
+    post '/orchestrator/coupon' , to: 'orchestrator#new_coupon'
+
+
+  ########## resqueue #############
+    mount Resque::Server.new, at: "/resque"
 
 end

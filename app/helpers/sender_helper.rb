@@ -33,8 +33,11 @@ module SenderHelper
       @order.order_id = SenderUtility.generate_order_id
       @order.sender_id = sender_id
       @order.status = 'active'
-
+      Resque.enqueue(Sleeper, 15)
       @order.save!
+
+
+
 
       @order.to_json(:include => :sender_order_item)
 
