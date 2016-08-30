@@ -46,13 +46,23 @@ class SenderController < ApplicationController
     logger.debug params
 
 
-    order = SenderHelper.new_order params[:id] , params
+
+
+    begin
+
+
+      order = SenderHelper.new_order params[:id] , params
 
     respond_to do |format|
 
       format.json { render :json => order ,:status=>:created}
 
     end
+
+    rescue Exception=>e
+      render :json => e.message , :status=>404
+
+      end
 
   end
 

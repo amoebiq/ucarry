@@ -25,6 +25,20 @@ module SenderHelper
   end
 
   def self.new_order sender_id , params
+    p "XXXX #{params}"
+    coupon = params[:sender_order][:coupon]
+
+    p "coupon is #{coupon}"
+    unless coupon.nil?
+      p "couponXXX is not nil"
+      c = Coupon.where(:name=>coupon).first
+      p "CCC is #{c}"
+      if c.nil?
+        error = {}
+        error['error'] = 'Coupon Not Found!!!'
+        raise error.to_json
+      end
+    end
 
     begin
     ActiveRecord::Base.transaction do
@@ -45,7 +59,7 @@ module SenderHelper
 
     end
 
-     orch = OrchestratorService.new(@order.order_id)
+     orch = OrchestratorService.new(@order)
       orch.calculate_order_costs
      @order.to_json(:include => :sender_order_item)
     rescue Exception=>e
@@ -63,7 +77,7 @@ module SenderHelper
   end
 
   def self.sender_order_params params
-    params.fetch(:sender_order).permit(:from_loc,:to_loc,:from_geo_lat,:to_goe_lat,:from_geo_long,:to_geo_long,:status,:type,:comments,sender_order_item_attributes: [:id,:item_attributes,:unit_price,:quantity ,:item_type,:item_subtype,:img])
+    params.fetch(:sender_order).permit(:from_loc,:to_loc,:from_geo_lat,:to_goe_lat,:from_geo_long,:to_geo_long,:status,:type,:comments,:coupon,:isInsured,sender_order_item_attributes: [:id,:item_attributes,:unit_price,:quantity ,:item_type,:item_subtype,:img])
   end
 
 
