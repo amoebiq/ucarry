@@ -1,0 +1,3 @@
+class OrchestratorError < StandardError
+
+end

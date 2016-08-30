@@ -16,11 +16,30 @@ module OrchestratorHelper
 
   end
 
-  def get_coupon params
+  def self.get_coupon code
+
+      @coupon = Coupon.where(:name => code).first
+      @coupon
 
   end
 
-  def deactivate_coupon coupon_code
+  def self.deactivate_coupon coupon_code
+
+    @coupon = Coupon.where(:name => coupon_code).first
+    curr_status = @coupon.status
+    p curr_status
+    if curr_status.eql?"inactive"
+      error = {}
+      error["error"] = "Already inactive coupon"
+      raise error.to_json
+    end
+    @coupon.status='inactive'
+    @coupon.save!
+
+    resp = {}
+    resp["status"] = "Successfully deactivated the coupon"
+
+    resp
 
   end
 
@@ -29,5 +48,13 @@ module OrchestratorHelper
     params.require(:coupon_code).permit(:name,:discount)
   end
 
-
+  def self.get_all_coupons
+    @coupons = Coupon.where(:status=>'active')
+    if @coupons.nil? or @coupons.empty?
+      error = {}
+      error["error"] = "No record found"
+      raise error.to_json
+    end
+    @coupons
+  end
 end

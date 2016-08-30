@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
    err = {}
    err['error'] = UcarryConstants::RECORD_NOT_FOUND
-   render :json => err
+   render :json => err ,:status=>404
   end
 
 

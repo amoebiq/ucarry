@@ -1,5 +1,6 @@
 module SenderHelper
   require_relative '../../lib/utilities/sender_utility.rb'
+  require_relative '../services/orchestrator_service'
 
   def self.create_new_sender params
 
@@ -33,16 +34,20 @@ module SenderHelper
       @order.order_id = SenderUtility.generate_order_id
       @order.sender_id = sender_id
       @order.status = 'active'
-      Resque.enqueue(Sleeper, 15)
+      #Resque.enqueue(Sleeper, 15)
       @order.save!
 
 
 
 
-      @order.to_json(:include => :sender_order_item)
+
+
 
     end
 
+     orch = OrchestratorService.new(@order.order_id)
+      orch.calculate_order_costs
+     @order.to_json(:include => :sender_order_item)
     rescue Exception=>e
       p e
     end

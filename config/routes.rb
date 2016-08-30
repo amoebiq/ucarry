@@ -34,7 +34,9 @@ Rails.application.routes.draw do
     #################### orchestrator ##################
 
     post '/orchestrator/coupon' , to: 'orchestrator#new_coupon'
-
+    get '/orchestrator/coupon/:code' , to: 'orchestrator#get_coupon_details'
+    put '/orchestrator/coupon/:code/deactivate' , to: 'orchestrator#deactivate'
+    get '/orchestrator/coupons' , to: 'orchestrator#get_all_coupons'
 
   ########## resqueue #############
     mount Resque::Server.new, at: "/resque"
