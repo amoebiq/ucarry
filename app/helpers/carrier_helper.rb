@@ -77,6 +77,11 @@ module CarrierHelper
       if carrier_schedule.nil?
         raise ActiveRecord::RecordNotFound
       end
+      if carrier_schedule.status.eql?"cancel"
+        error = {}
+        error["error"] = "The schedule is already in cancelled state"
+        raise error.to_json
+      end
       carrier_schedule.status = 'cancel'
       carrier_schedule.save!
 

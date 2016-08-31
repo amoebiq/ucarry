@@ -66,9 +66,46 @@ class SenderController < ApplicationController
 
   end
 
-  def all_active_orders
+  def all_orders
     logger.debug "in get all active order"
 
+    begin
+
+      orders = SenderHelper.get_all_orders params[:id]
+      respond_to do |format|
+      format.json { render :json => orders ,:status=>200}
+      end
+
+
+
+    rescue Exception =>e
+      error = {}
+      error['error'] = e.message
+      render :json => error ,:status=>400
+
+    end
+
   end
+
+   def update_reciever_details
+      logger.debug "in save reciever details"
+
+     begin
+      sender_id = params[:sender_id]
+      order_id = params[:order_id]
+
+      reciever = SenderHelper.update_reciever_details sender_id,order_id,params
+
+       respond_to do |format|
+         format.json { render :json=>reciever , :status=>201}
+       end
+
+     rescue Exception=>e
+       error = {}
+       error['error'] = e.message
+       render :json => error , :status=>400
+
+     end
+   end
 
 end

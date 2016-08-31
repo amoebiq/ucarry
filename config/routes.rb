@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
     ######### order ########################
     post '/sender/:id/order' , to: 'sender#new_order'
+    get '/sender/:id/orders' , to: 'sender#all_orders'
 
 
    ######### schedule #########################
@@ -37,6 +38,10 @@ Rails.application.routes.draw do
     get '/orchestrator/coupon/:code' , to: 'orchestrator#get_coupon_details'
     put '/orchestrator/coupon/:code/deactivate' , to: 'orchestrator#deactivate'
     get '/orchestrator/coupons' , to: 'orchestrator#get_all_coupons'
+
+    ##################################### reciever ##########################
+
+    post 'sender/:sender_id/order/:order_id/reciever' , to: 'sender#update_reciever_details'
 
   ########## resqueue #############
     mount Resque::Server.new, at: "/resque"

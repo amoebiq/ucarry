@@ -66,8 +66,39 @@ module SenderHelper
       p e
     end
 
-    end
+  end
 
+  def self.get_all_orders sender_id
+
+    @orders = SenderOrder.where(:sender_id => sender_id)
+    @orders
+
+  end
+
+  def self.update_reciever_details sender_id,order_id,params
+
+      ActiveRecord::Base.transaction do
+
+        @reciever = ReceiverOrderMapping.new(reciever_params(params))
+        @reciever.sender_id = sender_id
+        @reciever.order_id = order_id
+        @reciever.reciever_id = SenderUtility.generate_reciever_id
+        @reciever.status = 'active'
+
+
+
+        @reciever.save!
+
+      end
+
+    @reciever
+  end
+
+  def self.reciever_params params
+
+    params.require(:receiver_order_mapping).permit(:name, :phone_1, :phone_2, :address_line_1, :address_line_1,:state,:landmark,:pin,:status,:auto_save)
+
+  end
   def self.carrier_params params
     params.require(:sender_detail).permit(:email_id, :first_name, :last_name, :img_link, :phone)
   end

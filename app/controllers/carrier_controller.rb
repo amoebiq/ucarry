@@ -82,6 +82,10 @@ class CarrierController < ApplicationController
     logger.debug "in cancel carrier schedule"
     logger.debug params
 
+    begin
+
+
+
     status = CarrierHelper.cancel_carrier_schedule params[:id],params[:schedule_id]
 
 
@@ -89,6 +93,10 @@ class CarrierController < ApplicationController
 
       format.json { render :json => status}
 
+    end
+    rescue Exception=>e
+      p e
+      render :json => e.message , :status=>403
     end
 
 
