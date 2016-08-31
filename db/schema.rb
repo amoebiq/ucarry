@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160830134603) do
+ActiveRecord::Schema.define(version: 20160831095923) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -51,10 +51,10 @@ ActiveRecord::Schema.define(version: 20160830134603) do
 
   create_table "coupons", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.decimal  "discount",               precision: 10
+    t.decimal  "discount",               precision: 10, scale: 6
     t.string   "status",     limit: 255
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
   create_table "sender_details", force: :cascade do |t|
@@ -73,15 +73,15 @@ ActiveRecord::Schema.define(version: 20160830134603) do
   create_table "sender_order_items", force: :cascade do |t|
     t.string   "order_id",        limit: 255
     t.string   "item_attributes", limit: 255
-    t.decimal  "unit_price",                  precision: 10
+    t.decimal  "unit_price",                  precision: 10, scale: 6
     t.integer  "quantity",        limit: 4
-    t.decimal  "total_amount",                precision: 10
-    t.decimal  "tax",                         precision: 10
+    t.decimal  "total_amount",                precision: 10, scale: 6
+    t.decimal  "tax",                         precision: 10, scale: 6
     t.string   "item_type",       limit: 255
     t.string   "item_subtype",    limit: 255
     t.string   "img",             limit: 255
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
   end
 
   create_table "sender_orders", force: :cascade do |t|

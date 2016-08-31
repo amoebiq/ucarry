@@ -25,14 +25,14 @@ module SenderHelper
   end
 
   def self.new_order sender_id , params
-    p "XXXX #{params}"
+
     coupon = params[:sender_order][:coupon]
 
-    p "coupon is #{coupon}"
+
     unless coupon.nil?
-      p "couponXXX is not nil"
+
       c = Coupon.where(:name=>coupon).first
-      p "CCC is #{c}"
+   
       if c.nil?
         error = {}
         error['error'] = 'Coupon Not Found!!!'
