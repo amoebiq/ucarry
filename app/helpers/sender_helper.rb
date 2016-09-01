@@ -100,6 +100,10 @@ module SenderHelper
     ActiveRecord::Base.transaction do
 
       @mapping = ReceiverOrderMapping.find(params[:id])
+      if @mapping.blank?
+
+        raise ActiveRecord::RecordNotFound
+      end
       if @mapping.update_attributes(reciever_params(params))
         return @mapping
 

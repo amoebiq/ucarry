@@ -123,8 +123,9 @@ class SenderController < ApplicationController
 
 
       rescue Exception=>e
-
-        render :json => e.message , :status=>400
+        error = {}
+        error['error'] = e.message
+        render :json => error , :status=>400
 
       end
 
