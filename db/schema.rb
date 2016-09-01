@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160831095923) do
+ActiveRecord::Schema.define(version: 20160831165117) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -55,6 +55,24 @@ ActiveRecord::Schema.define(version: 20160831095923) do
     t.string   "status",     limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+  end
+
+  create_table "receiver_order_mappings", force: :cascade do |t|
+    t.string   "reciever_id",    limit: 255
+    t.string   "order_id",       limit: 255
+    t.string   "sender_id",      limit: 255
+    t.string   "name",           limit: 255
+    t.string   "phone_1",        limit: 255
+    t.string   "phone_2",        limit: 255
+    t.string   "address_line_1", limit: 255
+    t.string   "address_line_2", limit: 255
+    t.string   "state",          limit: 255
+    t.string   "landmark",       limit: 255
+    t.string   "pin",            limit: 255
+    t.string   "status",         limit: 255
+    t.boolean  "auto_save"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "sender_details", force: :cascade do |t|

@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     ##################################### reciever ##########################
 
     post 'sender/:sender_id/order/:order_id/reciever' , to: 'sender#update_reciever_details'
+    put 'sender/:sender_id/order/:order_id/reciever/:id' , to: 'sender#edit_reciever_details'
 
   ########## resqueue #############
     mount Resque::Server.new, at: "/resque"

@@ -108,4 +108,26 @@ class SenderController < ApplicationController
      end
    end
 
+    def edit_reciever_details
+
+      logger.debug "in edit of reciever details"
+
+      begin
+
+
+      @updated_mapping = SenderHelper.edit_reciever_details params
+
+        respond_to do |format|
+          format.json { render :json => @updated_mapping , :status=>200}
+        end
+
+
+      rescue Exception=>e
+
+        render :json => e.message , :status=>400
+
+      end
+
+    end
+
 end

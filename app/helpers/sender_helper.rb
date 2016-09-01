@@ -94,6 +94,26 @@ module SenderHelper
     @reciever
   end
 
+
+  def self.edit_reciever_details params
+
+    ActiveRecord::Base.transaction do
+
+      @mapping = ReceiverOrderMapping.find(params[:id])
+      if @mapping.update_attributes(reciever_params(params))
+        return @mapping
+
+      else
+
+      end
+
+
+
+
+    end
+
+  end
+
   def self.reciever_params params
 
     params.require(:receiver_order_mapping).permit(:name, :phone_1, :phone_2, :address_line_1, :address_line_1,:state,:landmark,:pin,:status,:auto_save)
