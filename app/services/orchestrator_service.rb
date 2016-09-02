@@ -37,4 +37,21 @@ class OrchestratorService
 
   end
 
+  def get_volumetric_wight
+    length = @params[:length].to_f
+    height = @params[:height].to_f
+    breadth = @params[:breadth].to_f
+
+    p "#{breadth} --- #{height} ---- #{length}"
+
+    vol = Volumetric.where(:status=>true).first
+    coeff = vol[:coefficient].to_f
+    p "coeff is #{coeff}"
+    vw = (length * breadth * height) / coeff
+    resp = {}
+    resp['volumetric_weight'] = vw
+    resp
+
+  end
+
 end
