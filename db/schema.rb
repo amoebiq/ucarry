@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160831165117) do
+ActiveRecord::Schema.define(version: 20160902132528) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -129,6 +129,15 @@ ActiveRecord::Schema.define(version: 20160831165117) do
     t.string   "url",        limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "volumetrics", force: :cascade do |t|
+    t.decimal  "coefficient",             precision: 10, scale: 6
+    t.string   "updated_by",  limit: 255
+    t.boolean  "status"
+    t.string   "comments",    limit: 255
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
   end
 
 end

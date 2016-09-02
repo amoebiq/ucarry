@@ -118,7 +118,9 @@ class SenderController < ApplicationController
       @updated_mapping = SenderHelper.edit_reciever_details params
 
         respond_to do |format|
-          format.json { render :json => @updated_mapping , :status=>200}
+
+
+          format.json { render :json => @updated_mapping ,:status => 204}
         end
 
 

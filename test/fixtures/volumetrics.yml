@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  coefficient: 9.99
+  ,precision=: 
+  scale: 
+  update_by: MyString
+  status: false
+  comments: MyString
+
+two:
+  coefficient: 9.99
+  ,precision=: 
+  scale: 
+  update_by: MyString
+  status: false
+  comments: MyString

@@ -44,6 +44,12 @@ Rails.application.routes.draw do
     post 'sender/:sender_id/order/:order_id/reciever' , to: 'sender#update_reciever_details'
     put 'sender/:sender_id/order/:order_id/reciever/:id' , to: 'sender#edit_reciever_details'
 
+
+    ############################## generic #################################
+
+    put 'generic/volumetric' , to: 'admin#update_volumetric'
+    get 'generic/volumetric' , to: 'admin#get_volumetric_data'
+
   ########## resqueue #############
     mount Resque::Server.new, at: "/resque"
 
