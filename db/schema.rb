@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902132528) do
+ActiveRecord::Schema.define(version: 20160903111122) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20160902132528) do
     t.string   "comments",    limit: 255
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
+    t.string   "name",        limit: 255
   end
 
 end

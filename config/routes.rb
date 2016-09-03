@@ -38,7 +38,8 @@ Rails.application.routes.draw do
     get '/orchestrator/coupon/:code' , to: 'orchestrator#get_coupon_details'
     put '/orchestrator/coupon/:code/deactivate' , to: 'orchestrator#deactivate'
     get '/orchestrator/coupons' , to: 'orchestrator#get_all_coupons'
-    get '/orchestrator/qoute' , to: 'orchestrator#get_quote'
+    get '/orchestrator/volumetric_weight' , to: 'orchestrator#volumetric_weight'
+    post 'orchestrator/quote' , to:  'orchestrator#get_quote'
 
     ##################################### reciever ##########################
 

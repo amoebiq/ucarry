@@ -81,7 +81,7 @@ class OrchestratorController < ApplicationController
     end
 
 
-    def get_quote
+    def volumetric_weight
 
       logger.debug "in get qoutes"
       logger.debug params
@@ -91,7 +91,7 @@ class OrchestratorController < ApplicationController
 
       orch = OrchestratorService.new(params)
 
-      resp = orch.get_volumetric_wight
+      resp = orch.volumetric_weight
 
       respond_to do |format|
 
@@ -107,6 +107,28 @@ class OrchestratorController < ApplicationController
       end
 
 
+    end
+
+    def get_quote
+
+      begin
+
+        orch = OrchestratorService.new(params)
+
+        resp = orch.get_quote
+        respond_to do |format|
+          format.json {render :json => resp , :status=>200}
+        end
+
+
+
+      rescue Exception=>e
+        p e
+        error = {}
+        error['error'] = e.message
+        render :json=>error , :status=>400
+
+      end
     end
 
 
