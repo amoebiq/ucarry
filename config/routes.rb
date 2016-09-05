@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     get '/orchestrator/volumetric_weight' , to: 'orchestrator#volumetric_weight'
     post 'orchestrator/quote' , to:  'orchestrator#get_quote'
     get 'orchestrator/schedules' , to: 'orchestrator#get_all_schedules'
+    get 'orchestrator/orders' , to: 'orchestrator#get_all_orders'
 
 
     ##################################### reciever ##########################

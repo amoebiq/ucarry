@@ -158,7 +158,27 @@ class OrchestratorController < ApplicationController
     end
 
 
+  def get_all_orders
 
+    logger.debug "in get all orders by orchestrator"
+    begin
+
+      orch = OrchestratorService.new(params)
+      resp = orch.get_all_orders
+
+      respond_to do |format|
+
+
+        format.json { render :json => resp , :status => 200}
+
+      end
+    rescue Exception=>e
+      error = {}
+      error['error'] = e.message
+      render :json => error , :status => 400
+    end
+
+  end
 
 
 
