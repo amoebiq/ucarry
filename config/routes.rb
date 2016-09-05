@@ -40,6 +40,8 @@ Rails.application.routes.draw do
     get '/orchestrator/coupons' , to: 'orchestrator#get_all_coupons'
     get '/orchestrator/volumetric_weight' , to: 'orchestrator#volumetric_weight'
     post 'orchestrator/quote' , to:  'orchestrator#get_quote'
+    get 'orchestrator/schedules' , to: 'orchestrator#get_all_schedules'
+
 
     ##################################### reciever ##########################
 

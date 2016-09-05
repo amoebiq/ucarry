@@ -132,6 +132,33 @@ class OrchestratorController < ApplicationController
     end
 
 
+    def get_all_schedules
+
+      logger.debug "in get all schedules"
+
+      begin
+
+
+      orch = OrchestratorService.new(params)
+      @schedules = orch.get_all_schedules
+
+        respond_to do |format|
+          format.json { render :json => @schedules , :status => 200}
+        end
+
+      rescue Exception=>e
+
+        error = {}
+        error['error'] = e.message
+        render :json => error , :status =>400
+
+
+      end
+
+    end
+
+
+
 
 
 

@@ -187,4 +187,34 @@ class OrchestratorService
 
   end
 
+
+  def get_all_schedules
+
+    search_params=""
+    from_loc = @params[:from_loc]
+    to_loc = @params[:to_loc]
+    start_time = @params[:start_time]
+    end_time = @params[:end_time]
+
+    where = {}
+    where["from_loc"]  = @params[:from_loc] if @params[:from_loc].present?
+    where["to_loc"]  = @params[:to_loc] if @params[:to_loc].present?
+
+    child_where = {}
+    child_where["carrier_schedule_details.start_time"] = @params[:start_time] if @params[:start_time].present?
+    child_where["carrier_schedule_details.end_time"] = @params[:end_time] if @params[:end_time].present?
+
+
+    @schedules = CarrierSchedule.where(where)
+    @schedules = CarrierSchedule.where(where).joins(:carrier_schedule_detail).where(child_where)
+    #@schedules = @schedules.CarrierScheduleDetail.where("start_time" => "2016-02-12 12:00:00")
+    @schedules.to_json(:include => :carrier_schedule_detail)
+
+
+
+
+
+
+  end
+
 end
