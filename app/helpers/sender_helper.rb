@@ -47,6 +47,7 @@ module SenderHelper
       @order = SenderOrder.new(sender_order_params(params))
       @order.order_id = SenderUtility.generate_order_id
       @order.sender_id = sender_id
+
       @order.status = 'active'
       #Resque.enqueue(Sleeper, 15)
       @order.save!
@@ -132,7 +133,7 @@ module SenderHelper
   end
 
   def self.sender_order_params params
-    params.fetch(:sender_order).permit(:from_loc,:to_loc,:from_geo_lat,:to_goe_lat,:from_geo_long,:to_geo_long,:status,:type,:comments,:coupon,:isInsured,sender_order_item_attributes: [:id,:item_attributes,:unit_price,:quantity ,:item_type,:item_subtype,:img])
+    params.fetch(:sender_order).permit(:from_loc,:to_loc,:from_geo_lat,:to_geo_lat,:from_geo_long,:to_geo_long,:status,:type,:comments,:coupon,:isInsured,sender_order_item_attributes: [:id,:unit_price,:quantity ,:item_type,:item_subtype,:img,item_attributes: [:length,:breadth,:height,:item_weight,:item_value]])
   end
 
 

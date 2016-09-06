@@ -15,6 +15,11 @@ class OrchestratorService
   def calculate_order_costs
         id = @params[:order_id]
         @orders = SenderOrderItem.where(:order_id=>id)
+        lat1 = @params[:from_geo_lat]
+        lat2 = @params[:to_geo_lat]
+        long1 = @params[:from_geo_long]
+        long2 = @params[:to_geo_long]
+        is_insured = @params[:is_insured]
         c = @params[:coupon]
         p "coupon is #{c}"
 
@@ -27,11 +32,33 @@ class OrchestratorService
           end
         @orders.each do |o|
           order_item = SenderOrderItem.where(:id=>o[:id]).first
-          unit_price = o[:unit_price]
-          quantity = o[:quantity]
+          item_att = o[:item_attributes]
+          p item_att
+          item_attributes = JSON.parse(item_att.to_json)
+          p "XXXX"
+          p item_attributes
+          length = item_attributes['length'].to_f
+          breadth = item_attributes['breadth'].to_f
+          height = item_attributes['height'].to_f
+          item_weight = item_attributes['item_weight'].to_f
+          item_value  = item_attributes['item_value'].to_f
+
+
+
+          resp = self.update_cost_details(lat1 , lat2 , long1 , long2 , length , height , breadth , item_weight , item_value , is_insured)
+          p "DDD is "
+          p resp
+          r = JSON.parse(resp.to_json)
+          q = r['quote']
+          p "XXXX is #{q}"
+          p q['total_charge']
+          unit_price = q['total_charge'].to_f
+          quantity = o[:quantity].to_i
           p "Here #{unit_price} #{quantity}"
           ActiveRecord::Base.transaction do
+            order_item[:unit_price] = unit_price
             order_item[:total_amount]=(unit_price * quantity)-(unit_price * quantity * discount)/100;
+            order_item[:item_attributes] = q
             order_item.save!
           end
 
@@ -56,6 +83,11 @@ class OrchestratorService
 
   end
 
+  def update_cost_details(lat1 , lat2 , long1 , long2 , length , height , breadth , item_weight , item_value , is_insured)
+
+    resp = self.quote_calc(lat1,lat2,long1,long2,length,height,breadth,item_weight,item_value,is_insured)
+
+  end
 
   def get_quote
 
@@ -73,8 +105,18 @@ class OrchestratorService
 
     is_insured = @params[:is_insured]
 
+    resp = self.quote_calc(lat1,lat2,long1,long2,length,height,breadth,item_weight,item_value,is_insured)
 
-    p "#{lat1} ---- #{long1}  ----- #{lat2} ----- #{long2}"
+    resp
+
+  end
+
+  def quote_calc (lat1 , lat2 , long1 , long2 , length , height , breadth , item_weight , item_value , is_insured)
+
+
+
+
+    p "#{lat1} ---- #{long1}  ----- #{lat2} ----- #{long2}---------------- #{length}"
 
 
     #total_distance = Geocoder::Calculations.distance_between([lat1,long1],[lat2,long2])
@@ -153,7 +195,9 @@ class OrchestratorService
     end
 
     total_distance_charge = total_distance/1000.00 * distance_coeff
-
+    params['length'] = length
+    params['breadth'] = breadth
+    params['height'] = height
     params['per_km_charge'] = distance_coeff
     params['total_distance'] = total_distance
 
@@ -180,7 +224,7 @@ class OrchestratorService
 
     params['total_charge'] = total_charges
 
-    resp['qoute'] = params
+    resp['quote'] = params
 
     resp
 
