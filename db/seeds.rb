@@ -1,7 +1,13 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# ruby encoding: utf-8
+Volumetric.create!(:coefficient=>5000, :updated_by=>'shuhail', :status=>true, :comments=>'Base Caculation', :name=>'VOLUMETRIC_COFF')
+Volumetric.create!(:coefficient=>10, :updated_by=>'shuhail', :status=>true, :comments=>'Base Calculation', :name=>'DISTANCE_COEFF')
+Volumetric.create!(:coefficient=>5, :updated_by=>'shuhail', :status=>true, :comments=>'Base weight for base calculatoin', :name=>'BASE_WEIGHT')
+Volumetric.create!(:coefficient=>50, :updated_by=>'shuhail', :status=>true, :comments=>'Base weight charge', :name=>'BASE_WEIGHT_CHARGE')
+Volumetric.create!(:coefficient=>5, :updated_by=>'shuhail', :status=>true, :comments=>'extra weight', :name=>'EXTRA_WEIGHT')
+Volumetric.create!(:coefficient=>20, :updated_by=>'shuhail', :status=>true, :comments=>'extra weigh extra charge', :name=>'EXTRA_WEIGHT_CHARGE')
+Volumetric.create!(:coefficient=>5, :updated_by=>'shuhail', :status=>true, :comments=>'Insurance charge', :name=>'INSURANCE_PERCENT')
+Volumetric.create!(:coefficient=>50, :updated_by=>'shuhail', :status=>true, :comments=>'Risk Charge', :name=>'RISK_CHARGE')
+Volumetric.create!(:coefficient=>10, :updated_by=>'shuhail', :status=>true, :comments=>'Service Charge', :name=>'SERVICE_CHARGE')
+Volumetric.create!(:coefficient=>0, :updated_by=>'shuhail', :status=>true, :comments=>'C/N Charge', :name=>'C_N_CHARGE')
+Volumetric.create!(:coefficient=>100, :updated_by=>'shuhail', :status=>true, :comments=>'EDL Charge', :name=>'EDL_CHARGE')
+Volumetric.create!(:coefficient=>0, :updated_by=>'shuhail', :status=>true, :comments=>'FUEL SURCHARGE', :name=>'FUEL_SURCHARGE')
