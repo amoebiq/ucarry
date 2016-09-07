@@ -5,10 +5,10 @@ class CreateSenderOrders < ActiveRecord::Migration
       t.string :sender_id
       t.string :from_loc
       t.string :to_loc
-      t.decimal :from_geo_lat, precision: 10, scale: 6
-      t.string :from_geo_long, precision: 10, scale: 6
-      t.string :to_geo_long, precision: 10, scale: 6
-      t.decimal :to_geo_lat, precision: 10, scale: 6
+      t.decimal :from_geo_lat, :precision=> 10, :scale => 6
+      t.string :from_geo_long, :precision => 10, :scale => 6
+      t.string :to_geo_long, :precision => 10, :scale => 6
+      t.decimal :to_geo_lat, :precision => 10, :scale => 6
       t.string :status
       t.string :comments
       t.string :type

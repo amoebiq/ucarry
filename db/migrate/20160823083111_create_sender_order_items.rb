@@ -5,7 +5,7 @@ class CreateSenderOrderItems < ActiveRecord::Migration
       t.string :item_attributes , :limit => 2048
       t.decimal :unit_price ,:precision => 18, :scale => 3 ,:default=>0.00
       t.integer :quantity
-      t.decimal :total_amount , precision: 18, scale: 3 ,:default=>0.00
+      t.decimal :total_amount , :precision =>18, :scale =>3 ,:default=>0.00
       t.decimal :tax
       t.string :item_type
       t.string :item_subtype
