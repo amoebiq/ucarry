@@ -1,6 +1,7 @@
 class OrchestratorService
 
   require 'net/http'
+  require_relative '../../lib/utilities/orchestrator_utility.rb'
 
   def initialize(params)
 
@@ -30,6 +31,7 @@ class OrchestratorService
             discount = 0
 
           end
+        total_amount = 0
         @orders.each do |o|
           order_item = SenderOrderItem.where(:id=>o[:id]).first
           item_att = o[:item_attributes]
@@ -58,10 +60,15 @@ class OrchestratorService
           ActiveRecord::Base.transaction do
             order_item[:unit_price] = unit_price
             order_item[:total_amount]=(unit_price * quantity)-(unit_price * quantity * discount)/100;
+            total_amount += order_item[:total_amount]
             order_item[:item_attributes] = q
             order_item.save!
           end
 
+        end
+
+        ActiveRecord::Base.transaction do
+          SenderOrder.where(:order_id=>id).update_all(:total_amount=>total_amount)
         end
 
   end
@@ -281,6 +288,37 @@ class OrchestratorService
   end
 
   def accept_order
+
+    carrier_id = @params[:carrier_id]
+    order_id = @params[:order_id]
+
+    p "XXX #{carrier_id} --- #{order_id}"
+    @order = SenderOrder.where(:order_id => order_id).first
+    if(@order.nil?)
+      error = {}
+      error['error'] = 'Order Not Found'
+      return error , 403
+    end
+    if(!@order.status.eql?'active')
+      error = {}
+      error['error'] = 'Order not active now'
+      return error,404
+    end
+
+    @order.status = 'scheduled'
+    @order.save!
+
+    @otm = OrderTransactionHistory.new
+    @otm.order_id = order_id
+    @otm.carrier_id = carrier_id
+    @otm.status = 'scheduled'
+    @otm.open_amount = @order.total_amount
+    @otm.transaction_id = OrchestratorUtility.generate_id
+    @otm.save!
+
+    resp = {}
+    resp['status'] = 'ok'
+    return resp,200
 
   end
 

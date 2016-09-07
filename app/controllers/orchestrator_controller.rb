@@ -20,7 +20,7 @@ class OrchestratorController < ApplicationController
       end
 
     rescue Exception=>e
-      p "--Error --- #{e}"
+
       render :json => e.message ,:status=>400
     end
 
@@ -39,7 +39,7 @@ class OrchestratorController < ApplicationController
         end
 
       rescue Exception=>e
-        p "--Error --- #{e}"
+
         render :json => e.message , :status=>400
       end
 
@@ -50,8 +50,6 @@ class OrchestratorController < ApplicationController
           logger.debug "in deactivate for coupon #{params}"
           begin
               status,code = OrchestratorHelper.deactivate_coupon params[:code]
-              p "KKKKK"
-              p "#{status} #{code}"
               respond_to do |format|
                 format.json { render :json => status.to_json,:status => code}
               end
@@ -193,6 +191,10 @@ class OrchestratorController < ApplicationController
     begin
 
       orch = OrchestratorService.new(params)
+      resp,code = orch.accept_order
+      respond_to do |format|
+        format.json {render :json => resp , :status => code}
+      end
     rescue Exception=>e
     error = {}
     error['error'] = e.message
