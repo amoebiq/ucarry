@@ -26,12 +26,22 @@ module OrchestratorHelper
   def self.deactivate_coupon coupon_code
 
     @coupon = Coupon.where(:name => coupon_code).first
+
+    p @coupon
+    if @coupon.nil?
+
+        error = {}
+        error["error"] = "Coupon not present"
+         resp , code = error , 404
+        return resp,code
+
+    end
     curr_status = @coupon.status
     p curr_status
     if curr_status.eql?"inactive"
       error = {}
       error["error"] = "Already inactive coupon"
-      raise error.to_json
+      return error , 403
     end
     @coupon.status='inactive'
     @coupon.save!
@@ -39,7 +49,7 @@ module OrchestratorHelper
     resp = {}
     resp["status"] = "Successfully deactivated the coupon"
 
-    resp
+    return resp,200
 
   end
 

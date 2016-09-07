@@ -1,7 +1,7 @@
 class OrchestratorController < ApplicationController
 
 
-  protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
+  protect_from_forgery :with=> :null_session, :if=> Proc.new { |c| c.request.format == 'application/json' }
   include OrchestratorHelper
 
 
@@ -21,7 +21,7 @@ class OrchestratorController < ApplicationController
 
     rescue Exception=>e
       p "--Error --- #{e}"
-      render json:  {error: e.message ,:status=>400}
+      render :json => e.message ,:status=>400
     end
 
   end
@@ -40,7 +40,7 @@ class OrchestratorController < ApplicationController
 
       rescue Exception=>e
         p "--Error --- #{e}"
-        render json:  {error: e.message ,:status=>400}
+        render :json => e.message , :status=>400
       end
 
     end
@@ -49,12 +49,15 @@ class OrchestratorController < ApplicationController
 
           logger.debug "in deactivate for coupon #{params}"
           begin
-              status = OrchestratorHelper.deactivate_coupon params[:code]
+              status,code = OrchestratorHelper.deactivate_coupon params[:code]
+              p "KKKKK"
+              p "#{status} #{code}"
               respond_to do |format|
-                format.json { render :json => status.to_json}
+                format.json { render :json => status.to_json,:status => code}
               end
           rescue Exception =>e
-                p e
+
+
                 render :json => e.message , :status=>403
 
 
@@ -71,8 +74,9 @@ class OrchestratorController < ApplicationController
           format.json { render :json => coupons}
         end
       rescue Exception =>e
-        p e
-        render :json => e.message , :status=>404
+        error = {}
+        error['error'] = e.message
+        render :json => error , :status=>404
 
 
 
@@ -181,5 +185,20 @@ class OrchestratorController < ApplicationController
   end
 
 
+
+  def accept_order
+
+    logger.debug "in accept order"
+
+    begin
+
+      orch = OrchestratorService.new(params)
+    rescue Exception=>e
+    error = {}
+    error['error'] = e.message
+      render :json => error , :status=>400
+    end
+
+  end
 
 end

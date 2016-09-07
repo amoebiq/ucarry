@@ -280,4 +280,8 @@ class OrchestratorService
 
   end
 
+  def accept_order
+
+  end
+
 end
