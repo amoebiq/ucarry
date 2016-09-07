@@ -5,7 +5,7 @@ class CreateSenderDetails < ActiveRecord::Migration
       t.string :email_id
       t.string :first_name
       t.string :last_name
-      t.string :img_link
+      t.string :img_link , :limit => 1024
       t.string :phone
       t.string :status
       t.date :deleted_at

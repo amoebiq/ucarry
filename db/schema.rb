@@ -90,16 +90,16 @@ ActiveRecord::Schema.define(version: 20160903111122) do
 
   create_table "sender_order_items", force: :cascade do |t|
     t.string   "order_id",        limit: 255
-    t.string   "item_attributes", limit: 255
-    t.decimal  "unit_price",                  precision: 10, scale: 6
+    t.string   "item_attributes", limit: 2048
+    t.decimal  "unit_price",                   precision: 18, scale: 3, default: 0.0
     t.integer  "quantity",        limit: 4
-    t.decimal  "total_amount",                precision: 10, scale: 6
-    t.decimal  "tax",                         precision: 10, scale: 6
+    t.decimal  "total_amount",                 precision: 18, scale: 3, default: 0.0
+    t.decimal  "tax",                          precision: 10, scale: 6
     t.string   "item_type",       limit: 255
     t.string   "item_subtype",    limit: 255
-    t.string   "img",             limit: 255
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
+    t.string   "img",             limit: 1024
+    t.datetime "created_at",                                                          null: false
+    t.datetime "updated_at",                                                          null: false
   end
 
   create_table "sender_orders", force: :cascade do |t|
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 20160903111122) do
     t.decimal  "from_geo_lat",              precision: 10, scale: 6
     t.string   "from_geo_long", limit: 255
     t.string   "to_geo_long",   limit: 255
-    t.decimal  "to_goe_lat",                precision: 10, scale: 6
+    t.decimal  "to_geo_lat",                precision: 10, scale: 6
     t.string   "status",        limit: 255
     t.string   "comments",      limit: 255
     t.string   "type",          limit: 255
