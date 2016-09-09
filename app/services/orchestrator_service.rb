@@ -20,7 +20,7 @@ class OrchestratorService
         lat2 = @params[:to_geo_lat]
         long1 = @params[:from_geo_long]
         long2 = @params[:to_geo_long]
-        is_insured = @params[:is_insured]
+        is_insured = @params[:isInsured]
         c = @params[:coupon]
         p "coupon is #{c}"
 
@@ -60,9 +60,9 @@ class OrchestratorService
           ActiveRecord::Base.transaction do
             order_item[:unit_price] = unit_price
             order_item[:total_amount]=(unit_price * quantity)-(unit_price * quantity * discount)/100;
-            total_amount += order_item[:total_amount]
             order_item[:item_attributes] = q
             order_item.save!
+            total_amount += order_item[:total_amount]
           end
 
         end
@@ -317,7 +317,10 @@ class OrchestratorService
     @otm.save!
 
     resp = {}
-    resp['status'] = 'ok'
+    resp['status'] = 'order accepted'
+    resp['order_id'] = order_id
+    resp['total_amount'] = @otm.open_amount
+
     return resp,200
 
   end

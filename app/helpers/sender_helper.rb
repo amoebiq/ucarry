@@ -26,6 +26,7 @@ module SenderHelper
 
   def self.new_order sender_id , params
 
+
     coupon = params[:sender_order][:coupon]
 
 
@@ -51,18 +52,43 @@ module SenderHelper
       @order.status = 'active'
       #Resque.enqueue(Sleeper, 15)
       @order.save!
-
-
-
-
-
-
-
-    end
+     end
 
      orch = OrchestratorService.new(@order)
       orch.calculate_order_costs
-     @order.to_json(:include => :sender_order_item)
+    @order = SenderOrder.where(:order_id => @order.order_id).first
+    id = @order[:order_id]
+    p "PPPAAA --- #{id}"
+    reciever = params[:sender_order][:receiver_order_mapping]
+    p reciever
+    rec = {}
+    rec['receiver_order_mapping'] = reciever
+    ActiveRecord::Base.transaction do
+
+      @reciever = ReceiverOrderMapping.new
+      @reciever.sender_id = sender_id
+      @reciever.order_id = id
+      @reciever.reciever_id = SenderUtility.generate_reciever_id
+      @reciever.status = 'active'
+      @reciever.name = reciever[:name]
+      @reciever.phone_1 = reciever[:phone_1]
+      @reciever.phone_2 = reciever[:phone_2]
+      @reciever.address_line_1 = reciever[:address_line_1]
+      @reciever.address_line_2 = reciever[:address_line_2]
+      @reciever.landmark = reciever[:landmark]
+      @reciever.pin = reciever[:pin]
+      @reciever.state = reciever[:state]
+      @reciever.auto_save = reciever[:auto_save]
+
+
+      @reciever.save!
+
+    end
+    child_where={}
+    child_where['receiver_order_mappings.order_id'] = id
+      #@orders = SenderOrder.where(:order_id=>id).joins(:receiver_order_mapping).where(child_where)
+    #@order = SenderOrder.where(:order_id=>id).joins(:receiver_order_mapping).where(child_where)
+     @order.to_json(:include => [:receiver_order_mapping,:sender_order_item])
     rescue Exception=>e
       p e
     end
@@ -133,7 +159,7 @@ module SenderHelper
   end
 
   def self.sender_order_params params
-    params.fetch(:sender_order).permit(:from_loc,:to_loc,:from_geo_lat,:to_geo_lat,:from_geo_long,:to_geo_long,:status,:type,:comments,:coupon,:isInsured,sender_order_item_attributes: [:id,:unit_price,:quantity ,:item_type,:item_subtype,:img,item_attributes: [:length,:breadth,:height,:item_weight,:item_value]])
+    params.fetch(:sender_order).permit(:from_loc,:to_loc,:from_geo_lat,:to_geo_lat,:from_geo_long,:to_geo_long,:status,:type,:comments,:coupon,:isInsured,sender_order_item_attributes: [:id,:unit_price,:quantity ,:item_type,:item_subtype,:img,:item_attributes=> [:length,:breadth,:height,:item_weight,:item_value ,:receiver_order_mapping=>[:name, :phone_1, :phone_2, :address_line_1, :address_line_1,:state,:landmark,:pin,:status,:auto_save]]])
   end
 
 
