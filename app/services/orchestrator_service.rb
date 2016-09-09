@@ -305,6 +305,9 @@ class OrchestratorService
       return error,404
     end
 
+    ActiveRecord::Base.transaction do
+
+
     @order.status = 'scheduled'
     @order.save!
 
@@ -315,6 +318,8 @@ class OrchestratorService
     @otm.open_amount = @order.total_amount
     @otm.transaction_id = OrchestratorUtility.generate_id
     @otm.save!
+
+    end
 
     resp = {}
     resp['status'] = 'order accepted'

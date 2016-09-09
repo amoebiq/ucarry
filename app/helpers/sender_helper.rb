@@ -37,7 +37,8 @@ module SenderHelper
       if c.nil?
         error = {}
         error['error'] = 'Coupon Not Found!!!'
-        raise error.to_json
+        code = 404
+        return error , code
       end
     end
 
@@ -88,7 +89,7 @@ module SenderHelper
     child_where['receiver_order_mappings.order_id'] = id
       #@orders = SenderOrder.where(:order_id=>id).joins(:receiver_order_mapping).where(child_where)
     #@order = SenderOrder.where(:order_id=>id).joins(:receiver_order_mapping).where(child_where)
-     @order.to_json(:include => [:receiver_order_mapping,:sender_order_item])
+     return @order.to_json(:include => [:receiver_order_mapping,:sender_order_item]),201
     rescue Exception=>e
       p e
     end
@@ -145,6 +146,42 @@ module SenderHelper
 
   end
 
+  def self.cancel_order params
+    order_id = params[:order_id]
+    comments = params[:comments]
+
+    ActiveRecord::Base.transaction do
+
+      @order = SenderOrder.where(:order_id => order_id).first
+
+      if @order.nil?
+        return SenderHelper.custom_msg('order not found!!!'),404
+      end
+      status = @order[:status]
+      if status.eql?'cancel'
+        return SenderHelper.custom_msg('already cancelled order !!!') , 403
+      end
+
+      if SenderOrder.where(:order_id => order_id).update_all(:status => 'cancel')
+        SenderOrder.where(:order_id => order_id).update_all(:comments => comments) unless comments.nil?
+        OrderTransactionHistory.where(:order_id => order_id).update_all(:status => 'cancel')
+        msg = {}
+        msg['status'] = 'Succesfully Cancelled'
+
+        ##### TO DO - Should send notification to carrier if status is scheduled #############
+
+        return msg , 200
+      end
+    end
+  end
+
+
+
+  def self.custom_msg msg
+    error = {}
+    error['error'] = msg
+    return error
+  end
   def self.reciever_params params
 
     params.require(:receiver_order_mapping).permit(:name, :phone_1, :phone_2, :address_line_1, :address_line_1,:state,:landmark,:pin,:status,:auto_save)

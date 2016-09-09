@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  transaction_id: MyString
+  carrier_id: MyString
+  order_id: MyString
+  open_amount: 9.99
+  applied_amount: 9.99
+  pending_applied_amount: MyString
+  status: MyString
+
+two:
+  transaction_id: MyString
+  carrier_id: MyString
+  order_id: MyString
+  open_amount: 9.99
+  applied_amount: 9.99
+  pending_applied_amount: MyString
+  status: MyString

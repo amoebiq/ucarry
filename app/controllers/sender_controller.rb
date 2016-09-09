@@ -51,11 +51,11 @@ class SenderController < ApplicationController
     begin
 
 
-      order = SenderHelper.new_order params[:id] , params
+      order,code = SenderHelper.new_order params[:id] , params
 
     respond_to do |format|
 
-      format.json { render :json => order ,:status=>:created}
+      format.json { render :json => order ,:status=>code}
 
     end
 
@@ -131,6 +131,22 @@ class SenderController < ApplicationController
 
       end
 
+    end
+
+    def cancel_order
+      logger.debug 'in cancel order'
+      begin
+
+        resp , code = SenderHelper.cancel_order(params)
+        respond_to do |format|
+          format.json { render :json => resp , :status=>code}
+        end
+      rescue Exception=>e
+        error = {}
+        error['error'] = e.message
+        render :json => error , :status =>400
+
+      end
     end
 
 end
