@@ -196,7 +196,7 @@ module SenderHelper
   end
 
   def self.sender_order_params params
-    params.fetch(:sender_order).permit(:from_loc,:to_loc,:from_geo_lat,:to_geo_lat,:from_geo_long,:to_geo_long,:status,:type,:comments,:coupon,:isInsured,sender_order_item_attributes: [:id,:unit_price,:quantity ,:item_type,:item_subtype,:img,:item_attributes=> [:length,:breadth,:height,:item_weight,:item_value ,:receiver_order_mapping=>[:name, :phone_1, :phone_2, :address_line_1, :address_line_1,:state,:landmark,:pin,:status,:auto_save]]])
+    params.fetch(:sender_order).permit(:from_loc,:to_loc,:from_geo_lat,:to_geo_lat,:from_geo_long,:to_geo_long,:status,:type,:comments,:coupon,:isInsured,:sender_order_item_attributes=> [:id,:unit_price,:quantity ,:item_type,:item_subtype,:img,:item_attributes=> [:length,:breadth,:height,:item_weight,:item_value ,:receiver_order_mapping=>[:name, :phone_1, :phone_2, :address_line_1, :address_line_1,:state,:landmark,:pin,:status,:auto_save]]])
   end
 
 

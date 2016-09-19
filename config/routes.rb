@@ -44,7 +44,8 @@ Rails.application.routes.draw do
     get 'orchestrator/schedules' , :to=> 'orchestrator#get_all_schedules'
     get 'orchestrator/orders' , :to=> 'orchestrator#get_all_orders'
     put 'orchestrator/carrier/:carrier_id/order/:order_id/accept' , :to => 'orchestrator#accept_order'
-    
+    post 'orchestrator/carrier/:carrier_id/order/:order_id/rate_sender' , :to => 'orchestrator#rate_sender'
+
 
     ##################################### reciever ##########################
 

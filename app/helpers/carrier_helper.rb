@@ -96,6 +96,14 @@ module CarrierHelper
 
   end
 
+  def self.rate_sender
+    ActiveRecord::Base.transaction do
+
+
+
+    end
+  end
+
 
   def self.get_all_carrier_schedules carrier_id
 
@@ -113,6 +121,8 @@ module CarrierHelper
   def self.carrier_params params
     params.require(:carrier_detail).permit(:email_id, :first_name, :last_name, :img_link, :phone)
   end
+
+
 
   def self.carrier_params_details params
     params.require(:carrier_detail).permit(:email_id,:img_link, :phone)

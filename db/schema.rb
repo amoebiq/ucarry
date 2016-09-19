@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907120425) do
+ActiveRecord::Schema.define(version: 20160919142626) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -67,6 +67,15 @@ ActiveRecord::Schema.define(version: 20160907120425) do
     t.string   "status",                 limit: 255
     t.datetime "created_at",                                                                null: false
     t.datetime "updated_at",                                                                null: false
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.string   "user",       limit: 255
+    t.string   "rated_by",   limit: 255
+    t.string   "comments",   limit: 255
+    t.integer  "rating",     limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "receiver_order_mappings", force: :cascade do |t|
@@ -126,10 +135,11 @@ ActiveRecord::Schema.define(version: 20160907120425) do
     t.string   "status",        limit: 255
     t.string   "comments",      limit: 255
     t.string   "type",          limit: 255
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.datetime "created_at",                                                       null: false
+    t.datetime "updated_at",                                                       null: false
     t.string   "coupon",        limit: 255
     t.boolean  "isInsured"
+    t.decimal  "total_amount",              precision: 18, scale: 3, default: 0.0
   end
 
   create_table "users", force: :cascade do |t|

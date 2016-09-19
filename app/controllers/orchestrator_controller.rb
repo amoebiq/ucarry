@@ -111,6 +111,9 @@ class OrchestratorController < ApplicationController
 
     end
 
+  # Get the qoute for a particular order
+  # @param length=30.125&breadth=5&height=10&weight=3.5
+  # @return { "volumetric_weight": 0.3765625 }
     def get_quote
 
       begin
@@ -201,6 +204,27 @@ class OrchestratorController < ApplicationController
       render :json => error , :status=>400
     end
 
+  end
+
+  # API to rate a carrier
+  # @param { "rating" : <rating in number[1-5]>}
+  # @return { "message" : "successfully saved"}
+  #
+
+  def rate_sender
+    logger.debug "in rate order"
+    begin
+      orch = OrchestratorService.new(params)
+      resp , code = orch.rate_sender
+      respond_to do |format|
+        format.json {render :json => resp , :status => code}
+      end
+    rescue Exception=>e
+      error = {}
+      error['error'] = e.message
+      render :json => error , :status => 400
+
+    end
   end
 
 end

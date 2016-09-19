@@ -330,4 +330,32 @@ class OrchestratorService
 
   end
 
+
+  def rate_sender
+
+    rating = @params[:rating]
+    comments = @params[:comments]
+    order_id = @params[:order_id]
+    rated_by = @params[:carrier_id]
+    order = SenderOrder.where(:order_id => order_id).first
+    sender = order[:sender_id]
+    ActiveRecord::Base.transaction do
+
+      @rating = Rating.new
+      @rating.user = sender
+      @rating.rated_by = rated_by
+      @rating.comments = comments unless comments.nil?
+      @rating.rating = rating
+
+      @rating.save!
+
+      resp = {}
+      resp['message'] = 'Thank You !'
+
+      return resp , 201
+
+    end
+
+  end
+
 end
