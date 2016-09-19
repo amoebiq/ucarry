@@ -99,7 +99,7 @@ module SenderHelper
   def self.get_all_orders sender_id
 
     @orders = SenderOrder.where(:sender_id => sender_id)
-    @orders
+    @orders.to_json(:include => :sender_order_item)
 
   end
 
