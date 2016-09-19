@@ -339,10 +339,53 @@ class OrchestratorService
     rated_by = @params[:carrier_id]
     order = SenderOrder.where(:order_id => order_id).first
     sender = order[:sender_id]
+
+    if rating < 1 or rating > 5
+      resp = {}
+      resp['error'] = 'Rating should be between 1 and 5'
+
+      return resp , 400
+    end
+
     ActiveRecord::Base.transaction do
 
       @rating = Rating.new
       @rating.user = sender
+      @rating.rated_by = rated_by
+      @rating.comments = comments unless comments.nil?
+      @rating.rating = rating
+
+      @rating.save!
+
+      resp = {}
+      resp['message'] = 'Thank You !'
+
+      return resp , 201
+
+    end
+
+  end
+
+  def rate_carrier
+
+    rating = @params[:rating]
+    comments = @params[:comments]
+    order_id = @params[:order_id]
+    rated_by = @params[:sender_id]
+    order = OrderTransactionHistory.where(:order_id => order_id).first
+    carrier = order[:carrier_id]
+
+    if rating < 1 or rating > 5
+      resp = {}
+      resp['error'] = 'Rating should be between 1 and 5'
+
+      return resp , 400
+    end
+
+    ActiveRecord::Base.transaction do
+
+      @rating = Rating.new
+      @rating.user = carrier
       @rating.rated_by = rated_by
       @rating.comments = comments unless comments.nil?
       @rating.rating = rating

@@ -206,7 +206,7 @@ class OrchestratorController < ApplicationController
 
   end
 
-  # API to rate a carrier
+  # API to rate a sender
   # @param { "rating" : <rating in number[1-5]>}
   # @return { "message" : "successfully saved"}
   #
@@ -216,6 +216,27 @@ class OrchestratorController < ApplicationController
     begin
       orch = OrchestratorService.new(params)
       resp , code = orch.rate_sender
+      respond_to do |format|
+        format.json {render :json => resp , :status => code}
+      end
+    rescue Exception=>e
+      error = {}
+      error['error'] = e.message
+      render :json => error , :status => 400
+
+    end
+  end
+
+  # API to rate a carrier
+  # @param { "rating" : <rating in number[1-5]>}
+  # @return { "message" : "successfully saved"}
+  #
+
+  def rate_carrier
+    logger.debug "in rate order"
+    begin
+      orch = OrchestratorService.new(params)
+      resp , code = orch.rate_carrier
       respond_to do |format|
         format.json {render :json => resp , :status => code}
       end
