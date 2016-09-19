@@ -281,7 +281,7 @@ class OrchestratorService
 
     @schedules = SenderOrder.where(where)
     #@schedules = @schedules.CarrierScheduleDetail.where("start_time" => "2016-02-12 12:00:00")
-    @schedules.to_json(:include => :sender_order_item)
+    @schedules.to_json(:include => [:sender_order_item,:rating])
 
 
 

@@ -236,7 +236,7 @@ class OrchestratorController < ApplicationController
     logger.debug "in rate order"
     begin
       orch = OrchestratorService.new(params)
-      resp , code = orch.rate_carrier
+      resp , code = orch.rate_carrier       
       respond_to do |format|
         format.json {render :json => resp , :status => code}
       end
