@@ -2,6 +2,15 @@ require 'resque/server'
 
 Rails.application.routes.draw do
 
+  # devise_scope :user do
+  #   post 'sessions' => 'sessions#create', :as => 'login'
+  #   delete 'sessions' => 'sessions#destroy', :as => 'logout'
+  # end
+
+
+  #devise_for :users
+  mount_devise_token_auth_for 'User', at: 'auth'
+
     ######### carrier crud operations ##########
     get '/carrier/:id' , :to=> 'carrier#details'
     post '/carrier', :to=> 'carrier#new'
@@ -61,5 +70,8 @@ Rails.application.routes.draw do
 
   ########## resqueue #############
     mount Resque::Server.new, :at => "/resque"
+
+
+  #devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
 
 end
