@@ -49,13 +49,18 @@ class ApplicationController < ActionController::Base
 
 
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+  rescue_from ActiveRecord::RecordNotFound do |ex|
+    err = {}
+    err['error'] = ex.message
+    render :json => err ,:status=>409
+  end
 
-  def record_not_found
+  rescue_from ActiveRecord::RecordInvalid do |ex|
+    p ex
+    err = {}
+    err['error'] = ex.message
+    render :json => err ,:status=>422
 
-   err = {}
-   err['error'] = UcarryConstants::RECORD_NOT_FOUND
-   render :json => err ,:status=>404
   end
 
 

@@ -1,16 +1,24 @@
 class SenderController < ApplicationController
+
+
+  require_relative '../../app/models/user'
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
   include SenderHelper
 
+  include DeviseTokenAuth::Concerns::SetUserByToken
+
+  before_action :authenticate_user!
 
 
   def new
       logger.debug "in create new sender"
-      sender = SenderHelper.create_new_sender params
+      email = request.headers['uid']
+      p "email is #{email}"
+      sender,code = SenderHelper.create_new_sender(params,request)
       respond_to do |format|
 
         #format.html #sender.html
-        format.json { render :json => sender ,:status => :created}
+        format.json { render :json => sender ,:status => code}
 
       end
 

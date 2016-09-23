@@ -2,14 +2,24 @@ module SenderHelper
   require_relative '../../lib/utilities/sender_utility.rb'
   require_relative '../services/orchestrator_service'
 
-  def self.create_new_sender params
+  def self.create_new_sender params , request
+
+    phone = params[:sender_detail][:phone]
+    s = SenderDetail.where(:phone => phone).first
+    # if !s.nil?
+    #   error = {}
+    #   error['error'] = 'phone number already exists . Please register with a different phone number'
+    #   return error , 409
+    # end
 
     @sender = SenderDetail.new(carrier_params(params))
+    email = request.headers['uid']
+    @sender.email_id = email
     @sender.sender_id = SenderUtility.generate_id params
     @sender.status='active'
     @sender.save!
 
-    @sender
+    return @sender , 201
 
   end
 
