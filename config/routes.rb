@@ -2,6 +2,8 @@ require 'resque/server'
 
 Rails.application.routes.draw do
 
+  get 'home/index'
+
   # devise_scope :user do
   #   post 'sessions' => 'sessions#create', :as => 'login'
   #   delete 'sessions' => 'sessions#destroy', :as => 'logout'
@@ -68,9 +70,22 @@ Rails.application.routes.draw do
     put 'generic/volumetric' , :to=> 'admin#update_volumetric'
     get 'generic/volumetric' , :to=> 'admin#get_volumetric_data'
 
+
+    ############### home #############################################
+
+
+      root 'home#index'
+
   ########## resqueue #############
     mount Resque::Server.new, :at => "/resque"
 
+
+  %w( 404 422 500 503 ).each do |code|
+    get code, :to => 'errors#show', :code => code
+  end
+
+  get '/orders' , :to => 'view#orders'
+  get '/register' , :to => 'view#register'
 
   #devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
 

@@ -12,5 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-cookie
+//= require angular
+//= require main
+//= require actions
 //= require turbolinks
 //= require_tree .
