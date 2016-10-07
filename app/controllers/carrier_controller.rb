@@ -13,6 +13,10 @@ class CarrierController < ApplicationController
   #       status: :bad_request
   # end
 
+
+  api :GET, '/users/:id'
+  param :id, :number
+
   def new
 
 

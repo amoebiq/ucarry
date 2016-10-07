@@ -2,6 +2,7 @@ require 'resque/server'
 
 Rails.application.routes.draw do
 
+  apipie
   get 'home/index'
 
   # devise_scope :user do
@@ -86,6 +87,13 @@ Rails.application.routes.draw do
 
   get '/orders' , :to => 'view#orders'
   get '/register' , :to => 'view#register'
+
+
+  #get 'users/verify', :to => 'users#show_verify', :as => 'verify'
+  post 'auth/send_otp/:phone_number' , :to => 'orchestrator#send_otp'
+
+  post 'auth/verify/:otp' , :to => 'orchestrator#verify_number'
+
 
   #devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
 
