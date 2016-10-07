@@ -264,7 +264,7 @@ class OrchestratorController < ApplicationController
       r = twilio_client.messages.create(
       to: phone_number,
       from: ENV['TWILIO_PHONE_NUMBER'],
-      body: "Your uCarry OTP is #{pin} . Please enter this to verify your number")
+      body: "Your KarrierBay OTP is #{pin} . Please enter this to verify your number")
 
 
       session[:otp_pin] = pin
