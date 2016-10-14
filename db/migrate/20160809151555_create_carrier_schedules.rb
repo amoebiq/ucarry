@@ -6,7 +6,7 @@ class CreateCarrierSchedules < ActiveRecord::Migration
       t.string :from_loc
       t.string :to_loc
       t.decimal :from_geo_lat, precision: 10, scale: 6
-      t.decimal :to_goe_lat, precision: 10, scale: 6
+      t.decimal :to_geo_lat, precision: 10, scale: 6
       t.string :status
       t.string :comments
 

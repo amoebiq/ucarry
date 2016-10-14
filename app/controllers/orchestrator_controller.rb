@@ -264,7 +264,9 @@ class OrchestratorController < ApplicationController
       r = twilio_client.messages.create(
       to: phone_number,
       from: ENV['TWILIO_PHONE_NUMBER'],
-      body: "Your KarrierBay OTP is #{pin} . Please enter this to verify your number")
+      #body: "Your KarrierBay OTP is #{pin} . Please enter this to verify your number")
+          body: "Your OTP for KarrierBay is #{pin} . Please keep this confidential .")
+
 
 
       session[:otp_pin] = pin
@@ -312,6 +314,42 @@ class OrchestratorController < ApplicationController
 
 
 
+  def send_custom_message_to_mobile
+
+    logger.debug "in send_custom_message_to_mobile"
+    phone_number = params[:phone_number]
+    message = params[:message]
+    begin
+
+
+
+
+      twilio_client =   Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+
+      pin = rand(0000..9999).to_s.rjust(4, "0")
+      r = twilio_client.messages.create(
+          to: phone_number,
+          from: ENV['TWILIO_PHONE_NUMBER'],
+          body: "#{message}")
+
+
+
+      session[:otp_pin] = pin
+
+      resp = {}
+      resp['message'] = 'sent the message to the number'
+      #resp['twilio'] = r
+      respond_to do |format|
+        format.json {render :json => resp , :status => 200}
+      end
+    rescue Exception=>e
+      error = {}
+      error['error'] = e.message
+      render :json => error , :status => 400
+
+    end
+
+  end
 
 
 end

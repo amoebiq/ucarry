@@ -93,6 +93,8 @@ Rails.application.routes.draw do
   post 'auth/send_otp/:phone_number' , :to => 'orchestrator#send_otp'
 
   post 'auth/verify/:otp' , :to => 'orchestrator#verify_number'
+  post 'mobile/message' , :to => 'orchestrator#send_custom_message_to_mobile'
+
 
 
   #devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}

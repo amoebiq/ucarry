@@ -129,7 +129,8 @@ module CarrierHelper
   end
 
   def self.carrier_schedule_params params
-    params.fetch(:carrier_schedule).permit(:from_loc,:to_loc,:from_geo_lat,:to_goe_lat,:comments,carrier_schedule_detail_attributes: [:id,:start_time,:end_time,:mode ,:capacity])
+    params[:carrier_schedule][:stop_overs] ||= []
+    params.fetch(:carrier_schedule).permit(:from_loc,:to_loc,:from_geo_lat,:to_geo_lat,:from_geo_long,:to_geo_long,:comments,:stop_overs=>[],:carrier_schedule_detail_attributes=>[:id,:start_time,:end_time,:mode ,:capacity,:ready_to_carry])
   end
 
 end
