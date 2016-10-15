@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161014175603) do
+ActiveRecord::Schema.define(version: 20161015024513) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20161014175603) do
     t.string   "from_loc",      limit: 255
     t.string   "to_loc",        limit: 255
     t.decimal  "from_geo_lat",               precision: 10, scale: 6
-    t.decimal  "to_goe_lat",                 precision: 10, scale: 6
+    t.decimal  "to_geo_lat",                 precision: 10, scale: 6
     t.string   "status",        limit: 255
     t.string   "comments",      limit: 255
     t.datetime "created_at",                                          null: false
@@ -71,6 +71,22 @@ ActiveRecord::Schema.define(version: 20161014175603) do
     t.string   "status",                 limit: 255
     t.datetime "created_at",                                                                null: false
     t.datetime "updated_at",                                                                null: false
+  end
+
+  create_table "pickup_order_mappings", force: :cascade do |t|
+    t.string   "name",           limit: 255
+    t.string   "order_id",       limit: 255
+    t.string   "sender_id",      limit: 255
+    t.string   "phone",          limit: 255
+    t.string   "address_line_1", limit: 255
+    t.string   "address_line_2", limit: 255
+    t.string   "state",          limit: 255
+    t.string   "landmark",       limit: 255
+    t.string   "pin",            limit: 255
+    t.string   "status",         limit: 255
+    t.boolean  "auto_save"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "ratings", force: :cascade do |t|

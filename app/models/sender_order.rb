@@ -4,6 +4,9 @@ class SenderOrder < ActiveRecord::Base
   has_many :rating, :foreign_key => 'user' , :autosave => true , :primary_key => 'sender_id'
   accepts_nested_attributes_for :sender_order_item
   has_one :receiver_order_mapping , :foreign_key => 'order_id' ,:primary_key => 'order_id'
+  has_one :pickup_order_mapping, :foreign_key => 'order_id', :primary_key => 'order_id'
+
+
 
   default_scope { order(updated_at: :desc) }
 

@@ -95,11 +95,35 @@ module SenderHelper
       @reciever.save!
 
     end
+
+    pickup = params[:sender_order][:pickup_order_mapping]
+
+    ActiveRecord::Base.transaction do
+
+      @pickup = PickupOrderMapping.new
+      @pickup.sender_id = sender_id
+      @pickup.order_id = id
+
+      @pickup.status = 'active'
+      @pickup.name = pickup[:name]
+      @pickup.phone = pickup[:phone_1]
+
+      @pickup.address_line_1 = pickup[:address_line_1]
+      @pickup.address_line_2 = pickup[:address_line_2]
+      @pickup.landmark = pickup[:landmark]
+      @pickup.pin = pickup[:pin]
+      @pickup.state = pickup[:state]
+      @pickup.auto_save = pickup[:auto_save]
+
+
+      @pickup.save!
+
+    end
     child_where={}
     child_where['receiver_order_mappings.order_id'] = id
       #@orders = SenderOrder.where(:order_id=>id).joins(:receiver_order_mapping).where(child_where)
     #@order = SenderOrder.where(:order_id=>id).joins(:receiver_order_mapping).where(child_where)
-     return @order.to_json(:include => [:receiver_order_mapping,:sender_order_item]),201
+     return @order.to_json(:include => [:receiver_order_mapping,:sender_order_item,:pickup_order_mapping]),201
     rescue Exception=>e
       p e
     end
@@ -206,7 +230,7 @@ module SenderHelper
   end
 
   def self.sender_order_params params
-    params.fetch(:sender_order).permit(:from_loc,:to_loc,:from_geo_lat,:to_geo_lat,:from_geo_long,:to_geo_long,:status,:type,:comments,:coupon,:isInsured,:sender_order_item_attributes=> [:id,:unit_price,:quantity ,:item_type,:item_subtype,:img,:item_attributes=> [:length,:breadth,:height,:item_weight,:item_value ,:receiver_order_mapping=>[:name, :phone_1, :phone_2, :address_line_1, :address_line_1,:state,:landmark,:pin,:status,:auto_save]]])
+    params.fetch(:sender_order).permit(:from_loc,:to_loc,:from_geo_lat,:to_geo_lat,:from_geo_long,:to_geo_long,:status,:type,:comments,:coupon,:isInsured,:sender_order_item_attributes=> [:id,:unit_price,:quantity ,:item_type,:item_subtype,:img,:item_attributes=> [:length,:breadth,:height,:item_weight,:item_value] ,:receiver_order_mapping=>[:name, :phone_1, :phone_2, :address_line_1, :address_line_1,:state,:landmark,:pin,:status,:auto_save] ,:pickup_order_mapping=>[:name, :phone_1, :phone_2, :address_line_1, :address_line_1,:state,:landmark,:pin,:status,:auto_save]])
   end
 
 
