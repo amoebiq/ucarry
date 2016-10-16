@@ -1,6 +1,6 @@
 class SenderController < ApplicationController
 
-
+  require 'date'
   require_relative '../../app/models/user'
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
   include SenderHelper
@@ -59,7 +59,7 @@ class SenderController < ApplicationController
     begin
 
 
-      order,code = SenderHelper.new_order params[:id] , params
+      order,code = SenderHelper.new_order(params[:id], params)
 
     respond_to do |format|
 
@@ -73,6 +73,8 @@ class SenderController < ApplicationController
       end
 
   end
+
+  #handle_asynchronously :new_order
 
   def all_orders
     logger.debug "in get all active order"

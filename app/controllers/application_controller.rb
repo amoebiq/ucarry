@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
  # protect_from_forgery with: :null_session
   before_action :print_creds
 
-  #before_action :authenticate_user!, except: [:new, :create]
+  before_action :authenticate_user!, except: [:new, :create]
 
   def print_creds
     p "in print creds"

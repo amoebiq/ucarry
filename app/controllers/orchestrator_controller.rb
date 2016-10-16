@@ -352,4 +352,30 @@ class OrchestratorController < ApplicationController
   end
 
 
+  def notify_carrier
+
+    logger.debug 'in notify sender'
+
+    begin
+
+      ns = NotifyService.new(params)
+
+    resp , code = ns.sender_to_carrier
+
+    respond_to do |format|
+      format.json {render :json => resp , :status => code}
+    end
+
+    rescue Exception => e
+
+      error = {}
+      error['error'] = e.message
+      render :json => error  , :status => 400
+
+    end
+
+
+  end
+
+
 end

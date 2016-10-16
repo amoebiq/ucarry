@@ -1,4 +1,4 @@
-require 'resque/server'
+#require 'resque/server'
 
 Rails.application.routes.draw do
 
@@ -78,7 +78,7 @@ Rails.application.routes.draw do
       root 'home#index'
 
   ########## resqueue #############
-    mount Resque::Server.new, :at => "/resque"
+    #mount Resque::Server.new, :at => "/resque"
 
 
   %w( 404 422 500 503 ).each do |code|
@@ -96,6 +96,10 @@ Rails.application.routes.draw do
   post 'mobile/message' , :to => 'orchestrator#send_custom_message_to_mobile'
 
 
+
+  #################### notify service ##############################
+
+  post 'orchestrator/sender/:sender_id/notify_carrier/:schedule_id' , :to => 'orchestrator#notify_carrier'
 
   #devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
 
