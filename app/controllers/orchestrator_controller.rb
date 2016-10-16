@@ -199,6 +199,7 @@ class OrchestratorController < ApplicationController
         format.json {render :json => resp , :status => code}
       end
     rescue Exception=>e
+      p e
     error = {}
     error['error'] = e.message
       render :json => error , :status=>400

@@ -10,9 +10,9 @@ gem 'geocoder'
 # Use mysql as the database for Active Record
 gem 'mysql2' , '~> 0.3.18'
 
-gem 'sidekiq'
 
-gem 'resque'
+
+
 
 gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-google-oauth2'
@@ -57,6 +57,8 @@ gem 'rspec-rails', '~> 2.14.0'
 gem 'apipie-rails'
 gem 'twilio-ruby'
 gem 'authy'
+gem 'delayed_job_active_record'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
