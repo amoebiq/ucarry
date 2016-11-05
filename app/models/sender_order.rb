@@ -10,5 +10,27 @@ class SenderOrder < ActiveRecord::Base
 
   default_scope { order(updated_at: :desc) }
 
+  scope :relevant, -> (from_loc,to_loc) {
+
+
+    where("(from_loc LIKE ? or to_loc LIKE ?) and status='active'" , "%#{from_loc}%"  , "%#{to_loc}%")
+
+  }
+
+  scope :named_like, (
+                   lambda do |from_loc,to_loc|
+
+                     if !from_loc.empty?
+                       self.where("from_loc LIKE ?", "%#{from_loc}%")
+                     end
+                     if !to_loc.empty?
+                       self.where("to_loc LIKE ?", "%#{to_loc}%")
+                     end
+
+                   end
+
+
+                   )
+
 
 end

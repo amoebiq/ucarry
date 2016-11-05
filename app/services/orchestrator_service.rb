@@ -279,9 +279,17 @@ class OrchestratorService
     child_where = {}
 
 
-    @schedules = SenderOrder.where(where)
+    #@schedules = SenderOrder.relevant(from_loc,to_loc)
+    @schedules = SenderOrder.relevant(from_loc,to_loc)
+    if @schedules.size==0
+      message = {}
+      message['message'] = 'No orders found!'
+      return message,404
+    end
+
     #@schedules = @schedules.CarrierScheduleDetail.where("start_time" => "2016-02-12 12:00:00")
-    @schedules.to_json(:include => [:sender_order_item,:rating])
+    return @schedules.to_json(:include => [:sender_order_item,:rating]) , 200
+
 
 
 

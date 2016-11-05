@@ -72,7 +72,7 @@ Rails.application.routes.draw do
     get 'generic/volumetric' , :to=> 'admin#get_volumetric_data'
 
 
-    ############### home #############################################
+    ############### homdse #############################################
 
 
       root 'home#index'

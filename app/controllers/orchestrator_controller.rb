@@ -169,15 +169,16 @@ class OrchestratorController < ApplicationController
     begin
 
       orch = OrchestratorService.new(params)
-      resp = orch.get_all_orders
+      resp , code = orch.get_all_orders
 
       respond_to do |format|
 
 
-        format.json { render :json => resp , :status => 200}
+        format.json { render :json => resp , :status => code}
 
       end
     rescue Exception=>e
+      p e
       error = {}
       error['error'] = e.message
       render :json => error , :status => 400
