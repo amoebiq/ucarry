@@ -45,13 +45,13 @@ module CarrierHelper
     'Successfully Deactivate the carrier'.to_json
   end
 
-  def self.create_carrier_schedule carrier_id ,params
+  def self.create_carrier_schedule carrier_id ,params , uid
 
     ActiveRecord::Base.transaction do
 
         @carrier_schedule = CarrierSchedule.new(carrier_schedule_params(params))
         @carrier_schedule.schedule_id = CarrierUtility.generate_carrier_schedule_id
-        @carrier_schedule.carrier_id = carrier_id
+        @carrier_schedule.carrier_id = uid
         @carrier_schedule.status = 'active'
 
         p params['carrier_schedule_detail']
@@ -61,10 +61,16 @@ module CarrierHelper
 
 
 
-       @carrier_schedule.to_json(:include => :carrier_schedule_detail)
+
 
 
     end
+
+    ns = NotifyService.new(@carrier_schedule)
+    ns.schedule_created
+
+
+    @carrier_schedule.to_json(:include => :carrier_schedule_detail)
 
   end
 

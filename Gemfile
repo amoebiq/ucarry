@@ -45,6 +45,10 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'rspec-rails', '~> 2.14.0'
 
+
+gem 'aws-sdk'
+gem 'paperclip'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

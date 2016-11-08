@@ -1,19 +1,29 @@
-class RegistrationsController <  Devise::RegistrationsController
+class RegistrationsController <  DeviseTokenAuth::RegistrationsController
 
-  def create
-    @user = User.create(user_params)
-    if @user.save
-      render :json => {:state => {:code => 0}, :data => @user }
-    else
-      render :json => {:state => {:code => 1, :messages => @user.errors.full_messages} }
-    end
-
-  end
+  before_action :validate_phone
 
   private
 
-  def user_params
-    params.require(:user).permit(:email, :password)
+  def validate_phone
+    phone = params[:phone]
+    p "Phone is #{phone}"
+    @user = User.where(:phone => phone).first
+    if @user
+      err = {}
+      err['error'] = 'phone number already in use'
+      render :json => err , :status=>403
+    end
+  end
+
+  def sign_up_params
+    params.require(:registration).permit(:phone,:email,:password,:password_confirmation,:phone)
+  end
+
+
+  def render_create_success
+    # here, the @resource is accessible, in your case, a User instance.
+    p 'here'
+    render :json=> {:status => 'success', :data => @resource.as_json}
   end
 
 

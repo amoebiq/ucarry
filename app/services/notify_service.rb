@@ -79,6 +79,31 @@ class NotifyService
   end
 
 
+
+  ############################
+  ## schedule created ###
+  ############################
+
+  def schedule_created
+
+    carrier_id = @params[:carrier_id]
+    @user =  User.where(:uid => carrier_id).first
+    phone = @user[:phone]
+    from_loc = @params[:from_loc]
+    to_loc = @params[:to_loc]
+    sms = SmsService.new
+    msg = String.new
+    msg << "Hi #{@user[:name]}"
+    msg << ',Regards from karrierbay.com '
+    msg << "you have successfully created a schedule"
+    msg << " #{from_loc} to #{to_loc}."
+    msg << " Please see your wall for more info"
+    sms.send_custom_message(phone,msg)
+
+    return
+
+  end
+
   def build_message msg
 
   end

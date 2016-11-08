@@ -70,8 +70,9 @@ class CarrierController < ApplicationController
 
     logger.debug "in create carrier schedule"
     logger.debug params
-
-    schedule = CarrierHelper.create_carrier_schedule params[:id] , params[:carrier]
+    uid = request.headers['Uid']
+    logger.debug uid
+    schedule = CarrierHelper.create_carrier_schedule params[:id] , params[:carrier] , uid
 
     respond_to do |format|
 

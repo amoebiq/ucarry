@@ -31,7 +31,9 @@ module SenderHelper
   end
 
   def self.get_sender_details sender_id
-    SenderDetail.where(:sender_id => sender_id)
+    @sender = SenderDetail.where(:sender_id => sender_id)
+
+    @sender
   end
 
   def self.new_order sender_id , params
