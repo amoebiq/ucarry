@@ -16,8 +16,8 @@ class SenderDetail < ActiveRecord::Base
                     :bucket => 'karrierbaydevelopment',
                         :url => '/user/:id/:basename_:id.:extension',
       :s3_credentials => {
-      :access_key_id => 'AKIAJOJ3QIVPGT5PQCUA',
-          :secret_access_key => '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'
+      :access_key_id => '',
+          :secret_access_key => ''
 
   },
       :path => '/user/:id/:basename_:id.:extension',
