@@ -45,7 +45,7 @@ module CarrierHelper
     'Successfully Deactivate the carrier'.to_json
   end
 
-  def self.create_carrier_schedule carrier_id ,params , uid
+  def self.create_carrier_schedule  params , uid
 
     ActiveRecord::Base.transaction do
 

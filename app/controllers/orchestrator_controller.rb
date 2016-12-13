@@ -192,10 +192,12 @@ class OrchestratorController < ApplicationController
 
     logger.debug "in accept order"
 
+    uid = request.headers['Uid']
+
     begin
 
       orch = OrchestratorService.new(params)
-      resp,code = orch.accept_order
+      resp,code = orch.accept_order uid
       respond_to do |format|
         format.json {render :json => resp , :status => code}
       end
@@ -306,9 +308,9 @@ class OrchestratorController < ApplicationController
 
       pin = rand(0000..9999).to_s.rjust(4, "0")
       r = twilio_client.messages.create(
-          to: phone_number,
-          from: ENV['TWILIO_PHONE_NUMBER'],
-          body: "#{message}")
+          :to => phone_number,
+          :from => ENV['TWILIO_PHONE_NUMBER'],
+          :body => "#{message}")
 
 
 

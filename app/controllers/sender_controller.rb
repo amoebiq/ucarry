@@ -79,10 +79,11 @@ class SenderController < ApplicationController
 
   def all_orders
     logger.debug "in get all active order"
+    uid = request.headers['Uid']
 
     begin
 
-      orders = SenderHelper.get_all_orders params[:id]
+      orders = SenderHelper.get_all_orders uid
       respond_to do |format|
       format.json { render :json => orders ,:status=>200}
       end

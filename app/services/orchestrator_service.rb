@@ -295,9 +295,9 @@ class OrchestratorService
 
   end
 
-  def accept_order
+  def accept_order uid
 
-    carrier_id = @params[:carrier_id]
+    carrier_id = uid
     order_id = @params[:order_id]
 
     p "XXX #{carrier_id} --- #{order_id}"
@@ -332,35 +332,20 @@ class OrchestratorService
     sender_id = @order[:sender_id]
     o_id = @otm.order_id
     p "o_id is #{o_id}"
-    @sender_details = SenderDetail.where(:sender_id => sender_id).first
-    s_phone = @sender_details[:phone]
-    s_name = @sender_details[:first_name] + ' ' +@sender_details[:last_name]
+    # @sender_details = SenderDetail.where(:sender_id => sender_id).first
+    # s_phone = @sender_details[:phone]
+    # s_name = @sender_details[:first_name] + ' ' +@sender_details[:last_name]
+
+    nf = NotifyService.new(@otm)
+    nf.accept_order
     resp = {}
     resp['status'] = 'order accepted'
     resp['order_id'] = order_id
     resp['total_amount'] = @otm.open_amount
 
-    @carrier_details = CarrierDetail.where(:carrier_id => carrier_id).first
-    from_loc = @order[:from_loc]
-    to_loc = @order[:to_loc]
-    s_fname = @carrier_details[:first_name]
-    s_lname = @carrier_details[:last_name]
-    c_number = @carrier_details[:phone]
 
-    sms = SmsService.new
-    msg = String.new
-    msg << "Hi #{s_name}"
-    msg << ",Regards from karrierbay.com . Regarding order #{o_id},"
-    msg << "#{s_fname} #{s_lname} has accepted the order to carry item(s) from"
-    msg << " #{from_loc} to #{to_loc}."
-    msg << " Please see your wall for more info"
-    sms.send_custom_message(s_phone,msg)
 
-    msg = String.new
-    msg << "Hi #{s_fname} #{s_lname}. "
-    msg << "You have accepted order #{o_id} to carry from #{from_loc} to #{to_loc}."
-    msg << " Total order amount #{@otm.open_amount}"
-    sms.send_custom_message(c_number,msg)
+
     return resp,200
 
   end
@@ -465,10 +450,10 @@ class OrchestratorService
 
 
       r = twilio_client.messages.create(
-          to: phone_number,
-          from: ENV['TWILIO_PHONE_NUMBER'],
+          :to => phone_number,
+          :from => ENV['TWILIO_PHONE_NUMBER'],
           #body: "Your KarrierBay OTP is #{pin} . Please enter this to verify your number")
-          body: "Your OTP for KarrierBay is #{pin} . Please keep this confidential .")
+          :body => "Your OTP for KarrierBay is #{pin} . Please keep this confidential .")
 
 
 

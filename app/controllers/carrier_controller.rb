@@ -72,7 +72,7 @@ class CarrierController < ApplicationController
     logger.debug params
     uid = request.headers['Uid']
     logger.debug uid
-    schedule = CarrierHelper.create_carrier_schedule params[:id] , params[:carrier] , uid
+    schedule = CarrierHelper.create_carrier_schedule params[:carrier] , uid
 
     respond_to do |format|
 
@@ -112,7 +112,9 @@ class CarrierController < ApplicationController
 
     logger.debug "in get all schedules"
 
-    carriers = CarrierHelper.get_all_carrier_schedules params[:id]
+    uid = request.headers['Uid']
+
+    carriers = CarrierHelper.get_all_carrier_schedules uid
 
     respond_to do |format|
 

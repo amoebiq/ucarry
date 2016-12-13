@@ -17,21 +17,21 @@ Rails.application.routes.draw do
   }
 
     ######### carrier crud operations ##########
-    get '/carrier/:id' , :to=> 'carrier#details'
+    #get '/carrier/:id' , :to=> 'carrier#details'
     post '/carrier', :to=> 'carrier#new'
     get '/carrier/all', :to=> 'carrier#all'
     put '/carrier/deactivate/:id' , :to=> 'carrier#deactivate'
 
 
     ######## carrier schedule ##########
-    get '/carrier/:id/schedules' , :to=> 'carrier#get_all_schedule'
-    post '/carrier/:id/schedule' , :to=> 'carrier#create_carrier_schedule'
+    get '/carrier/schedules' , :to=> 'carrier#get_all_schedule'
+    post '/carrier/schedule' , :to=> 'carrier#create_carrier_schedule'
     put '/carrier/:id/schedule/:schedule_id/cancel' , :to=> 'carrier#cancel_carrier_schedule'
 
 
 
     ######### sender crud operations ###########
-    get '/sender/:id' , :to=> 'sender#details'
+    #get '/sender/:id' , :to=> 'sender#details'
     post '/sender', :to=> 'sender#new'
     get '/sender/all', :to=> 'sender#all'
 
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
     ######### order ########################
     post '/sender/order' , :to=> 'sender#new_order'
     put 'sender/:sender_id/order/:order_id/cancel' , :to => 'sender#cancel_order'
-    get '/sender/:id/orders' , :to=> 'sender#all_orders'
+    get '/sender/orders' , :to=> 'sender#all_orders'
 
 
    ######### schedule #########################
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     post 'orchestrator/quote' , :to=>  'orchestrator#get_quote'
     get 'orchestrator/schedules' , :to=> 'orchestrator#get_all_schedules'
     get 'orchestrator/orders' , :to=> 'orchestrator#get_all_orders'
-    put 'orchestrator/carrier/:carrier_id/order/:order_id/accept' , :to => 'orchestrator#accept_order'
+    put 'orchestrator/order/:order_id/accept' , :to => 'orchestrator#accept_order'
     post 'orchestrator/carrier/:carrier_id/order/:order_id/rate_sender' , :to => 'orchestrator#rate_sender'
     post 'orchestrator/sender/:sender_id/order/:order_id/rate_carrier' , :to => 'orchestrator#rate_carrier'
 
