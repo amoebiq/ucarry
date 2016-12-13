@@ -92,9 +92,9 @@ Rails.application.routes.draw do
 
 
   #get 'users/verify', :to => 'users#show_verify', :as => 'verify'
-  post 'auth/send_otp/:phone_number' , :to => 'orchestrator#send_otp'
+  post 'auth/send_otp/:phone_number' , :to => 'generic#send_otp'
 
-  post 'auth/verify/:otp/phone_number/:phone_number' , :to => 'orchestrator#verify_number'
+  post 'auth/verify/:otp/phone_number/:phone_number' , :to => 'generic#verify_number'
   post 'mobile/message' , :to => 'orchestrator#send_custom_message_to_mobile'
 
 
