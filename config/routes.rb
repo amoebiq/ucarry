@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   #devise_for :users
   mount_devise_token_auth_for 'User', :at => 'auth' , :controllers => {
-      :registrations => 'registrations'
+      :registrations => 'registrations' , :omniauth_callbacks => 'omniauth_callbacks'
   }
 
     ######### carrier crud operations ##########
@@ -94,7 +94,7 @@ Rails.application.routes.draw do
   #get 'users/verify', :to => 'users#show_verify', :as => 'verify'
   post 'auth/send_otp/:phone_number' , :to => 'orchestrator#send_otp'
 
-  post 'auth/verify/:otp' , :to => 'orchestrator#verify_number'
+  post 'auth/verify/:otp/phone_number/:phone_number' , :to => 'orchestrator#verify_number'
   post 'mobile/message' , :to => 'orchestrator#send_custom_message_to_mobile'
 
 

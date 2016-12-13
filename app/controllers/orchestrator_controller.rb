@@ -250,59 +250,35 @@ class OrchestratorController < ApplicationController
     end
   end
 
-
   def send_otp
 
     logger.debug "in verify phone number"
     phone_number = params[:phone_number]
+
     begin
 
-
-
-
-      twilio_client =   Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
-
-      pin = rand(0000..9999).to_s.rjust(4, "0")
-      r = twilio_client.messages.create(
-      to: phone_number,
-      from: ENV['TWILIO_PHONE_NUMBER'],
-      #body: "Your KarrierBay OTP is #{pin} . Please enter this to verify your number")
-          body: "Your OTP for KarrierBay is #{pin} . Please keep this confidential .")
-
-
-
-      session[:otp_pin] = pin
-
-      resp = {}
-      resp['message'] = 'sent the OTP to the number'
-      #resp['twilio'] = r
+      orch = OrchestratorService.new(params)
+      resp , code = orch.send_otp
       respond_to do |format|
-        format.json {render :json => resp , :status => 200}
+        format.json {render :json => resp , :code => code}
       end
     rescue Exception=>e
+
       error = {}
       error['error'] = e.message
-      render :json => error , :status => 400
-
+      render :json => error , :status =>400
     end
-
   end
+
+
 
 
   def verify_number
 
 
-    otp = params[:otp]
-    sent_otp =  session[:otp_pin]
-    resp = {}
-    if otp.eql?sent_otp
 
-      resp['message'] = 'Successfully verified the number'
-      code = 200
-    else
-      resp['message'] = 'Wrong OTP . Please re-enter correctly'
-      code = 400
-    end
+    orch = OrchestratorService.new(params)
+    resp , code = orch.verify_otp
     respond_to do |format|
       format.json {render :json => resp , :status => code}
     end

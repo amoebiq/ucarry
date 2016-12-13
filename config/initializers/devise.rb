@@ -17,6 +17,8 @@ Devise::TokenAuthenticatable.setup do |config|
 
   config.token_authentication_key = :auth_token
 
+
+
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 

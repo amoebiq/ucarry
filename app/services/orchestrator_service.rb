@@ -436,4 +436,86 @@ class OrchestratorService
 
   end
 
+  def send_otp
+
+    pin = rand(0000..9999).to_s.rjust(5, "0")
+
+     ActiveRecord::Base.transaction do
+
+      phone_number = @params[:phone_number]
+
+      @existing = Otp.where(:phone => phone_number).first
+      p @existing
+      if !@existing.nil?
+        @existing.status = 'aborted'
+        @existing.save!
+      end
+      @otp = Otp.new
+      @otp.phone = phone_number
+      @otp.otp = pin
+      @otp.status = 'Verification Pending'
+      @otp.expiry = Time.now + 15*60
+
+      @otp.save!
+
+      resp = {}
+      resp['message'] = 'Successfully send the otp'
+
+      twilio_client =   Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+
+
+      r = twilio_client.messages.create(
+          to: phone_number,
+          from: ENV['TWILIO_PHONE_NUMBER'],
+          #body: "Your KarrierBay OTP is #{pin} . Please enter this to verify your number")
+          body: "Your OTP for KarrierBay is #{pin} . Please keep this confidential .")
+
+
+
+      return resp , 200
+
+    end
+
+
+
+  end
+
+  def verify_otp
+
+    phone_number = @params[:phone_number]
+    otp_to_verify = @params[:otp]
+
+    ActiveRecord::Base.transaction do
+
+      @existing = Otp.where(:phone => phone_number,:status=>'Verification Pending').first
+      p @existing
+      if @existing.nil?
+
+        message = {}
+        message['error'] = 'OTP not yet generated'
+        return message , 400
+
+      end
+
+        otp = @existing[:otp]
+
+      if otp.eql?otp_to_verify
+        @existing.status = 'verified'
+        @existing.save!
+
+        message = {}
+        message['message'] = 'Successfully Verified the number'
+        return message,200
+      else
+
+        message = {}
+        message['error'] = 'incorrect OTP entered'
+
+        return message , 400
+
+      end
+
+    end
+  end
+
 end

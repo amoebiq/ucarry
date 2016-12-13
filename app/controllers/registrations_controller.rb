@@ -23,6 +23,9 @@ class RegistrationsController <  DeviseTokenAuth::RegistrationsController
   def render_create_success
     # here, the @resource is accessible, in your case, a User instance.
     p 'here'
+    p @resource.uid
+    UserMailer.welcome_email(@resource).deliver
+    p 'Mailed!!!'
     render :json=> {:status => 'success', :data => @resource.as_json}
   end
 

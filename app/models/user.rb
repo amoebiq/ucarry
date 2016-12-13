@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
           :confirmable, :omniauthable
   include DeviseTokenAuth::Concerns::User
   #
-  before_save -> { skip_confirmation! }
+  #before_save -> { skip_confirmation! }
 
 
   #before_save :ensure_authentication_token
