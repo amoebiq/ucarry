@@ -125,6 +125,9 @@ module SenderHelper
     child_where['receiver_order_mappings.order_id'] = id
       #@orders = SenderOrder.where(:order_id=>id).joins(:receiver_order_mapping).where(child_where)
     #@order = SenderOrder.where(:order_id=>id).joins(:receiver_order_mapping).where(child_where)
+
+      ns = NotifyService.new(@order)
+      ns.sender_order_created
      return @order.to_json(:include => [:receiver_order_mapping,:sender_order_item,:pickup_order_mapping]),201
     rescue Exception=>e
       p e

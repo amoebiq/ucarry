@@ -37,7 +37,7 @@ Rails.application.routes.draw do
 
 
     ######### order ########################
-    post '/sender/:id/order' , :to=> 'sender#new_order'
+    post '/sender/order' , :to=> 'sender#new_order'
     put 'sender/:sender_id/order/:order_id/cancel' , :to => 'sender#cancel_order'
     get '/sender/:id/orders' , :to=> 'sender#all_orders'
 

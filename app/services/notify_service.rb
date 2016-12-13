@@ -104,6 +104,25 @@ class NotifyService
 
   end
 
+  def sender_order_created
+
+    uid = @params[:sender_id]
+    @user =  User.where(:uid => uid).first
+    phone = @user[:phone]
+    from_loc = @params[:from_loc]
+    to_loc = @params[:to_loc]
+    sms = SmsService.new
+    msg = String.new
+    msg << "Hi #{@user[:name]}"
+    msg << ',Regards from karrierbay.com '
+    msg << "you have successfully created a request to send an item"
+    msg << " #{from_loc} to #{to_loc}."
+    msg << " Please see your wall for more info"
+    sms.send_custom_message(phone,msg)
+
+
+  end
+
   def build_message msg
 
   end

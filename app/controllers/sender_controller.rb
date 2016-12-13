@@ -51,15 +51,16 @@ class SenderController < ApplicationController
 
   def new_order
     logger.debug "in create new order for a sender"
-    logger.debug params
+    #logger.debug params
 
+    uid = request.headers['Uid']
 
 
 
     begin
 
 
-      order,code = SenderHelper.new_order(params[:id], params)
+      order,code = SenderHelper.new_order(uid , params)
 
     respond_to do |format|
 
