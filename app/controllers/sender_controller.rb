@@ -147,9 +147,11 @@ class SenderController < ApplicationController
 
     def cancel_order
       logger.debug 'in cancel order'
+      uid = request.headers['Uid']
+
       begin
 
-        resp , code = SenderHelper.cancel_order(params)
+        resp , code = SenderHelper.cancel_order(uid,params)
         respond_to do |format|
           format.json { render :json => resp , :status=>code}
         end

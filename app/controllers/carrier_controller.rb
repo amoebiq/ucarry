@@ -87,11 +87,13 @@ class CarrierController < ApplicationController
     logger.debug "in cancel carrier schedule"
     logger.debug params
 
+    uid = request.headers['Uid']
+
     begin
 
 
 
-    status = CarrierHelper.cancel_carrier_schedule params[:id],params[:schedule_id]
+    status = CarrierHelper.cancel_carrier_schedule uid,params[:schedule_id]
 
 
     respond_to do |format|

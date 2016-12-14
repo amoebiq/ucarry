@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     ######## carrier schedule ##########
     get '/carrier/schedules' , :to=> 'carrier#get_all_schedule'
     post '/carrier/schedule' , :to=> 'carrier#create_carrier_schedule'
-    put '/carrier/:id/schedule/:schedule_id/cancel' , :to=> 'carrier#cancel_carrier_schedule'
+    put '/carrier/schedule/:schedule_id/cancel' , :to=> 'carrier#cancel_carrier_schedule'
 
 
 
@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 
     ######### order ########################
     post '/sender/order' , :to=> 'sender#new_order'
-    put 'sender/:sender_id/order/:order_id/cancel' , :to => 'sender#cancel_order'
+    put 'sender/order/:order_id/cancel' , :to => 'sender#cancel_order'
     get '/sender/orders' , :to=> 'sender#all_orders'
 
 
