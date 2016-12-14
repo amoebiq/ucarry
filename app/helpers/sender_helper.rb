@@ -185,7 +185,7 @@ module SenderHelper
 
   end
 
-  def self.cancel_order params
+  def self.cancel_order uid,params
     order_id = params[:order_id]
     comments = params[:comments]
 
