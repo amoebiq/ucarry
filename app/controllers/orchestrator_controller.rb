@@ -2,7 +2,7 @@ class OrchestratorController < ApplicationController
 
 
 
-
+  skip_before_action :authenticate_user!, except: [:create]
 
   protect_from_forgery :with=> :null_session, :if=> Proc.new { |c| c.request.format == 'application/json' }
   include OrchestratorHelper
@@ -323,5 +323,33 @@ class OrchestratorController < ApplicationController
 
   end
 
+  def upload_image
+
+    logger.debug 'in image upload controller'
+
+    p params
+
+    begin
+
+    orch = OrchestratorService.new(params)
+
+    resp,code = orch.upload_image
+
+    respond_to do |format|
+      format.json {render :json => resp , :status => code}
+    end
+
+    rescue Exceptio=>e
+
+      error = {}
+      error['error'] = e.message
+      render :json => error , :status => 400
+  end
+
+  end
+
+  def userdoc_params
+    params.require(:userdoc).permit(:picture)
+  end
 
 end

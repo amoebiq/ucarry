@@ -61,7 +61,7 @@ Rails.application.routes.draw do
     post 'orchestrator/carrier/:carrier_id/order/:order_id/rate_sender' , :to => 'orchestrator#rate_sender'
     post 'orchestrator/sender/:sender_id/order/:order_id/rate_carrier' , :to => 'orchestrator#rate_carrier'
 
-
+    put 'orchestrator/image' , :to => 'orchestrator#upload_image'
     ##################################### reciever ##########################
 
     post 'sender/:sender_id/order/:order_id/reciever' , :to=> 'sender#update_reciever_details'

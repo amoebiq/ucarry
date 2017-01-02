@@ -429,7 +429,7 @@ class OrchestratorService
 
       phone_number = @params[:phone_number]
 
-      @existing = Otp.where(:phone => phone_number).first
+      @existing = Otp.where(:phone => phone_number).last
       p @existing
       if !@existing.nil?
         @existing.status = 'aborted'
@@ -501,6 +501,27 @@ class OrchestratorService
       end
 
     end
+  end
+
+
+  def upload_image
+
+    picture = @params[:picture]
+
+    ActiveRecord::Base.transaction do
+
+      @userdoc = Userdoc.new
+      @userdoc.picture = picture
+      @userdoc.save!
+
+      resp = {}
+      resp['message'] = 'uploaded successfully'
+      resp['url'] = @userdoc.picture.url
+      return resp , 200
+
+    end
+
+
   end
 
 end
