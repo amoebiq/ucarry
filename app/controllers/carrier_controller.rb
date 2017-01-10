@@ -116,7 +116,10 @@ class CarrierController < ApplicationController
 
     uid = request.headers['Uid']
 
-    carriers = CarrierHelper.get_all_carrier_schedules uid
+    start = params[:start]
+    offset = params[:offset]
+
+    carriers = CarrierHelper.get_all_carrier_schedules(uid,params);
 
     respond_to do |format|
 
