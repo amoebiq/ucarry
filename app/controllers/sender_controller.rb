@@ -83,7 +83,7 @@ class SenderController < ApplicationController
 
     begin
 
-      orders = SenderHelper.get_all_orders uid
+      orders = SenderHelper.get_all_orders uid,params
       respond_to do |format|
       format.json { render :json => orders ,:status=>200}
       end
