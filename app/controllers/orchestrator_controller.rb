@@ -303,10 +303,10 @@ class OrchestratorController < ApplicationController
     logger.debug 'in notify sender'
 
     begin
-
+      uid = request.headers['Uid']
       ns = NotifyService.new(params)
 
-    resp , code = ns.sender_to_carrier
+    resp , code = ns.sender_to_carrier uid
 
     respond_to do |format|
       format.json {render :json => resp , :status => code}

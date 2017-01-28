@@ -6,6 +6,11 @@ class RegistrationsController <  DeviseTokenAuth::RegistrationsController
 
   def validate_phone
     phone = params[:phone]
+    if phone.nil? or phone.empty?
+      err = {}
+      err['error'] = 'Phone number is mandatory'
+      render :json => err , :status=>403
+    end
     p "Phone is #{phone}"
     @user = User.where(:phone => phone).first
     if @user

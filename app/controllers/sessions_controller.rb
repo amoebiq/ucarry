@@ -1,4 +1,4 @@
-class SessionsController < DeviseTokenAuth::SessionsController
+class SessionsController <  DeviseTokenAuth::SessionsController
 
   before_action :phone_email
 
@@ -8,19 +8,20 @@ class SessionsController < DeviseTokenAuth::SessionsController
     p 'In before action in sessions controller'
 
 
+
     if params[:phone].present?
 
       @user = User.where(:phone => params[:phone]).first
       p "User is #{@user}"
       if @user.nil?
         p 'User is emoty dude'
-        render json : {
-            errors : [I18n.t("devise_token_auth.sessions.bad_credentials")]
-        }, status : 401
+        render json: {
+            errors: [I18n.t("devise_token_auth.sessions.bad_credentials")]
+        }, status: 401
       else
-        params[:email] = @user.uid
+      params[:email] = @user.uid
       end
-    end
+      end
 
     p 'new creds'
     p params
@@ -30,7 +31,7 @@ class SessionsController < DeviseTokenAuth::SessionsController
 
 
   def sign_in_params
-    params.require(:session).permit(:phone, :email, :password)
+    params.require(:session).permit(:phone,:email,:password)
   end
 
 
@@ -71,6 +72,8 @@ class SessionsController < DeviseTokenAuth::SessionsController
   #     }
   #   end
   # end
+
+
 
 
 end

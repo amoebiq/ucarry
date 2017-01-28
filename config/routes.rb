@@ -101,7 +101,7 @@ Rails.application.routes.draw do
 
   #################### notify service ##############################
 
-  post 'orchestrator/sender/:sender_id/notify_carrier/:schedule_id' , :to => 'orchestrator#notify_carrier', :defaults => {:format => 'json'}
+  post 'orchestrator/notify_carrier/:schedule_id' , :to => 'orchestrator#notify_carrier', :defaults => {:format => 'json'}
 
   #devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
 

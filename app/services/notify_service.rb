@@ -56,14 +56,14 @@ class NotifyService
   ## Sender Notify Carrier ###
   ############################
 
-  def sender_to_carrier
+  def sender_to_carrier uid
     id = @params[:schedule_id]
-    sender_id = @params[:sender_id]
+    sender_id = uid
     @carry_details = CarrierSchedule.where(:schedule_id => id).first
     carrier_id = @carry_details[:carrier_id]
 
     @carrier_details = CarrierDetail.where(:carrier_id => carrier_id).first
-    @sender_details = SenderDetail.where(:sender_id => sender_id).first
+    @sender_details = SenderDetail.where(:email_id => sender_id).first
     c_fname = @carrier_details[:first_name]
     phone = @carrier_details[:phone]
     from_loc = @carry_details[:from_loc]
