@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170102114306) do
+ActiveRecord::Schema.define(version: 20170223120539) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
     t.string   "email_id",   limit: 255
     t.string   "first_name", limit: 255
     t.string   "last_name",  limit: 255
-    t.string   "img_link",   limit: 255
+    t.string   "img_link",   limit: 1024
     t.string   "phone",      limit: 255
     t.string   "status",     limit: 255
     t.date     "deleted_at"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "carrier_schedule_details", force: :cascade do |t|
@@ -146,12 +146,12 @@ ActiveRecord::Schema.define(version: 20170102114306) do
     t.string   "email_id",            limit: 255
     t.string   "first_name",          limit: 255
     t.string   "last_name",           limit: 255
-    t.string   "img_link",            limit: 255
+    t.string   "img_link",            limit: 1024
     t.string   "phone",               limit: 255
     t.string   "status",              limit: 255
     t.date     "deleted_at"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "avatar_content_type", limit: 255
     t.string   "avatar_file_name",    limit: 255
     t.integer  "avatar_file_size",    limit: 4
@@ -170,6 +170,8 @@ ActiveRecord::Schema.define(version: 20170102114306) do
     t.string   "img",             limit: 1024
     t.datetime "created_at",                                                          null: false
     t.datetime "updated_at",                                                          null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
   end
 
   create_table "sender_orders", force: :cascade do |t|
@@ -177,6 +179,7 @@ ActiveRecord::Schema.define(version: 20170102114306) do
     t.string   "sender_id",     limit: 255
     t.string   "from_loc",      limit: 255
     t.string   "to_loc",        limit: 255
+    t.decimal  "total_amount",              precision: 18, scale: 3
     t.decimal  "from_geo_lat",              precision: 10, scale: 6
     t.string   "from_geo_long", limit: 255
     t.string   "to_geo_long",   limit: 255
@@ -184,11 +187,10 @@ ActiveRecord::Schema.define(version: 20170102114306) do
     t.string   "status",        limit: 255
     t.string   "comments",      limit: 255
     t.string   "type",          limit: 255
-    t.datetime "created_at",                                                       null: false
-    t.datetime "updated_at",                                                       null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.string   "coupon",        limit: 255
     t.boolean  "isInsured"
-    t.decimal  "total_amount",              precision: 18, scale: 3, default: 0.0
   end
 
   create_table "userdocs", force: :cascade do |t|
