@@ -144,7 +144,7 @@ module SenderHelper
     @orders = @orders.limit(params[:offset]) if params[:offset].present?
 
 
-    @orders.to_json(:include => :sender_order_item)
+    @orders.to_json(:include => [:user,:sender_order_item])
 
   end
 
