@@ -7,6 +7,7 @@ module CarrierHelper
 
     @carrier = CarrierDetail.new(carrier_params(params))
     @carrier.carrier_id=CarrierUtility.generate_id params
+
     @carrier.status='active'
 
     ActiveRecord::Base.transaction do
@@ -119,8 +120,16 @@ module CarrierHelper
     carriers = carriers.limit(params[:limit]) if params[:limit].present?
     carriers = carriers.offset(params[:offset]) if params[:offset].present?
 
+    if carrier_id.include?'@'
+      @user = User.where(:email=>carrier_id).first
+    else
+      @user = User.where(:phone => carrier_id).first
+    end
 
-    carriers.to_json(:include => :carrier_schedule_detail)
+    p "User is #{@user}"
+    carrier_detail = {}
+    carrier_detail['name'] = 'Shuhail'
+    carriers.to_json(:include => [:user,:carrier_schedule_detail])
 
   end
 
