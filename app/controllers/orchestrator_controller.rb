@@ -241,9 +241,10 @@ class OrchestratorController < ApplicationController
 
   def rate_carrier
     logger.debug "in rate order"
+    uid = request.headers['Uid']
     begin
       orch = OrchestratorService.new(params)
-      resp , code = orch.rate_carrier       
+      resp , code = orch.rate_carrier(uid)
       respond_to do |format|
         format.json {render :json => resp , :status => code}
       end

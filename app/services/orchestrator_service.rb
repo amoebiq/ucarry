@@ -157,6 +157,15 @@ class OrchestratorService
 
     volumetric = Volumetric.where(:name=>'VOLUMETRIC_COFF').first
     volumetric_coeff = volumetric[:coefficient].to_f
+
+    base_distance = Volumetric.where(:name=>'BASE_DISTANCE').first
+    base_distance_coeff = base_distance[:coefficient].to_f
+
+    base_distance_charge = Volumetric.where(:name=>'BASE_DISTANCE_CHARGE').first
+    base_distance_charge_coeff = base_distance_charge[:coefficient].to_f
+
+
+
     distance = Volumetric.where(:name=>'DISTANCE_COEFF').first
     distance_coeff = distance[:coefficient].to_f
     base = Volumetric.where(:name=>'BASE_WEIGHT').first
@@ -172,6 +181,9 @@ class OrchestratorService
 
     service_c = Volumetric.where(:name=>'SERVICE_CHARGE').first
     service_charge = service_c[:coefficient].to_f
+    service_tax = Volumetric.where(:name=>'SERVICE_TAX').first
+    service_tax_percent = service_tax[:coefficient].to_f
+
     risk_c = Volumetric.where(:name=>'RISK_CHARGE').first
     risk_charge = risk_c[:coefficient].to_f
 
@@ -181,7 +193,22 @@ class OrchestratorService
 
     calculate_weight = 1
 
-    cost_of_distance = total_distance * distance_coeff
+    total_distance = total_distance / 1000
+
+    if(total_distance<base_distance_coeff)
+
+      cost_of_distance = base_distance_charge_coeff
+    else
+
+      p base_distance_charge_coeff
+      p total_distance
+      p base_distance_coeff
+      p base_distance_charge_coeff
+
+      cost_of_distance = base_distance_charge_coeff + (total_distance - base_distance_coeff) * distance_coeff
+
+    end
+
     volumetric_weight = (length * breadth * height) / volumetric_coeff
 
     if(item_weight > volumetric_weight)
@@ -201,7 +228,7 @@ class OrchestratorService
       total_weight_price = base_weight_charge + ((calculate_weight - base_weight)/extra_weight)*extra_weight_charge
     end
 
-    total_distance_charge = total_distance/1000.00 * distance_coeff
+    total_distance_charge = cost_of_distance
     params['length'] = length
     params['breadth'] = breadth
     params['height'] = height
@@ -212,6 +239,8 @@ class OrchestratorService
     params['total_weight_charge'] = total_weight_price
 
     total_charges = total_distance_charge + total_weight_price
+
+    params['sub_total'] = total_charges
     insurance_charge = 0
     p "insured is #{is_insured}"
     if is_insured
@@ -220,16 +249,22 @@ class OrchestratorService
 
     end
 
-    params['insurance_percent'] = insurance_percent
-    params['insurance_charge'] = insurance_charge
-    params['risk_charge'] = risk_charge
+    # params['insurance_percent'] = insurance_percent
+    # params['insurance_charge'] = insurance_charge
+    # params['risk_charge'] = risk_charge
 
     service_charge_commission = (total_charges * service_charge)/100.00
     params['service_charge_percent'] = service_charge
     params['service_charge'] = service_charge_commission
-    total_charges = total_charges + service_charge_commission
 
-    params['total_charge'] = total_charges
+    service_tax_charges = (total_charges * service_tax_percent)/100;
+    params['service_tax_charges'] = service_tax_charges
+    params['service_tax'] = service_tax_percent
+
+
+    total_charges = total_charges + service_charge_commission + service_tax_charges
+
+    params['grand_total'] = total_charges
 
     resp['quote'] = params
 
@@ -351,7 +386,7 @@ class OrchestratorService
   end
 
 
-  def rate_sender
+  def  rate_sender
 
     rating = @params[:rating]
     comments = @params[:comments]
@@ -386,12 +421,12 @@ class OrchestratorService
 
   end
 
-  def rate_carrier
+  def rate_carrier uid
 
     rating = @params[:rating]
     comments = @params[:comments]
     order_id = @params[:order_id]
-    rated_by = @params[:sender_id]
+    rated_by = uid
     order = OrderTransactionHistory.where(:order_id => order_id).first
     carrier = order[:carrier_id]
 

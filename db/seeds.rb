@@ -1,6 +1,6 @@
 # ruby encoding: utf-8
 Volumetric.create!(:coefficient=>5000, :updated_by=>'shuhail', :status=>true, :comments=>'Base Caculation', :name=>'VOLUMETRIC_COFF')
-Volumetric.create!(:coefficient=>10, :updated_by=>'shuhail', :status=>true, :comments=>'Base Calculation', :name=>'DISTANCE_COEFF')
+Volumetric.create!(:coefficient=>0.25, :updated_by=>'shuhail', :status=>true, :comments=>'Base Calculation', :name=>'DISTANCE_COEFF')
 Volumetric.create!(:coefficient=>5, :updated_by=>'shuhail', :status=>true, :comments=>'Base weight for base calculatoin', :name=>'BASE_WEIGHT')
 Volumetric.create!(:coefficient=>50, :updated_by=>'shuhail', :status=>true, :comments=>'Base weight charge', :name=>'BASE_WEIGHT_CHARGE')
 Volumetric.create!(:coefficient=>5, :updated_by=>'shuhail', :status=>true, :comments=>'extra weight', :name=>'EXTRA_WEIGHT')
