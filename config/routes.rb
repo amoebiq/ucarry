@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
     ######## carrier schedule ##########
     get '/carrier/schedules' , :to=> 'carrier#get_all_schedule', :defaults => {:format => 'json'}
+    get '/carrier/schedules/all' , :to=> 'carrier#get_all_active_schedules_of_all_users', :defaults => {:format => 'json'}
     post '/carrier/schedule' , :to=> 'carrier#create_carrier_schedule', :defaults => {:format => 'json'}
     put '/carrier/schedule/:schedule_id/cancel' , :to=> 'carrier#cancel_carrier_schedule', :defaults => {:format => 'json'}
 
@@ -40,6 +41,7 @@ Rails.application.routes.draw do
     post '/sender/order' , :to=> 'sender#new_order', :defaults => {:format => 'json'}
     put 'sender/order/:order_id/cancel' , :to => 'sender#cancel_order', :defaults => {:format => 'json'}
     get '/sender/orders' , :to=> 'sender#all_orders', :defaults => {:format => 'json'}
+    get '/sender/orders/all' , :to=> 'sender#all_orders_of_all_senders' , :defaults => {:format => 'json'}
 
 
    ######### schedule #########################
@@ -104,5 +106,12 @@ Rails.application.routes.draw do
   post 'orchestrator/notify_carrier/:schedule_id' , :to => 'orchestrator#notify_carrier', :defaults => {:format => 'json'}
 
   #devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
+
+
+  ##################   views ##############################
+
+  get 'user/home' , :to => 'generic#home'
+
+
 
 end

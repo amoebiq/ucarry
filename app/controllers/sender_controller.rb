@@ -99,6 +99,19 @@ class SenderController < ApplicationController
 
   end
 
+  def all_orders_of_all_senders
+
+    logger.debug "in get all orders of all senders"
+
+    begin
+
+      orders = SenderHelper.get_all_orders_of_all_users params
+      respond_to do |format|
+        format.json { render :json => orders , :status=>200}
+      end
+    end
+  end
+
    def update_reciever_details
       logger.debug "in save reciever details"
 

@@ -137,6 +137,7 @@ module SenderHelper
 
   def self.get_all_orders sender_id,params
 
+    @orders = SenderOrder.where(:status => 'active')
     @orders = SenderOrder.where(:sender_id => sender_id)
     @orders = @orders.where(:from_loc=>params[:from_loc]) if params[:from_loc].present?
     @orders = @orders.where(:to_loc=>params[:to_loc]) if params[:to_loc].present?
@@ -147,6 +148,21 @@ module SenderHelper
     @orders.to_json(:include => [:user,:sender_order_item])
 
   end
+
+
+  def self.get_all_orders_of_all_users params
+
+    @orders = SenderOrder.where(:status => 'active')
+    @orders = @orders.where(:from_loc=>params[:from_loc]) if params[:from_loc].present?
+    @orders = @orders.where(:to_loc=>params[:to_loc]) if params[:to_loc].present?
+    @orders = @orders.limit(params[:limit]) if params[:limit].present?
+    @orders = @orders.limit(params[:offset]) if params[:offset].present?
+
+
+    @orders.to_json(:include => [:user,:sender_order_item])
+
+  end
+
 
   def self.update_reciever_details sender_id,order_id,params
 

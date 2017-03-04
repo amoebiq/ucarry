@@ -45,4 +45,8 @@ class GenericController < ApplicationController
 
   end
 
+  def home
+
+  end
+
 end

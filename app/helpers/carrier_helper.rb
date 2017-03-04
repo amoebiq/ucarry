@@ -133,6 +133,19 @@ module CarrierHelper
 
   end
 
+  def self.get_all_active_schedules_of_all_users params
+
+    carriers = CarrierSchedule.where(:status => 'active')
+    carriers = carriers.where(:to_loc=>params[:to_loc]) if params[:to_loc].present?
+    carriers = carriers.where(:from_loc=>params[:from_loc]) if params[:from_loc].present?
+    carriers = carriers.limit(params[:limit]) if params[:limit].present?
+    carriers = carriers.offset(params[:offset]) if params[:offset].present?
+
+    carriers.to_json(:include => [:user,:carrier_schedule_detail])
+
+
+  end
+
   def self.get_carrier_details carrier_id
     details = CarrierDetail.where(:carrier_id => carrier_id).first
     details

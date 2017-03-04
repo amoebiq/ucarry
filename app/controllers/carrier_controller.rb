@@ -129,6 +129,22 @@ class CarrierController < ApplicationController
 
   end
 
+  def get_all_active_schedules_of_all_users
+
+    logger.debug "in get all schedules of all carriers"
+
+    carriers = CarrierHelper.get_all_active_schedules_of_all_users(params)
+
+    respond_to do |format|
+
+      format.json { render :json => carriers }
+
+    end
+
+
+  end
+
+
   def details
     details = CarrierHelper.get_carrier_details params[:id]
     respond_to do |format|
