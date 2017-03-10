@@ -64,6 +64,8 @@ Rails.application.routes.draw do
     post 'orchestrator/:order_id/rate_carrier' , :to => 'orchestrator#rate_carrier', :defaults => {:format => 'json'}
 
     put 'orchestrator/image' , :to => 'orchestrator#upload_image'
+
+    put 'orchestrator/:order_id/complete' , :to => 'orchestrator#complete'
     ##################################### reciever ##########################
 
     post 'sender/:sender_id/order/:order_id/reciever' , :to=> 'sender#update_reciever_details', :defaults => {:format => 'json'}

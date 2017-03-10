@@ -577,7 +577,7 @@ class OrchestratorService
 
       end
 
-      @order = SenderOrder.where(:order_id=>order_id)
+      @order = SenderOrder.where(:order_id=>order_id).first
       @order.status = 'completed'
       @order.save!
 

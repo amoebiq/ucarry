@@ -367,7 +367,7 @@ class OrchestratorController < ApplicationController
           format.json {render :json => resp , :status => code}
         end
 
-    rescue
+    rescue Exception=>e
 
       error = {}
       error['error'] = e.message
