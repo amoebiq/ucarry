@@ -353,4 +353,27 @@ class OrchestratorController < ApplicationController
     params.require(:userdoc).permit(:picture)
   end
 
+
+  def complete
+    logger.debug 'in completion call'
+    p params
+
+    begin
+        orch = OrchestratorService.new(params)
+        resp , code = orch.complete
+
+
+        respond_to do |format|
+          format.json {render :json => resp , :status => code}
+        end
+
+    rescue
+
+      error = {}
+      error['error'] = e.message
+      render :json => error , :status => 400
+
+    end
+  end
+
 end

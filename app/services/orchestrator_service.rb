@@ -559,4 +559,38 @@ class OrchestratorService
 
   end
 
+  def complete
+
+    order_id = @params[:order_id]
+
+    ActiveRecord::Base.transaction do
+
+      @transaction = OrderTransactionHistory.where(:order_id => order_id).first
+      status = @transaction[:status]
+
+      if !status.eql?'in_progress'
+
+        resp = {}
+        resp['error'] = 'Trip not in progress'
+
+        return resp , 400
+
+      end
+
+      @order = SenderOrder.where(:order_id=>order_id)
+      @order.status = 'completed'
+      @order.save!
+
+      @transaction.status = 'completed'
+      @transaction.save!
+
+
+      resp = {}
+      resp['message'] = 'Trip Completed successfully'
+
+      return resp , 200
+
+    end
+  end
+
 end
