@@ -628,6 +628,29 @@ class OrchestratorService
 
   end
 
+  def update_user_details uuid
+
+    p 'in update user details'
+    p "uid #{uuid}"
+    uid = uuid
+    address = @params[:address]
+    image = @params[:image]
+    name = @params[:name]
+    ActiveRecord::Base.transaction do
+
+      @user = User.where(:email=>uid).first
+      @user.address = address unless address.nil?
+      @user.image = image unless image.nil?
+      @user.name = name unless name.nil?
+
+      @user.save!
+
+      return @user.to_json , 200
+
+    end
+
+  end
+
 
   def generate_instamojo_link
 
@@ -636,6 +659,10 @@ class OrchestratorService
     api = Instamojo::API.new("52e5c15d916b95c00522dd719355ad64@instamojo.com", "794b57a8f17a1a18c7c02d87fb489cc1@instamojo.com")
 
 
+  end
+
+  def self.user_detail params
+    params.require(:user).permit(:image,:address)
   end
 
 end
