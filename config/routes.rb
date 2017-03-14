@@ -66,6 +66,7 @@ Rails.application.routes.draw do
     put 'orchestrator/image' , :to => 'orchestrator#upload_image'
 
     put 'orchestrator/order/:order_id/complete' , :to => 'orchestrator#complete'
+    put 'orchestrator/order/:order_id/in_progress' , :to => 'orchestrator#in_progress'
     ##################################### reciever ##########################
 
     post 'sender/:sender_id/order/:order_id/reciever' , :to=> 'sender#update_reciever_details', :defaults => {:format => 'json'}

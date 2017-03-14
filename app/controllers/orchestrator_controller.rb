@@ -376,4 +376,26 @@ class OrchestratorController < ApplicationController
     end
   end
 
+  def in_progress
+    logger.debug 'in progress call'
+    p params
+
+    begin
+      orch = OrchestratorService.new(params)
+      resp , code = orch.in_progress
+
+
+      respond_to do |format|
+        format.json {render :json => resp , :status => code}
+      end
+
+    rescue Exception=>e
+
+      error = {}
+      error['error'] = e.message
+      render :json => error , :status => 400
+
+    end
+  end
+
 end

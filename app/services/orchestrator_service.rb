@@ -2,6 +2,7 @@ class OrchestratorService
 
   require 'net/http'
   require_relative '../../lib/utilities/orchestrator_utility.rb'
+  require 'Instamojo-rb'
 
   def initialize(params)
 
@@ -542,7 +543,8 @@ class OrchestratorService
   def upload_image
 
     picture = @params[:picture]
-
+    p @params
+    p "picture is #{picture}"
     ActiveRecord::Base.transaction do
 
       @userdoc = Userdoc.new
@@ -591,6 +593,49 @@ class OrchestratorService
       return resp , 200
 
     end
+  end
+
+  def in_progress
+
+    order_id = @params[:order_id]
+
+    ActiveRecord::Base.transaction do
+
+      @order = SenderOrder.where(:order_id=>order_id).first
+      status = @order[:status]
+
+      if !status.eql?'active'
+
+        resp = {}
+        resp['error'] = 'Trip not Active'
+
+        return resp , 400
+
+      end
+
+
+      @order.status = 'in_progress'
+      @order.save!
+
+
+
+      resp = {}
+      resp['message'] = 'Trip marked as in_progress'
+
+      return resp , 200
+
+    end
+
+  end
+
+
+  def generate_instamojo_link
+
+    #api = Instamojo::API.new("api_key-you-received-from-api@instamojo.com", "auth_token-you-received-from-api@instamojo.com")
+
+    api = Instamojo::API.new("52e5c15d916b95c00522dd719355ad64@instamojo.com", "794b57a8f17a1a18c7c02d87fb489cc1@instamojo.com")
+
+
   end
 
 end
