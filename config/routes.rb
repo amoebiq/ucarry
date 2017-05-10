@@ -63,11 +63,11 @@ Rails.application.routes.draw do
     post 'orchestrator/:order_id/rate_sender' , :to => 'orchestrator#rate_sender', :defaults => {:format => 'json'}
     post 'orchestrator/:order_id/rate_carrier' , :to => 'orchestrator#rate_carrier', :defaults => {:format => 'json'}
 
-    put 'orchestrator/image' , :to => 'orchestrator#upload_image'
+    put 'orchestrator/image' , :to => 'orchestrator#upload_image', :defaults => {:format => 'json'}
 
-    put 'orchestrator/order/:order_id/complete' , :to => 'orchestrator#complete'
-    put 'orchestrator/order/:order_id/in_progress' , :to => 'orchestrator#in_progress'
-    put 'orchestrator/user/update' , :to => 'orchestrator#update_user_details'
+    put 'orchestrator/order/:order_id/complete' , :to => 'orchestrator#complete', :defaults => {:format => 'json'}
+    put 'orchestrator/order/:order_id/in_progress' , :to => 'orchestrator#in_progress', :defaults => {:format => 'json'}
+    put 'orchestrator/user/update' , :to => 'orchestrator#update_user_details', :defaults => {:format => 'json'}
 
     ##################################### reciever ##########################
 
