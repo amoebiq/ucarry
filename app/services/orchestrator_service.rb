@@ -658,6 +658,19 @@ class OrchestratorService
 
   end
 
+  def get_user_detail uuid
+
+    p 'in get user details'
+    uid = uuid
+
+    ActiveRecord::Base.transaction do
+
+      @user = User.where(:email=>uid).first
+      return @user.to_json , 200
+
+    end
+  end
+
 
   def generate_instamojo_link
 
@@ -669,7 +682,7 @@ class OrchestratorService
   end
 
   def self.user_detail params
-    params.require(:user).permit(:image,:address)
+    params.require(:user).permit(:image,:address,:aadhar_link,:voterid_link,:dl_link)
   end
 
 end

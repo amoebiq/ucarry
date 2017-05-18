@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     put 'orchestrator/order/:order_id/complete' , :to => 'orchestrator#complete', :defaults => {:format => 'json'}
     put 'orchestrator/order/:order_id/in_progress' , :to => 'orchestrator#in_progress', :defaults => {:format => 'json'}
     put 'orchestrator/user/update' , :to => 'orchestrator#update_user_details', :defaults => {:format => 'json'}
+    get 'orchestrator/user/detail' , :to => 'orchestrator#get_user_detail', :defaults => {:format => 'json'}
 
     ##################################### reciever ##########################
 

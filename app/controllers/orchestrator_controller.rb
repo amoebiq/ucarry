@@ -426,5 +426,30 @@ class OrchestratorController < ApplicationController
   end
 
 
+  def get_user_detail
+
+    logger.debug 'in get user details'
+    uid = request.headers[:Uid]
+
+    begin
+
+      orch = OrchestratorService.new(params)
+      resp , code = orch.get_user_detail uid
+
+      respond_to do |format|
+        format.json {render :json => resp , :status => code}
+      end
+
+    rescue Exception=>e
+
+      error = {}
+      error['error'] = e.message
+      render :json => error , :status => 400
+
+
+    end
+
+    end
+
 
 end
