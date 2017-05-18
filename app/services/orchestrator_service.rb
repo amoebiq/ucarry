@@ -2,7 +2,7 @@ class OrchestratorService
 
   require 'net/http'
   require_relative '../../lib/utilities/orchestrator_utility.rb'
-  require 'Instamojo-rb'
+  #require 'Instamojo-rb'
 
   def initialize(params)
 
@@ -635,13 +635,20 @@ class OrchestratorService
     uid = uuid
     address = @params[:address]
     image = @params[:image]
-    name = @params[:name]
+    aadhar_link = @params[:aadhar_link]
+    voterid_link = @params[:voterid_link]
+    dl_link = @params[:dl_link]
+    verified = @params[:verified]
     ActiveRecord::Base.transaction do
 
       @user = User.where(:email=>uid).first
       @user.address = address unless address.nil?
       @user.image = image unless image.nil?
-      @user.name = name unless name.nil?
+      #@user.name = name unless name.nil?
+      @user.aadhar_link = aadhar_link unless aadhar_link.nil?
+      @user.voterid_link = voterid_link unless voterid_link.nil?
+      @user.dl_link = dl_link unless dl_link.nil?
+      @user.verified = verified unless verified.nil?
 
       @user.save!
 
