@@ -141,6 +141,9 @@ module CarrierHelper
     carriers = carriers.limit(params[:limit]) if params[:limit].present?
     carriers = carriers.offset(params[:offset]) if params[:offset].present?
 
+    curr_date = Date.today
+    carriers = carriers.joins(:carrier_schedule_detail).where("carrier_schedule_details.start_time > '#{curr_date} 00:00:00'")
+
     carriers.to_json(:include => [:user,:carrier_schedule_detail])
 
 
