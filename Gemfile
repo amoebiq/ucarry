@@ -11,7 +11,7 @@ gem 'geocoder'
 gem 'mysql2' , '~> 0.3.18'
 
 
-
+gem 'fcm'
 
 
 gem 'omniauth', '~> 1.2.2'
@@ -50,6 +50,8 @@ gem 'aws-sdk'
 gem 'paperclip'
 
 gem 'mailcatcher'
+
+gem 'certified'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

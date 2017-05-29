@@ -452,4 +452,29 @@ class OrchestratorController < ApplicationController
     end
 
 
+  def send_fcm_pn
+
+    logger.debug 'in send fcm pn'
+    client_id = params[:client_id]
+
+    begin
+
+      orch = OrchestratorService.new(params)
+
+      resp  = orch.send_fcm_pn
+
+      respond_to do |format|
+        format.json {render :json => resp , :status => 200}
+      end
+      rescue Exception=>e
+
+        p e
+      error = {}
+      error['error'] = e.message
+      render :json => error , :status => 400
+
+
+    end
+
+  end
 end

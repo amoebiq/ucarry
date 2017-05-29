@@ -82,6 +82,10 @@ Rails.application.routes.draw do
     get 'generic/volumetric' , :to=> 'admin#get_volumetric_data', :defaults => {:format => 'json'}
 
 
+    ############################## push notification #################################
+
+    post 'orchestrator/fcm/send/:client_id' , :to=> 'orchestrator#send_fcm_pn' , :defaults => {:format => 'json'}
+
     ############### homdse #############################################
 
 

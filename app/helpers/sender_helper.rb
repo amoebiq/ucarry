@@ -159,8 +159,20 @@ module SenderHelper
     @orders = @orders.limit(params[:offset]) if params[:offset].present?
 
 
+    # @orders.each do |order|
+    #
+    #   order.sender_order_item.select{|item| item.start_time < Date.today}
+    # end
 
-    @orders.to_json(:include => [:user,:sender_order_item])
+
+
+    date_time = Date.today
+    p "Date is #{date_time}"
+
+    @orders = @orders.joins(:sender_order_item).where("sender_order_items.start_time > '#{date_time} 00:00:00'")
+    @orders.to_json(:include => [:user,:sender_order_item])#.where('sender_order_items.unit_price>0')
+    #@order.joins(:sender_order_items)
+
 
   end
 

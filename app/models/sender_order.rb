@@ -9,7 +9,11 @@ class SenderOrder < ActiveRecord::Base
 
 
 
-  default_scope { order(updated_at: :desc) }
+  default_scope { order(updated_at: :desc)}
+
+  def self.filter()
+    self.sender_order_item.where("created_at<'2017-01-01'")
+  end
 
   scope :relevant, -> (from_loc,to_loc) {
 
