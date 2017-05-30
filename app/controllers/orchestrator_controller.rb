@@ -6,7 +6,7 @@ class OrchestratorController < ApplicationController
 
   protect_from_forgery :with=> :null_session, :if=> Proc.new { |c| c.request.format == 'application/json' }
   include OrchestratorHelper
-
+  include UcarryConstants
 
 
   def new_coupon
@@ -304,9 +304,15 @@ class OrchestratorController < ApplicationController
     logger.debug 'in notify sender'
 
     begin
+      dev_id = []
+      device_reg_id = params[:device_id]
+      dev_id[0] = device_reg_id
+
+
       uid = request.headers['Uid']
       ns = NotifyService.new(params)
-
+      pns = PushNotifyService.new(params)
+      pns.send_to_specific_mobile(dev_id,UcarryConstants::APP_NAME, UcarryConstants::NOTIFY_SENDER)
     resp , code = ns.sender_to_carrier uid
 
     respond_to do |format|

@@ -1,5 +1,7 @@
 class NotifyService
 
+  include UcarryConstants
+
   def initialize(params)
 
     @params = params
@@ -79,6 +81,12 @@ class NotifyService
     msg << " Please see your wall for more info"
     sms.send_custom_message(phone,msg)
 
+    tokens = []
+    tokens[0] = "AAAAEW6c0PM:APA91bEW6LQLfXfyQPP8cv9o0D9-1Z_i0pUh0xsBTb0S84CDquzA_VEw9DLl9yeK5LxNk1gpcuDjhFRFrx55TiLMxwI4ktyXPUSdCsZ22XS3e_Qfmf-wCPUQBeJbv3vYIy7_Gk5E9zFF"
+
+    pns = PushNotifyService.new(@params)
+    pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
+
     resp = {}
 
     resp['message'] = 'Notified the carrier . Please sit back and relax while he responds'
@@ -114,7 +122,7 @@ class NotifyService
   end
 
   def sender_order_created
-
+    p 'in sender order creation noficartion'
     uid = @params[:sender_id]
     @user =  User.where(:uid => uid).first
     phone = @user[:phone]
@@ -129,6 +137,14 @@ class NotifyService
     msg << " Please see your wall for more info"
     sms.send_custom_message(phone,msg)
 
+    tokens = []
+    tokens[0] = "cLToQyv9oPM:APA91bGKvBp6hhzJinSxR0hHqJ8AeRGLPS2ZhfG0HXaCzC5y53Ps2nH8Tl99REIIKtAKRUdps8qMPgHkRegQVH0-fUMo4DyF52V6Gsukh4EUA3O0SLxc1eTG4o8zBw5NfWR_r8EkDYlB"
+
+    p 'in sender order creation push notification'
+    pns = PushNotifyService.new(@params)
+    resp = pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
+
+    p resp
 
   end
 

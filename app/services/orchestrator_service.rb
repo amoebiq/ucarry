@@ -675,14 +675,14 @@ class OrchestratorService
   def send_fcm_pn
 
     p 'in service'
-    fcm = FCM.new("AAAAEW6c0PM:APA91bEW6LQLfXfyQPP8cv9o0D9-1Z_i0pUh0xsBTb0S84CDquzA_VEw9DLl9yeK5LxNk1gpcuDjhFRFrx55TiLMxwI4ktyXPUSdCsZ22XS3e_Qfmf-wCPUQBeJbv3vYIy7_Gk5E9zFF")
-    #fcm = FCM.new("74870214899-mkvcmaqnqjdsi3rhg87ltmsgddb2mhgr.apps.googleusercontent.com")
+
     registration_ids = ["cLToQyv9oPM:APA91bGKvBp6hhzJinSxR0hHqJ8AeRGLPS2ZhfG0HXaCzC5y53Ps2nH8Tl99REIIKtAKRUdps8qMPgHkRegQVH0-fUMo4DyF52V6Gsukh4EUA3O0SLxc1eTG4o8zBw5NfWR_r8EkDYlB"]
-    #options = {data: {score: "123"}, collapse_key: "updated_score" , priority: "high"}
 
+    params = {}
 
+    push_serive = PushNotifyService.new(params)
+    response = push_serive.send_to_specific_mobile(registration_ids,'KarrierBay','Thanks Bro for the order')
 
-    response = fcm.send(registration_ids,{data: {message: 'Hello World' , priority: 'high'}})
     p response
     return response
 
