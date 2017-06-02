@@ -132,8 +132,9 @@ class CarrierController < ApplicationController
   def get_all_active_schedules_of_all_users
 
     logger.debug "in get all schedules of all carriers"
+    uid = request.headers['Uid']
 
-    carriers = CarrierHelper.get_all_active_schedules_of_all_users(params)
+    carriers = CarrierHelper.get_all_active_schedules_of_all_users(params,uid)
 
     respond_to do |format|
 
