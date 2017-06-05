@@ -138,10 +138,13 @@ class NotifyService
     sms.send_custom_message(phone,msg)
 
     tokens = []
-    tokens[0] = "cLToQyv9oPM:APA91bGKvBp6hhzJinSxR0hHqJ8AeRGLPS2ZhfG0HXaCzC5y53Ps2nH8Tl99REIIKtAKRUdps8qMPgHkRegQVH0-fUMo4DyF52V6Gsukh4EUA3O0SLxc1eTG4o8zBw5NfWR_r8EkDYlB"
+
+    tokens[0] = @user[:dl_link]
 
     p 'in sender order creation push notification'
     pns = PushNotifyService.new(@params)
+
+
     resp = pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
 
     p resp

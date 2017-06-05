@@ -14,6 +14,9 @@ class PushNotifyService
     p 'in send to specific mobile service'
     api_key = ENV['fcm_api_key']
 
+    begin
+
+
 
     fcm = FCM.new(api_key)
     options = {}
@@ -39,6 +42,11 @@ class PushNotifyService
       responses << response
     end
     return responses.to_json
+
+    rescue Exception=>e
+
+    end
+
   end
 
 
