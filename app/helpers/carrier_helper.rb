@@ -115,8 +115,8 @@ module CarrierHelper
   def self.get_all_carrier_schedules carrier_id , params
 
     carriers = CarrierSchedule.where(:carrier_id => carrier_id).where(:status=>'active')
-    carriers = carriers.where(:to_loc=>params[:to_loc]) if params[:to_loc].present?
-    carriers = carriers.where(:from_loc=>params[:from_loc]) if params[:from_loc].present?
+    carriers = carriers.where("to_loc LIKE ?", "%#{params[:to_loc]}%") if params[:to_loc].present?
+    carriers = carriers.where("from_loc LIKE ?","%#{params[:from_loc]}%") if params[:from_loc].present?
     carriers = carriers.limit(params[:limit]) if params[:limit].present?
     carriers = carriers.offset(params[:offset]) if params[:offset].present?
 
