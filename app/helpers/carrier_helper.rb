@@ -146,8 +146,8 @@ module CarrierHelper
     carriers = carriers.joins(:carrier_schedule_detail).where("carrier_schedule_details.start_time > '#{curr_date} 00:00:00'")
 
 
-    carriers = carriers.joins(:carrier_schedule_detail).where("carrier_schedule_details.start_time > '#{params[:from_filter_date]} 00:00:00' and carrier_schedule_details.start_time < '#{params[:from_filter_date]} 23:59:59'") if params[:from_filter_date].present?
-    carriers = carriers.joins(:carrier_schedule_detail).where("carrier_schedule_details.start_time > '#{params[:to_filter_date]} 00:00:00' and carrier_schedule_details.start_time < '#{params[:to_filter_date]} 23:59:59'") if params[:to_filter_date].present?
+    carriers = carriers.joins(:carrier_schedule_detail).where("carrier_schedule_details.start_time >= '#{params[:from_filter_date]} 00:00:00' and carrier_schedule_details.start_time <= '#{params[:from_filter_date]} 23:59:59'") if params[:from_filter_date].present?
+    carriers = carriers.joins(:carrier_schedule_detail).where("carrier_schedule_details.end_time >= '#{params[:to_filter_date]} 00:00:00' and carrier_schedule_details.end_time <= '#{params[:to_filter_date]} 23:59:59'") if params[:to_filter_date].present?
 
 
 
