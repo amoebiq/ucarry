@@ -38,6 +38,14 @@ class NotifyService
     p msg
     sms.send_custom_message(@ud[:phone],msg)
 
+    tokens = []
+
+    tokens[0] = @ud[:dl_link]
+
+    pns = PushNotifyService.new(@params)
+    pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
+
+
 
     msg = String.new
     msg << "Hi #{@cd[:uid]}. "
@@ -49,7 +57,7 @@ class NotifyService
 
     tokens = []
 
-    tokens[0] = @user[:dl_link]
+    tokens[0] = @cd[:dl_link]
 
     pns = PushNotifyService.new(@params)
     pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
