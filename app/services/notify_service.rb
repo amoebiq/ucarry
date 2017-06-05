@@ -47,6 +47,13 @@ class NotifyService
     sms.send_custom_message(@cd[:phone],msg)
 
 
+    tokens = []
+
+    tokens[0] = @user[:dl_link]
+
+    pns = PushNotifyService.new(@params)
+    pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
+
 
 
 
@@ -82,7 +89,8 @@ class NotifyService
     sms.send_custom_message(phone,msg)
 
     tokens = []
-    tokens[0] = "AAAAEW6c0PM:APA91bEW6LQLfXfyQPP8cv9o0D9-1Z_i0pUh0xsBTb0S84CDquzA_VEw9DLl9yeK5LxNk1gpcuDjhFRFrx55TiLMxwI4ktyXPUSdCsZ22XS3e_Qfmf-wCPUQBeJbv3vYIy7_Gk5E9zFF"
+
+    tokens[0] = @user[:dl_link]
 
     pns = PushNotifyService.new(@params)
     pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
@@ -116,6 +124,18 @@ class NotifyService
     msg << " #{from_loc} to #{to_loc}."
     msg << " Please see your wall for more info"
     sms.send_custom_message(phone,msg)
+
+    tokens = []
+
+    tokens[0] = @user[:dl_link]
+
+
+    pns = PushNotifyService.new(@params)
+
+
+    resp = pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
+
+    p resp
 
     return
 
