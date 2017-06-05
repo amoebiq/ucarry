@@ -47,6 +47,28 @@ class GenericController < ApplicationController
 
   def home
 
+
+
+  end
+
+
+  def update_fcm_of_user
+
+    uid = request.headers['Uid']
+    reg_id = params['reg_id']
+
+    orch = OrchestratorService.new(params)
+    resp , code = orch.update_fcm_details(uid,reg_id)
+    respond_to do |format|
+      format.json {render :json => resp , :status => code}
+    end
+
+  rescue Exception=>e
+
+    error = {}
+    error['error'] = e.message
+    render :json => error , :status => 400
+
   end
 
 end

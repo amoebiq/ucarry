@@ -109,6 +109,8 @@ Rails.application.routes.draw do
   post 'auth/verify/:otp/phone_number/:phone_number' , :to => 'generic#verify_number' , :defaults => {:format => 'json'}
   post 'mobile/message' , :to => 'orchestrator#send_custom_message_to_mobile', :defaults => {:format => 'json'}
 
+  post 'auth/update_fcm' , :to => 'generic#update_fcm_of_user' , :defaults => {:format => 'json'}
+
 
 
   #################### notify service ##############################

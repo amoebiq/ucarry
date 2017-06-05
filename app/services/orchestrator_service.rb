@@ -688,6 +688,21 @@ class OrchestratorService
 
   end
 
+  def update_fcm_details uid , reg_id
+
+
+    ActiveRecord::Base.transaction do
+
+      @user = User.where(:email=>uid).first
+      @user.dl_link = reg_id
+      @user.save!
+
+    end
+
+    return @user.to_json , 200
+
+  end
+
 
   def generate_instamojo_link
 
