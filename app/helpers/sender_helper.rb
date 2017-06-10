@@ -140,8 +140,15 @@ module SenderHelper
     if(params[:my_bay].present?)
 
 
-      @orders = SenderOrder.where.not(:status => 'completed').where.not(:sender_id => sender_id)
+      @orders = SenderOrder.where.not(:status => 'completed').where(:sender_id => sender_id)
       return @orders.to_json(:include => [:user,:sender_order_item])
+
+      elsif params[:my_bay_completed].present?
+
+
+             @orders = SenderOrder.where(:status => 'completed').where(:sender_id => sender_id)
+             return @orders.to_json(:include => [:user,:sender_order_item])
+
 
     else
 
@@ -155,8 +162,13 @@ module SenderHelper
 
     return @orders.to_json(:include => [:user,:sender_order_item])
 
+
+
     end
-  end
+    end
+
+
+
 
 
   def self.get_all_orders_of_all_users params,uid

@@ -116,7 +116,19 @@ module CarrierHelper
 
     if(params[:my_bay].present?)
 
-      carriers = CarrierSchedule.where.not(:status => 'completed').where.not(:carrier_id => carrier_id)
+      carriers = CarrierSchedule.where.not(:status => 'completed').where(:carrier_id => carrier_id)
+      if carrier_id.include?'@'
+        @user = User.where(:email=>carrier_id).first
+      else
+        @user = User.where(:phone => carrier_id).first
+      end
+
+      return carriers.to_json(:include => [:user,:carrier_schedule_detail])
+
+    elsif params[:my_bay_completed].present?
+
+
+      carriers = CarrierSchedule.where(:status => 'completed').where(:carrier_id => carrier_id)
       if carrier_id.include?'@'
         @user = User.where(:email=>carrier_id).first
       else
