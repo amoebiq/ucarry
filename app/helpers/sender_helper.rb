@@ -137,16 +137,25 @@ module SenderHelper
 
   def self.get_all_orders sender_id,params
 
-    @orders = SenderOrder.where(:status => 'active')
-    @orders = SenderOrder.where(:sender_id => sender_id)
+    if(params[:my_bay].present?)
+
+
+      @orders = SenderOrder.where.not(:status => 'completed').where.not(:sender_id => sender_id)
+      return @orders.to_json(:include => [:user,:sender_order_item])
+
+    else
+
+
+    @orders = SenderOrder.where(:status => 'active').where(:sender_id => sender_id)
     @orders = @orders.where(:from_loc=>params[:from_loc]) if params[:from_loc].present?
     @orders = @orders.where(:to_loc=>params[:to_loc]) if params[:to_loc].present?
     @orders = @orders.limit(params[:limit]) if params[:limit].present?
     @orders = @orders.limit(params[:offset]) if params[:offset].present?
 
 
-    @orders.to_json(:include => [:user,:sender_order_item])
+    return @orders.to_json(:include => [:user,:sender_order_item])
 
+    end
   end
 
 

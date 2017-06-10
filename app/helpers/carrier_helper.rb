@@ -114,9 +114,23 @@ module CarrierHelper
 
   def self.get_all_carrier_schedules carrier_id , params
 
+    if(params[:my_bay].present?)
+
+      carriers = CarrierSchedule.where.not(:status => 'completed').where.not(:carrier_id => carrier_id)
+      if carrier_id.include?'@'
+        @user = User.where(:email=>carrier_id).first
+      else
+        @user = User.where(:phone => carrier_id).first
+      end
+
+      return carriers.to_json(:include => [:user,:carrier_schedule_detail])
+
+    else
+
     carriers = CarrierSchedule.where(:carrier_id => carrier_id).where(:status=>'active')
     carriers = carriers.where("to_loc LIKE ?", "%#{params[:to_loc]}%") if params[:to_loc].present?
     carriers = carriers.where("from_loc LIKE ?","%#{params[:from_loc]}%") if params[:from_loc].present?
+    carriers = carriers.where(:status => params[:status]) if params[:status].present?
     carriers = carriers.limit(params[:limit]) if params[:limit].present?
     carriers = carriers.offset(params[:offset]) if params[:offset].present?
 
@@ -129,11 +143,14 @@ module CarrierHelper
     p "User is #{@user}"
     carrier_detail = {}
     carrier_detail['name'] = 'Shuhail'
-    carriers.to_json(:include => [:user,:carrier_schedule_detail])
+    return carriers.to_json(:include => [:user,:carrier_schedule_detail])
 
+      end
   end
 
   def self.get_all_active_schedules_of_all_users params , uid
+
+
 
     carriers = CarrierSchedule.where(:status => 'active').where.not(:carrier_id => uid)
     carriers = carriers.where("to_loc LIKE ?", "%#{params[:to_loc]}%") if params[:to_loc].present?
@@ -151,7 +168,8 @@ module CarrierHelper
 
 
 
-    carriers.to_json(:include => [:user,:carrier_schedule_detail])
+     carriers.to_json(:include => [:user,:carrier_schedule_detail])
+
 
 
   end
