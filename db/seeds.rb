@@ -15,3 +15,4 @@ Volumetric.create!(:coefficient=>125, :updated_by=>'shuhail', :status=>true, :co
 Volumetric.create!(:coefficient=>0, :updated_by=>'shuhail', :status=>true, :comments=>'C/N Charge', :name=>'C_N_CHARGE')
 Volumetric.create!(:coefficient=>0, :updated_by=>'shuhail', :status=>true, :comments=>'EDL Charge', :name=>'EDL_CHARGE')
 Volumetric.create!(:coefficient=>0, :updated_by=>'shuhail', :status=>true, :comments=>'FUEL SURCHARGE', :name=>'FUEL_SURCHARGE')
+Volumetric.create!(:coefficient=>15, :updated_by=>'shuhail', :status=>true, :comments=>'PICKUP CHARGE', :name=>'PICKUP_CHARGE')

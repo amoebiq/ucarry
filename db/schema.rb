@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518073116) do
+ActiveRecord::Schema.define(version: 20170610070525) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(version: 20170518073116) do
     t.datetime "updated_at",                                                          null: false
     t.datetime "start_time"
     t.datetime "end_time"
+    t.decimal  "grand_total",                  precision: 18, scale: 3
   end
 
   create_table "sender_orders", force: :cascade do |t|
@@ -191,6 +192,7 @@ ActiveRecord::Schema.define(version: 20170518073116) do
     t.datetime "updated_at",                                         null: false
     t.string   "coupon",        limit: 255
     t.boolean  "isInsured"
+    t.decimal  "grand_total",               precision: 18, scale: 3
   end
 
   create_table "userdocs", force: :cascade do |t|

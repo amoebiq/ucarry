@@ -32,6 +32,7 @@ class OrchestratorService
             discount = 0
 
           end
+        grand_total_amount = 0
         total_amount = 0
         @orders.each do |o|
           order_item = SenderOrderItem.where(:id=>o[:id]).first
@@ -55,20 +56,24 @@ class OrchestratorService
           q = r['quote']
           p "XXXX is #{q}"
           p q['total_charge']
-          unit_price = q['total_charge'].to_f
+          unit_price = q['grand_total'].to_f
+          sub_total = q['sub_total'].to_f
           quantity = o[:quantity].to_i
-          p "Here #{unit_price} #{quantity}"
+          p "Here in calculation #{unit_price} #{quantity}  ---- #{sub_total} ---- "
           ActiveRecord::Base.transaction do
             order_item[:unit_price] = unit_price
-            order_item[:total_amount]=(unit_price * quantity)-(unit_price * quantity * discount)/100;
+            order_item[:grand_total]=(unit_price * quantity)-(unit_price * quantity * discount)/100;
+            order_item[:total_amount] = sub_total
             order_item[:item_attributes] = q
             order_item.save!
+            grand_total_amount += order_item[:grand_total]
             total_amount += order_item[:total_amount]
           end
 
         end
 
         ActiveRecord::Base.transaction do
+          SenderOrder.where(:order_id=>id).update_all(:grand_total=>grand_total_amount)
           SenderOrder.where(:order_id=>id).update_all(:total_amount=>total_amount)
         end
 
@@ -164,6 +169,10 @@ class OrchestratorService
 
     base_distance_charge = Volumetric.where(:name=>'BASE_DISTANCE_CHARGE').first
     base_distance_charge_coeff = base_distance_charge[:coefficient].to_f
+
+
+    pickup_charge = Volumetric.where(:name=>'PICKUP_CHARGE').first
+    pickup_charge_coeff = pickup_charge[:coefficient].to_f
 
 
 
@@ -262,8 +271,12 @@ class OrchestratorService
     params['service_tax_charges'] = service_tax_charges
     params['service_tax'] = service_tax_percent
 
+    pickup_charge_amount = (total_charges * pickup_charge_coeff)/100.00;
+    params['pickup_charge_amount'] = pickup_charge_amount
+    params['pickup_charge_percent'] = pickup_charge_coeff
 
-    total_charges = total_charges + service_charge_commission + service_tax_charges
+
+    total_charges = total_charges + service_charge_commission + service_tax_charges + pickup_charge_amount
 
     params['grand_total'] = total_charges
 
