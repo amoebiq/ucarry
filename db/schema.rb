@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170610070525) do
+ActiveRecord::Schema.define(version: 20170619175314) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -193,6 +193,9 @@ ActiveRecord::Schema.define(version: 20170610070525) do
     t.string   "coupon",        limit: 255
     t.boolean  "isInsured"
     t.decimal  "grand_total",               precision: 18, scale: 3
+    t.string   "ref_1",         limit: 255
+    t.string   "ref_2",         limit: 255
+    t.string   "ref_3",         limit: 255
   end
 
   create_table "userdocs", force: :cascade do |t|

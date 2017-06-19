@@ -79,26 +79,26 @@ class NotifyService
     @carry_details = CarrierSchedule.where(:schedule_id => id).first
     carrier_id = @carry_details[:carrier_id]
 
-    @carrier_details = CarrierDetail.where(:carrier_id => carrier_id).first
-    @sender_details = SenderDetail.where(:email_id => sender_id).first
-    c_fname = @carrier_details[:first_name]
+    @carrier_details = User.where(:uid => carrier_id).first
+    @sender_details = User.where(:uid => sender_id).first
+    c_fname = @carrier_details[:name]
     phone = @carrier_details[:phone]
-    from_loc = @carry_details[:from_loc]
-    to_loc = @carry_details[:to_loc]
-    s_fname = @sender_details[:first_name]
-    s_lname = @sender_details[:last_name]
+    #from_loc = @carry_details[:from_loc]
+    #to_loc = @carry_details[:to_loc]
+    s_fname = @sender_details[:name]
+    #s_lname = @sender_details[:last_name]
     sms = SmsService.new
     msg = String.new
     msg << "Hi #{c_fname}"
     msg << ',Regards from karrierbay.com '
-    msg << "#{s_fname} #{s_lname} has requested to carry his item from"
-    msg << "#{from_loc} to #{to_loc}."
+    msg << "#{s_fname}  has requested to carry his item "
+    #msg << "#{from_loc} to #{to_loc}."
     msg << " Please see your wall for more info"
     sms.send_custom_message(phone,msg)
 
     tokens = []
 
-    tokens[0] = @user[:dl_link]
+    tokens[0] = @carrier_details[:dl_link]
 
     pns = PushNotifyService.new(@params)
     pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )

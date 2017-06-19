@@ -34,6 +34,7 @@ class OrchestratorService
           end
         grand_total_amount = 0
         total_amount = 0
+        weight = 0
         @orders.each do |o|
           order_item = SenderOrderItem.where(:id=>o[:id]).first
           item_att = o[:item_attributes]
@@ -59,7 +60,8 @@ class OrchestratorService
           unit_price = q['grand_total'].to_f
           sub_total = q['sub_total'].to_f
           quantity = o[:quantity].to_i
-          p "Here in calculation #{unit_price} #{quantity}  ---- #{sub_total} ---- "
+          weight = q['weight']
+          p "Here in calculation #{unit_price} #{quantity}  ---- #{sub_total} ---- #{weight}"
           ActiveRecord::Base.transaction do
             order_item[:unit_price] = unit_price
             order_item[:grand_total]=(unit_price * quantity)-(unit_price * quantity * discount)/100;
@@ -73,8 +75,10 @@ class OrchestratorService
         end
 
         ActiveRecord::Base.transaction do
+          SenderOrder.where(:order_id=>id).update_all(:ref_1=>weight)
           SenderOrder.where(:order_id=>id).update_all(:grand_total=>grand_total_amount)
           SenderOrder.where(:order_id=>id).update_all(:total_amount=>total_amount)
+
         end
 
   end
@@ -242,6 +246,8 @@ class OrchestratorService
     params['length'] = length
     params['breadth'] = breadth
     params['height'] = height
+    params['weight'] = item_weight
+    params['volumetric_weight'] = volumetric_weight
     params['per_km_charge'] = distance_coeff
     params['total_distance'] = total_distance
 
