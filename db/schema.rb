@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619175314) do
+ActiveRecord::Schema.define(version: 20170620130717) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -53,6 +53,19 @@ ActiveRecord::Schema.define(version: 20170619175314) do
     t.string   "to_geo_long",   limit: 255
   end
 
+  create_table "ccnotifications", force: :cascade do |t|
+    t.string   "user_id",           limit: 255
+    t.string   "order_schedule_id", limit: 255
+    t.string   "notif_type",        limit: 255
+    t.string   "message",           limit: 255
+    t.string   "ref_1",             limit: 255
+    t.string   "ref_2",             limit: 255
+    t.string   "ref_3",             limit: 255
+    t.string   "ref_4",             limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
   create_table "coupons", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.decimal  "discount",               precision: 10, scale: 6
@@ -76,6 +89,19 @@ ActiveRecord::Schema.define(version: 20170619175314) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "user_id",           limit: 255
+    t.string   "order_schedule_id", limit: 255
+    t.string   "type",              limit: 255
+    t.string   "message",           limit: 255
+    t.string   "ref_1",             limit: 255
+    t.string   "ref_2",             limit: 255
+    t.string   "ref_3",             limit: 255
+    t.string   "ref_4",             limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
 
   create_table "order_transaction_histories", force: :cascade do |t|
     t.string   "transaction_id",         limit: 255

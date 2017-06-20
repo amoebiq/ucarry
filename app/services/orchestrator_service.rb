@@ -722,6 +722,41 @@ class OrchestratorService
 
   end
 
+  def update_notification user_id,order_schedule_id,type,message,ref_1,ref_2,ref_3,ref_4
+
+
+    ActiveRecord::Base.transaction do
+
+     noti = Ccnotification.new
+     noti[:user_id] = user_id
+     noti[:order_schedule_id] = order_schedule_id
+     noti[:notif_type] = type
+     noti[:message] = message
+     noti[:ref_1] = ref_1
+     noti[:ref_2] = ref_2
+     noti[:ref_3] = ref_3
+     noti[:ref_4] = ref_4
+
+
+      noti.save!
+
+
+    end
+
+
+  end
+
+  def get_notifications_to_a_user uid
+
+    ActiveRecord::Base.transaction do
+
+      @notify = Ccnotification.where(:ref_4=>uid)
+      return @notify.to_json , 200
+
+    end
+
+  end
+
 
   def generate_instamojo_link
 

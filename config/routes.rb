@@ -70,6 +70,8 @@ Rails.application.routes.draw do
     put 'orchestrator/user/update' , :to => 'orchestrator#update_user_details', :defaults => {:format => 'json'}
     get 'orchestrator/user/detail' , :to => 'orchestrator#get_user_detail', :defaults => {:format => 'json'}
 
+  get 'orchestrator/notifications' , :to => 'orchestrator#get_notifications_to_a_user', :defaults => {:format => 'json'}
+
     ##################################### reciever ##########################
 
     post 'sender/:sender_id/order/:order_id/reciever' , :to=> 'sender#update_reciever_details', :defaults => {:format => 'json'}

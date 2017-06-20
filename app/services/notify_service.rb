@@ -29,9 +29,9 @@ class NotifyService
 
     sms = SmsService.new
     msg = String.new
-    msg << "Hi #{@ud[:uid]}"
+    msg << "Hi #{@ud[:name]}"
     msg << ",Regards from CrowdCarry team . Regarding order #{order_id},"
-    msg << "#{@cd[:uid]} has accepted the order to carry item(s) from"
+    msg << "#{@cd[:name]} has accepted the order to carry item(s) from"
     msg << " #{from_loc} to #{to_loc}."
     msg << " Please see your wall for more info"
 
@@ -45,14 +45,21 @@ class NotifyService
     pns = PushNotifyService.new(@params)
     pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
 
+    orch = OrchestratorService.new(nil)
+    orch.update_notification(@cd[:uid],order_id,UcarryConstants::NOT_TYPE_ACCPEPT,msg,nil,nil,nil,@ud[:uid])
+
 
 
     msg = String.new
-    msg << "Hi #{@cd[:uid]}. "
-    msg << ",Regards from karrierbay.com ."
+    msg << "Hi #{@cd[:name]}. "
+    msg << ",Regards from CrowdCarry team ."
     msg << "You have accepted order #{order_id} to carry from #{from_loc} to #{to_loc}."
     msg << " Total order amount #{@params[:open_amount]}"
     sms.send_custom_message(@cd[:phone],msg)
+
+
+    orch.update_notification(@ud[:uid],order_id,UcarryConstants::NOT_TYPE_ACCPEPT,msg,nil,nil,nil,@cd[:uid])
+
 
 
     tokens = []
@@ -90,7 +97,7 @@ class NotifyService
     sms = SmsService.new
     msg = String.new
     msg << "Hi #{c_fname}"
-    msg << ',Regards from karrierbay.com '
+    msg << ',Regards from CrowdCarry team '
     msg << "#{s_fname}  has requested to carry his item "
     #msg << "#{from_loc} to #{to_loc}."
     msg << " Please see your wall for more info"
@@ -102,6 +109,11 @@ class NotifyService
 
     pns = PushNotifyService.new(@params)
     pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
+
+    orch = OrchestratorService.new(nil)
+    orch.update_notification(@sender_details[:uid],id,UcarryConstants::NOT_TYPE_NOTIFY,msg,nil,nil,nil,@carrier_details[:uid])
+
+
 
     resp = {}
 
@@ -143,6 +155,10 @@ class NotifyService
 
     resp = pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
 
+    orch = OrchestratorService.new(nil)
+    orch.update_notification(@user[:uid],@params[:schedule_id],UcarryConstants::NOT_TYPE_SCHEDULE_CREATED,msg,nil,nil,nil,@user[:uid])
+
+
     p resp
 
     return
@@ -174,6 +190,10 @@ class NotifyService
 
 
     resp = pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
+
+    orch = OrchestratorService.new(nil)
+    orch.update_notification(@user[:uid],@params[:order_id],UcarryConstants::NOT_TYPE_ORDER_CREATED,msg,nil,nil,nil,@user[:uid])
+
 
     p resp
 

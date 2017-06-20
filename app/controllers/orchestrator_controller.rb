@@ -483,4 +483,36 @@ class OrchestratorController < ApplicationController
     end
 
   end
+
+
+  def get_notifications_to_a_user
+
+    logger.debug 'in get all notifications'
+
+    uid = request.headers[:Uid]
+
+    begin
+
+      orch = OrchestratorService.new(params)
+
+      resp,status  = orch.get_notifications_to_a_user(uid)
+
+      respond_to do |format|
+        format.json {render :json => resp , :status => status}
+
+
+end
+
+
+  rescue Exception=>e
+    error = {}
+    error['error'] = e.message
+    render :json=>error , :status=>400
+
+      end
+
+    end
+
+
+
 end
