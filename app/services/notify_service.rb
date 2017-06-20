@@ -30,7 +30,7 @@ class NotifyService
     sms = SmsService.new
     msg = String.new
     msg << "Hi #{@ud[:uid]}"
-    msg << ",Regards from karrierbay.com . Regarding order #{order_id},"
+    msg << ",Regards from CrowdCarry team . Regarding order #{order_id},"
     msg << "#{@cd[:uid]} has accepted the order to carry item(s) from"
     msg << " #{from_loc} to #{to_loc}."
     msg << " Please see your wall for more info"
@@ -127,7 +127,7 @@ class NotifyService
     sms = SmsService.new
     msg = String.new
     msg << "Hi #{@user[:name]}"
-    msg << ',Regards from karrierbay.com '
+    msg << ',Regards from CrowdCarry team '
     msg << "you have successfully created a schedule"
     msg << " #{from_loc} to #{to_loc}."
     msg << " Please see your wall for more info"
@@ -159,7 +159,7 @@ class NotifyService
     sms = SmsService.new
     msg = String.new
     msg << "Hi #{@user[:name]}"
-    msg << ',Regards from karrierbay.com '
+    msg << ',Regards from CrowdCarry team '
     msg << "you have successfully created a request to send an item"
     msg << " #{from_loc} to #{to_loc}."
     msg << " Please see your wall for more info"

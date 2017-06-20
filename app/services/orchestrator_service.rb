@@ -508,7 +508,7 @@ class OrchestratorService
           :to => phone_number,
           :from => ENV['TWILIO_PHONE_NUMBER'],
           #body: "Your KarrierBay OTP is #{pin} . Please enter this to verify your number")
-          :body => "Your OTP for KarrierBay is #{pin} . Please keep this confidential .")
+          :body => "Your OTP for CrowdCarry is #{pin} . Please keep this confidential .")
 
 
 
