@@ -66,6 +66,8 @@ class NotifyService
 
     tokens[0] = @cd[:dl_link]
 
+    @params[:click_action] = "com.ucarry.developer.android.activity.SenderListActivityDetailActivity"
+
     pns = PushNotifyService.new(@params)
     pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
 
@@ -101,11 +103,17 @@ class NotifyService
     msg << "#{s_fname}  has requested to carry his item "
     #msg << "#{from_loc} to #{to_loc}."
     msg << " Please see your wall for more info"
-    sms.send_custom_message(phone,msg)
+    #sms.send_custom_message(phone,msg)
 
     tokens = []
 
     tokens[0] = @carrier_details[:dl_link]
+
+
+    @params[:data_action] = UcarryConstants::NOT_TYPE_NOTIFY
+    @params[:click_action] = "com.ucarry.developer.android.activity.SenderListActivityListActivity"
+
+
 
     pns = PushNotifyService.new(@params)
     pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )

@@ -36,6 +36,8 @@ class PushNotifyService
     options[:data][:image_url] = @params[:data_image_url] if @params[:data_image_url]!=nil
     options[:data][:url] = @params[:data_url] if @params[:data_url]!=nil
 
+    options[:data][:action] = @params[:data_action] if @params[:data_action]!=nil
+
     responses = []
     tokens.compact.each_slice(1000) do |tokens_sliced|
       response = fcm.send(tokens_sliced, options)
