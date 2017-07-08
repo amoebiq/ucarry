@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170620130717) do
+ActiveRecord::Schema.define(version: 20170707074534) do
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255
@@ -265,6 +265,8 @@ ActiveRecord::Schema.define(version: 20170620130717) do
     t.string   "voterid_link",           limit: 255
     t.string   "dl_link",                limit: 255
     t.string   "verified",               limit: 255,   default: "Not Verified"
+    t.string   "oauth_token",            limit: 255
+    t.datetime "oauth_expires_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", using: :btree

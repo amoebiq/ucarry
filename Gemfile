@@ -13,6 +13,8 @@ gem 'mysql2' , '~> 0.3.18'
 
 gem 'fcm'
 
+gem 'omniauth-facebook'
+
 
 gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-google-oauth2'
@@ -52,6 +54,8 @@ gem 'paperclip'
 gem 'mailcatcher'
 
 gem 'certified'
+
+gem 'fb_graph2'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

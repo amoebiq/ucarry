@@ -11,9 +11,18 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session, :if => Proc.new { |c| c.request.format == 'application/json' }
 
  # protect_from_forgery with: :null_session
+
+  private
+
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+  helper_method :current_user
+
+
   before_action :print_creds
 
-  before_action :authenticate_user!, except: [:create]
+  #before_action :authenticate_user!, except: [:create]
 
   def print_creds
     p "in print creds"

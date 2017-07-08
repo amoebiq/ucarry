@@ -12,9 +12,11 @@ Rails.application.routes.draw do
 
 
   #devise_for :users
-  mount_devise_token_auth_for 'User', :at => 'auth' , :controllers => {
-      :registrations => 'registrations' , :omniauth_callbacks => 'omniauth_callbacks' , :sessions => 'sessions'
-  }
+  # mount_devise_token_auth_for 'User', :at => 'auth' , :controllers => {
+  #     :registrations => 'registrations' , :omniauth_callbacks => 'omniauth_callbacks' , :sessions => 'sessions'
+  # }
+
+    devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
     ######### carrier crud operations ##########
     #get '/carrier/:id' , :to=> 'carrier#details'
@@ -70,7 +72,9 @@ Rails.application.routes.draw do
     put 'orchestrator/user/update' , :to => 'orchestrator#update_user_details', :defaults => {:format => 'json'}
     get 'orchestrator/user/detail' , :to => 'orchestrator#get_user_detail', :defaults => {:format => 'json'}
 
-  get 'orchestrator/notifications' , :to => 'orchestrator#get_notifications_to_a_user', :defaults => {:format => 'json'}
+    get 'orchestrator/notifications' , :to => 'orchestrator#get_notifications_to_a_user', :defaults => {:format => 'json'}
+
+
 
     ##################################### reciever ##########################
 
@@ -112,6 +116,8 @@ Rails.application.routes.draw do
   post 'mobile/message' , :to => 'orchestrator#send_custom_message_to_mobile', :defaults => {:format => 'json'}
 
   post 'auth/update_fcm' , :to => 'generic#update_fcm_of_user' , :defaults => {:format => 'json'}
+
+  get 'auth/mobile/login' , :to => 'generic#check_mobile_login' , :defaults => {:format => 'json'}
 
 
 

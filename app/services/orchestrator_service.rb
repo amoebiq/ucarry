@@ -658,16 +658,19 @@ class OrchestratorService
     voterid_link = @params[:voterid_link]
     dl_link = @params[:dl_link]
     verified = @params[:verified]
+    phone = @params[:phone]
     ActiveRecord::Base.transaction do
 
       @user = User.where(:email=>uid).first
       @user.address = address unless address.nil?
+      @user.phone =
       @user.image = image unless image.nil?
       #@user.name = name unless name.nil?
       @user.aadhar_link = aadhar_link unless aadhar_link.nil?
       @user.voterid_link = voterid_link unless voterid_link.nil?
       @user.dl_link = dl_link unless dl_link.nil?
       @user.verified = verified unless verified.nil?
+      @user.phone = phone unless phone.nil?
 
       @user.save!
 
@@ -744,7 +747,38 @@ class OrchestratorService
     end
 
 
-  end
+    end
+
+    def check_mobile_login u
+
+      p 'in check mobile login'
+
+      ActiveRecord::Base.transaction do
+
+        @user = User.where(:email=>u.email).first
+        p @user
+        if(@user.nil?)
+          @new_user = User.new
+          p "No user ava"
+          @new_user.uid = u.email
+          @new_user.email = u.email
+          @new_user.name = u.name
+          @new_user.image = u.picture(:large).url
+
+
+          @new_user.save!
+
+          return @new_user,201
+
+
+        end
+      end
+
+      return @user,201
+    end
+
+
+
 
   def get_notifications_to_a_user uid
 

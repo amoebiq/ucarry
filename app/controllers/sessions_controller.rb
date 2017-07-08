@@ -35,6 +35,18 @@ class SessionsController <  DeviseTokenAuth::SessionsController
   end
 
 
+  def create
+    user = User.from_omniauth(env["omniauth.auth"])
+    session[:user_id] = user.id
+    redirect_to root_url
+  end
+
+  def destroy
+    session[:user_id] = nil
+    redirect_to root_url
+  end
+
+
   # POST /resource/sign_in
   # Resets the authentication token each time! Won't allow you to login on two devices
   # at the same time (so does logout).
