@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170707074534) do
+ActiveRecord::Schema.define(version: 20170708064252) do
+
+  create_table "bank_details", force: :cascade do |t|
+    t.string   "uid",        limit: 255
+    t.string   "account_no", limit: 255
+    t.string   "ifsc",       limit: 255
+    t.string   "bank_name",  limit: 255
+    t.string   "ref_1",      limit: 255
+    t.string   "ref_2",      limit: 255
+    t.string   "ref_3",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "carrier_details", force: :cascade do |t|
     t.string   "carrier_id", limit: 255

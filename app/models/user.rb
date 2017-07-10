@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :carrier_schedule , foreign_key: 'carrier_id' , :primary_key => 'uid'
   has_many :sender_order , foreign_key: 'sender_id' , :primary_key => 'uid'
   has_many :ratings , :foreign_key => 'user' , :primary_key => 'uid'
+  has_one :bank_detail , :foreign_key => 'uid' , :primary_key => 'uid'
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

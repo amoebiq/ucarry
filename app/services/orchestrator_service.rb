@@ -659,11 +659,14 @@ class OrchestratorService
     dl_link = @params[:dl_link]
     verified = @params[:verified]
     phone = @params[:phone]
+    bank_details = @params[:bank_detail]
+    p "bank is #{bank_details}"
+
     ActiveRecord::Base.transaction do
 
       @user = User.where(:email=>uid).first
       @user.address = address unless address.nil?
-      @user.phone =
+
       @user.image = image unless image.nil?
       #@user.name = name unless name.nil?
       @user.aadhar_link = aadhar_link unless aadhar_link.nil?
@@ -672,9 +675,26 @@ class OrchestratorService
       @user.verified = verified unless verified.nil?
       @user.phone = phone unless phone.nil?
 
+      if(!bank_details.nil?)
+
+        @bank_details = BankDetail.where(:uid=>@user.uid).first
+        if(@bank_details.nil?)
+          @bank_details = BankDetail.new
+          @bank_details.uid = @user.uid
+        end
+
+        acc_no = bank_details[:account_no]
+        ifsc = bank_details[:ifsc]
+        bank_name = bank_details[:bank_name]
+        @bank_details.account_no = acc_no unless acc_no.nil?
+        @bank_details.ifsc = ifsc unless ifsc.nil?
+        @bank_details.bank_name = bank_name unless bank_name.nil?
+        @bank_details.save!
+      end
+
       @user.save!
 
-      return @user.to_json , 200
+      return @user.to_json(:include => :bank_detail) , 200
 
     end
 
@@ -688,7 +708,7 @@ class OrchestratorService
     ActiveRecord::Base.transaction do
 
       @user = User.where(:email=>uid).first
-      return @user.to_json , 200
+      return @user.to_json(:include => :bank_detail) , 200
 
     end
   end
