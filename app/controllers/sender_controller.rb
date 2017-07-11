@@ -112,6 +112,20 @@ class SenderController < ApplicationController
     end
   end
 
+  def all_orders_accepted_from_transaction
+
+    logger.debug "in get all orders of all senders from transaction"
+    uid = request.headers['Uid']
+    begin
+
+      orders = SenderHelper.get_all_orders_from_transactions params,uid
+      respond_to do |format|
+        format.json { render :json => orders , :status=>200}
+      end
+    end
+
+  end
+
    def update_reciever_details
       logger.debug "in save reciever details"
 

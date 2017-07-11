@@ -111,11 +111,19 @@ module CarrierHelper
     end
   end
 
+  def self.get_all_active_transactions carrier_id , params
+
+
+
+
+
+  end
 
   def self.get_all_carrier_schedules carrier_id , params
 
     if(params[:my_bay].present?)
 
+      p 'in order transaaction hostoryaaa'
       carriers = CarrierSchedule.where.not(:status => 'completed').where(:carrier_id => carrier_id)
       if carrier_id.include?'@'
         @user = User.where(:email=>carrier_id).first
@@ -123,6 +131,8 @@ module CarrierHelper
         @user = User.where(:phone => carrier_id).first
       end
 
+
+      #carriers = CarrierSchedule.where(:status => 'completed').where(:carrier_id => carrier_id)
       return carriers.to_json(:include => [:user,:carrier_schedule_detail])
 
     elsif params[:my_bay_completed].present?
@@ -135,6 +145,8 @@ module CarrierHelper
         @user = User.where(:phone => carrier_id).first
       end
 
+      p 'in order transaaction hostory'
+
       return carriers.to_json(:include => [:user,:carrier_schedule_detail])
 
     else
@@ -145,6 +157,7 @@ module CarrierHelper
     carriers = carriers.where(:status => params[:status]) if params[:status].present?
     carriers = carriers.limit(params[:limit]) if params[:limit].present?
     carriers = carriers.offset(params[:offset]) if params[:offset].present?
+
 
     if carrier_id.include?'@'
       @user = User.where(:email=>carrier_id).first

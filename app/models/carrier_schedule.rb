@@ -9,6 +9,8 @@ class CarrierSchedule < ActiveRecord::Base
   has_many :rating, :foreign_key => 'user' , :autosave => true , :primary_key => 'carrier_id'
 
 
+
+
   default_scope { order(updated_at: :desc) }
 
 

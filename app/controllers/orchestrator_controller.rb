@@ -511,7 +511,33 @@ end
 
       end
 
+  end
+
+
+  def update_order_status
+
+    logger.debug 'in update order status'
+
+    uid = request.headers[:Uid]
+
+    begin
+
+      orch = OrchestratorService.new(params)
+      resp,status = orch.update_order_status(uid)
+
+      respond_to do |format|
+        format.json {render :json => resp , :status => status}
+        end
+
+    rescue Exception=>e
+
+      error = {}
+      error['error'] = e.message
+      render :json=>error , :status=>400
+
     end
+
+  end
 
 
 

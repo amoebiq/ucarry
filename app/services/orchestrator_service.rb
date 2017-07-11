@@ -811,6 +811,30 @@ class OrchestratorService
 
   end
 
+  def update_order_status (uid)
+
+    status = @params[:status]
+    order_id = @params[:order_id]
+
+    ActiveRecord::Base.transaction do
+
+      @order_transaction = OrderTransactionHistory.where(:order_id=>order_id).first
+      @order_transaction.status = status
+      @order_transaction.save!
+
+      @sender_order = SenderOrder.where(:order_id=>order_id).first
+      @sender_order.status = status
+      @sender_order.save!
+
+      resp = {}
+      resp['message'] = 'success'
+      return resp.to_json , 200
+
+
+    end
+
+  end
+
 
   def generate_instamojo_link
 

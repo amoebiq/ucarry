@@ -135,19 +135,36 @@ module SenderHelper
 
   end
 
+  def self.get_all_orders_from_transactions  params , uid
+
+    p "params is #{params}"
+
+    if(params[:my_bay].present?)
+      p 'in get order transactions....'
+      @ord = SenderOrder.joins(:order_transaction_history).where("order_transaction_histories.carrier_id='#{uid}' and order_transaction_histories.status!='completed'")
+      return @ord.to_json(:include => [:user,:sender_order_item,:order_transaction_history,:pickup_order_mapping,:receiver_order_mapping])
+
+
+    end
+
+  end
+
   def self.get_all_orders sender_id,params
 
     if(params[:my_bay].present?)
 
 
       @orders = SenderOrder.where.not(:status => 'completed').where(:sender_id => sender_id)
-      return @orders.to_json(:include => [:user,:sender_order_item])
+
+
+
+      return @orders.to_json(:include => [:user,:sender_order_item,:pickup_order_mapping,:receiver_order_mapping])
 
       elsif params[:my_bay_completed].present?
 
 
              @orders = SenderOrder.where(:status => 'completed').where(:sender_id => sender_id)
-             return @orders.to_json(:include => [:user,:sender_order_item])
+             return @orders.to_json(:include => [:user,:sender_order_item,:pickup_order_mapping,:receiver_order_mapping])
 
 
     else
