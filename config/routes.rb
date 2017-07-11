@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     put 'sender/order/:order_id/cancel' , :to => 'sender#cancel_order', :defaults => {:format => 'json'}
     get '/sender/orders' , :to=> 'sender#all_orders', :defaults => {:format => 'json'}
     get '/sender/orders/all' , :to=> 'sender#all_orders_of_all_senders' , :defaults => {:format => 'json'}
+    get '/sender/orders/accepted_transactions' ,:to=> 'sender#all_orders_accepted_from_transaction' , :defaults => {:format => 'json'}
 
 
    ######### schedule #########################
@@ -74,7 +75,7 @@ Rails.application.routes.draw do
 
     get 'orchestrator/notifications' , :to => 'orchestrator#get_notifications_to_a_user', :defaults => {:format => 'json'}
 
-
+    put 'orchestrator/order/update' , :to => 'orchestrator#update_order_status', :defaults => {:format => 'json'}
 
     ##################################### reciever ##########################
 

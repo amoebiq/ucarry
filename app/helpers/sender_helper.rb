@@ -145,9 +145,21 @@ module SenderHelper
       return @ord.to_json(:include => [:user,:sender_order_item,:order_transaction_history,:pickup_order_mapping,:receiver_order_mapping])
 
 
+
+
+
+    elsif(params[:my_bay_completed].present?)
+      p 'in get order transactions....'
+      @ord = SenderOrder.joins(:order_transaction_history).where("order_transaction_histories.carrier_id='#{uid}' and order_transaction_histories.status='completed'")
+      return @ord.to_json(:include => [:user,:sender_order_item,:order_transaction_history,:pickup_order_mapping,:receiver_order_mapping])
+
     end
 
-  end
+    end
+
+
+
+  
 
   def self.get_all_orders sender_id,params
 
