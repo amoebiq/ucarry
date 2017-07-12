@@ -660,11 +660,12 @@ class OrchestratorService
     verified = @params[:verified]
     phone = @params[:phone]
     bank_details = @params[:bank_detail]
+    email = @params[:email]
     p "bank is #{bank_details}"
 
     ActiveRecord::Base.transaction do
 
-      @user = User.where(:email=>uid).first
+      @user = User.where(:uid=>uid).first
       @user.address = address unless address.nil?
 
       @user.image = image unless image.nil?
@@ -674,6 +675,7 @@ class OrchestratorService
       @user.dl_link = dl_link unless dl_link.nil?
       @user.verified = verified unless verified.nil?
       @user.phone = phone unless phone.nil?
+      @user.email = email unless email.nil?
 
       if(!bank_details.nil?)
 
@@ -707,7 +709,7 @@ class OrchestratorService
 
     ActiveRecord::Base.transaction do
 
-      @user = User.where(:email=>uid).first
+      @user = User.where(:uid=>uid).first
       return @user.to_json(:include => :bank_detail) , 200
 
     end
@@ -735,7 +737,7 @@ class OrchestratorService
 
     ActiveRecord::Base.transaction do
 
-      @user = User.where(:email=>uid).first
+      @user = User.where(:uid=>uid).first
       @user.dl_link = reg_id
       @user.save!
 
@@ -773,16 +775,18 @@ class OrchestratorService
 
       p 'in check mobile login'
 
+
       ActiveRecord::Base.transaction do
 
-        @user = User.where(:email=>u.email).first
+
+        @user = User.where(:uid=>u.id).first
         p @user
         if(@user.nil?)
           @new_user = User.new
           p "No user ava"
-          @new_user.uid = u.email
-          @new_user.email = u.email
-          @new_user.name = u.name
+          @new_user.uid = u.id
+          @new_user.email = u.email unless u.email.nil?
+          @new_user.name = u.name unless u.name.nil?
           @new_user.image = u.picture(:large).url
 
 

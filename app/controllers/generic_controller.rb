@@ -76,7 +76,7 @@ class GenericController < ApplicationController
     p 'in mobile login'
     token = params[:token]
     user = FbGraph2::User.me(token)
-    user = user.fetch(fields: [:name,:email, :first_name, :last_name,:picture])
+    user = user.fetch(fields: [:name,:email, :first_name, :last_name,:picture,:id])
     p user.picture(:large)
     p "Email is #{user.email}"
     orch = OrchestratorService.new(params)
@@ -92,6 +92,8 @@ class GenericController < ApplicationController
     p e.message
     error = {}
     error['error'] = e.message
+
+    p error
     render :json => error , :status => 400
 
   end
