@@ -159,14 +159,14 @@ module SenderHelper
 
 
 
-  
+
 
   def self.get_all_orders sender_id,params
 
     if(params[:my_bay].present?)
 
 
-      @orders = SenderOrder.where.not(:status => 'completed').where(:sender_id => sender_id)
+      @orders = SenderOrder.where.not(:status => 'completed').where.not(:status => 'cancel').where(:sender_id => sender_id)
 
 
 

@@ -124,7 +124,7 @@ module CarrierHelper
     if(params[:my_bay].present?)
 
       p 'in order transaaction hostoryaaa'
-      carriers = CarrierSchedule.where.not(:status => 'completed').where(:carrier_id => carrier_id)
+      carriers = CarrierSchedule.where.not(:status => 'completed').where.not(:status => 'cancel').where(:carrier_id => carrier_id)
       if carrier_id.include?'@'
         @user = User.where(:email=>carrier_id).first
       else
