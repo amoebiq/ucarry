@@ -840,6 +840,25 @@ class OrchestratorService
   end
 
 
+  def add_subscription
+
+    email = @params[:email]
+    comments = @params[:comments]
+    ActiveRecord::Base.transaction do
+
+        subsc = Subscription.new
+        subsc.email = email
+        subsc.comments = comments
+        subsc.save!
+    resp = {}
+    resp['message'] = 'success'
+    return resp.to_json , 200
+
+
+    end
+  end
+
+
   def generate_instamojo_link
 
     #api = Instamojo::API.new("api_key-you-received-from-api@instamojo.com", "auth_token-you-received-from-api@instamojo.com")

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170708064252) do
+ActiveRecord::Schema.define(version: 20170719054025) do
 
   create_table "bank_details", force: :cascade do |t|
     t.string   "uid",        limit: 255
@@ -234,6 +234,14 @@ ActiveRecord::Schema.define(version: 20170708064252) do
     t.string   "ref_1",         limit: 255
     t.string   "ref_2",         limit: 255
     t.string   "ref_3",         limit: 255
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.string   "email",      limit: 255
+    t.string   "comments",   limit: 255
+    t.string   "ref_1",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "userdocs", force: :cascade do |t|

@@ -75,6 +75,8 @@ Rails.application.routes.draw do
 
     get 'orchestrator/notifications' , :to => 'orchestrator#get_notifications_to_a_user', :defaults => {:format => 'json'}
 
+    post 'orchestrator/subscription' , :to => 'generic#create_subscription', :defaults => {:format => 'json'}
+
     put 'orchestrator/order/update' , :to => 'orchestrator#update_order_status', :defaults => {:format => 'json'}
 
     ##################################### reciever ##########################

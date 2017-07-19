@@ -98,4 +98,28 @@ class GenericController < ApplicationController
 
   end
 
+
+  def create_subscription
+
+    p 'in create subscription'
+
+    orch = OrchestratorService.new(params)
+    resp,code = orch.add_subscription
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render :json => resp,:status =>code }
+    end
+
+  rescue Exception=>e
+    p e.message
+    error = {}
+    error['error'] = e.message
+
+    p error
+    render :json => error , :status => 400
+
+
+  end
+
 end
