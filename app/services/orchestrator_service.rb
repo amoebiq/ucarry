@@ -249,9 +249,9 @@ class OrchestratorService
     params['weight'] = item_weight
     params['volumetric_weight'] = volumetric_weight
     params['per_km_charge'] = distance_coeff
-    params['total_distance'] = total_distance
+    params['total_distance'] = total_distance.ceil
 
-    params['total_distance_charge'] = total_distance_charge
+    params['total_distance_charge'] = total_distance_charge.ceil
     params['total_weight_charge'] = total_weight_price.ceil
 
     total_charges = total_distance_charge + total_weight_price
@@ -270,21 +270,21 @@ class OrchestratorService
     # params['risk_charge'] = risk_charge
 
     service_charge_commission = (total_charges * service_charge)/100.00
-    params['service_charge_percent'] = service_charge
+    params['service_charge_percent'] = service_charge.ceil
     params['service_charge'] = service_charge_commission
 
     service_tax_charges = (total_charges * service_tax_percent)/100;
-    params['service_tax_charges'] = service_tax_charges
+    params['service_tax_charges'] = service_tax_charges.ceil
     params['service_tax'] = service_tax_percent
 
     pickup_charge_amount = (total_charges * pickup_charge_coeff)/100.00;
-    params['pickup_charge_amount'] = pickup_charge_amount
+    params['pickup_charge_amount'] = pickup_charge_amount.ceil
     params['pickup_charge_percent'] = pickup_charge_coeff
 
 
     total_charges = total_charges + service_charge_commission + service_tax_charges + pickup_charge_amount
 
-    params['grand_total'] = total_charges
+    params['grand_total'] = total_charges.ceil
 
     resp['quote'] = params
 
