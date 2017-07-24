@@ -311,6 +311,7 @@ class OrchestratorController < ApplicationController
 
       uid = request.headers['Uid']
       ns = NotifyService.new(params)
+      ns.sender_to_carrier(uid)
       pns = PushNotifyService.new(params)
       pns.send_to_specific_mobile(dev_id,UcarryConstants::APP_NAME, UcarryConstants::NOTIFY_SENDER)
     resp , code = ns.sender_to_carrier uid

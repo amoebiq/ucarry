@@ -252,7 +252,7 @@ class OrchestratorService
     params['total_distance'] = total_distance
 
     params['total_distance_charge'] = total_distance_charge
-    params['total_weight_charge'] = total_weight_price
+    params['total_weight_charge'] = total_weight_price.ceil
 
     total_charges = total_distance_charge + total_weight_price
 
