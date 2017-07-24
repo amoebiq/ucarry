@@ -858,6 +858,40 @@ class OrchestratorService
     end
   end
 
+  def verify_completion
+
+    order_id = @params[:order_id]
+    pin = @params[:pin]
+    comp_order = CompleteOrder.where(:order_id => order_id).last
+    if(comp_order.nil?)
+      msg = {}
+      msg['message'] = 'No order Found!'
+    end
+    p comp_order[:otp]
+    if(comp_order[:otp].eql?pin)
+
+      comp_order.status = 'VERIFIED'
+      comp_order.save!
+      msg = {}
+      msg['message'] = 'Successfully Verified'
+      return msg,200
+
+    else
+
+      msg = {}
+      msg['message'] = 'Wrong Transit Pin'
+      return msg,400
+
+
+    end
+
+
+
+
+  end
+
+
+
 
   def generate_instamojo_link
 

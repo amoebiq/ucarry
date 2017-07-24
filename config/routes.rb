@@ -79,6 +79,10 @@ Rails.application.routes.draw do
 
     put 'orchestrator/order/update' , :to => 'orchestrator#update_order_status', :defaults => {:format => 'json'}
 
+    post 'orchestrator/order/verify_completion' , :to => 'orchestrator#verify_completion_pin', :defaults => {:format => 'json'}
+
+
+
     ##################################### reciever ##########################
 
     post 'sender/:sender_id/order/:order_id/reciever' , :to=> 'sender#update_reciever_details', :defaults => {:format => 'json'}

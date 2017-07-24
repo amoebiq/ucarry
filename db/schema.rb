@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170719054025) do
+ActiveRecord::Schema.define(version: 20170724165537) do
 
   create_table "bank_details", force: :cascade do |t|
     t.string   "uid",        limit: 255
@@ -76,6 +76,17 @@ ActiveRecord::Schema.define(version: 20170719054025) do
     t.string   "ref_4",             limit: 255
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+  end
+
+  create_table "complete_orders", force: :cascade do |t|
+    t.string   "order_id",   limit: 255
+    t.string   "otp",        limit: 255
+    t.string   "status",     limit: 255
+    t.string   "ref_1",      limit: 255
+    t.string   "ref_2",      limit: 255
+    t.string   "ref_3",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "coupons", force: :cascade do |t|

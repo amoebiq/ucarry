@@ -120,6 +120,8 @@ module SenderHelper
 
       @pickup.save!
 
+      send_otp_to_reciever(id)
+
     end
     child_where={}
     child_where['receiver_order_mappings.order_id'] = id
@@ -158,7 +160,30 @@ module SenderHelper
     end
 
 
+  def self.send_otp_to_reciever order_id
 
+    pin = rand(1111..9999).to_s.rjust(5, "1")
+
+    reciever = ReceiverOrderMapping.where(:order_id => order_id).first
+    phone_number = reciever[:phone_1]
+    twilio_client =   Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+
+
+    r = twilio_client.messages.create(
+        :to => phone_number,
+        :from => ENV['TWILIO_PHONE_NUMBER'],
+        #body: "Your KarrierBay OTP is #{pin} . Please enter this to verify your number")
+        :body => "Hi , Your confidential pin for CrowdCarry is #{pin}  for order #{order_id}. Please keep this confidential . Pass this to the person when you accept the order")
+
+    ActiveRecord::Base.transaction do
+    comp_order = CompleteOrder.new
+    comp_order.order_id = order_id
+    comp_order.otp = pin
+    comp_order.status = 'IN_PROGRESS'
+      comp_order.save!
+
+      end
+  end
 
 
   def self.get_all_orders sender_id,params
