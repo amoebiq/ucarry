@@ -569,6 +569,25 @@ end
 
   end
 
+  def create_issue
+
+    logger.debug 'in create issue'
+    uid = request.headers[:Uid]
+    begin
+
+      orch = OrchestratorService.new(params)
+      resp,status = orch.create_issue
+      respond_to do |format|
+        format.json {render :json => resp , :status => status}
+      end
+
+    rescue Exception=>e
+      error = {}
+      error['error'] = e.message
+      render :json=>error , :status=>400
+    end
+  end
+
 
 
 end

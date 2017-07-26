@@ -891,6 +891,29 @@ class OrchestratorService
   end
 
 
+  def create_issue
+
+    name = @params[:name]
+    number = @params[:contact_no]
+    issue = @params[:issue]
+
+    ActiveRecord::Base.transaction do
+
+        customer_support = CustomerSupport.new
+        customer_support.contact_no = number
+        customer_support.name = name
+        customer_support.issue = issue
+
+      customer_support.save!
+      return customer_support.to_json,200
+    end
+
+
+
+
+  end
+
+
 
 
   def generate_instamojo_link
