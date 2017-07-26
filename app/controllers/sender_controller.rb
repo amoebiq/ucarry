@@ -99,6 +99,20 @@ class SenderController < ApplicationController
 
   end
 
+  def get_order_details
+
+    logger.debug "in get order details"
+    uid = request.headers['Uid']
+    begin
+      order_id = params[:order_id]
+      order,status = SenderHelper.get_order_details(order_id)
+      respond_to do |format|
+        format.json { render :json => order , :status=>status}
+      end
+    end
+
+  end
+
   def all_orders_of_all_senders
 
     logger.debug "in get all orders of all senders"

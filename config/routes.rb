@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     post '/sender/order' , :to=> 'sender#new_order', :defaults => {:format => 'json'}
     put 'sender/order/:order_id/cancel' , :to => 'sender#cancel_order', :defaults => {:format => 'json'}
     get '/sender/orders' , :to=> 'sender#all_orders', :defaults => {:format => 'json'}
+    get '/sender/order/:order_id' , :to=> 'sender#get_order_details', :defaults => {:format => 'json'}
     get '/sender/orders/all' , :to=> 'sender#all_orders_of_all_senders' , :defaults => {:format => 'json'}
     get '/sender/orders/accepted_transactions' ,:to=> 'sender#all_orders_accepted_from_transaction' , :defaults => {:format => 'json'}
 
@@ -82,6 +83,10 @@ Rails.application.routes.draw do
     post 'orchestrator/order/verify_completion' , :to => 'orchestrator#verify_completion_pin', :defaults => {:format => 'json'}
 
     post 'orchestrator/customer_support' , :to => 'orchestrator#create_issue', :defaults => {:format => 'json'}
+
+    post 'orchestrator/payments' , :to => 'orchestrator#get_insta_payments' , :defaults => {:format => 'json' }
+
+    get 'orchestrator/sender/orders' , :to => 'orchestrator#get_orders_of_user' , :defaults => {:format => 'json' }
 
 
 
@@ -132,7 +137,7 @@ Rails.application.routes.draw do
 
   #################### notify service ##############################
 
-  post 'orchestrator/notify_carrier/:schedule_id' , :to => 'orchestrator#notify_carrier', :defaults => {:format => 'json'}
+  post 'orchestrator/notify_carrier/:schedule_id/order/:order_id' , :to => 'orchestrator#notify_carrier', :defaults => {:format => 'json'}
 
   #devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
 

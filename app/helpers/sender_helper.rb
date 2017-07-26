@@ -223,7 +223,17 @@ module SenderHelper
 
 
 
+  def self.get_order_details order_id
 
+
+    ActiveRecord::Base.transaction do
+
+      @orders  = SenderOrder.where(:order_id=>order_id).first
+      return @orders.to_json(:include => [:user,:sender_order_item]),200
+
+    end
+
+  end
 
   def self.get_all_orders_of_all_users params,uid
 

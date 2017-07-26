@@ -324,6 +324,7 @@ class OrchestratorController < ApplicationController
 
       error = {}
       error['error'] = e.message
+      p error
       render :json => error  , :status => 400
 
     end
@@ -610,7 +611,30 @@ end
 
 
 
+  def get_orders_of_user
 
+    p 'in get orders of a user'
+
+    uid = request.headers['Uid']
+
+    begin
+
+      orch = OrchestratorService.new(params)
+      resp,code = orch.get_orders_of_user(uid)
+
+      respond_to do |format|
+        format.json {render :json => resp , :status => code}
+      end
+
+    rescue Exception=>e
+      error = {}
+      error['error'] = e.message
+      p error
+      render :json=>error , :status=>400
+
+    end
+
+  end
 
 
 

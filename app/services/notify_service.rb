@@ -110,8 +110,10 @@ class NotifyService
     pns = PushNotifyService.new(@params)
     pns.send_to_specific_mobile(tokens,UcarryConstants::APP_NAME, msg )
 
+    order_id = @params[:order_id]
+
     orch = OrchestratorService.new(nil)
-    orch.update_notification(@sender_details[:uid],id,UcarryConstants::NOT_TYPE_NOTIFY,msg,nil,nil,nil,@carrier_details[:uid])
+    orch.update_notification(@sender_details[:uid],id,UcarryConstants::NOT_TYPE_NOTIFY,msg,order_id,nil,nil,@carrier_details[:uid])
 
 
 

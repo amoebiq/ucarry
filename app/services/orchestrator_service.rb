@@ -929,6 +929,18 @@ class OrchestratorService
   end
 
 
+  def get_orders_of_user uid
+
+    ActiveRecord::Base.transaction do
+
+      orders = SenderOrder.select("id,order_id,from_loc,to_loc").where(:sender_id=>uid)
+      return orders.to_json,200
+
+    end
+
+  end
+
+
 
 
   def generate_instamojo_link
