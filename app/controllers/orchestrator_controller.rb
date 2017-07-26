@@ -589,5 +589,29 @@ end
   end
 
 
+  def get_insta_payments
+
+    p 'in get insta payments'
+
+    begin
+    payment = PaymentsService.new(params)
+
+    resp,code = payment.faraday_generate_payments(params[:user],params[:amount])
+
+    return resp
+  rescue Exception=>e
+    error = {}
+    error['error'] = e.message
+    p error
+    render :json=>error , :status=>400
+
+      end
+  end
+
+
+
+
+
+
 
 end

@@ -19,6 +19,11 @@ gem 'omniauth-facebook'
 gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-google-oauth2'
 
+gem 'Instamojo-rb' , '~> 1.1.0'
+
+gem 'faraday'
+
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets

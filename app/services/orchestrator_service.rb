@@ -817,9 +817,24 @@ class OrchestratorService
 
   def update_order_status (uid)
 
+
     status = @params[:status]
     order_id = @params[:order_id]
 
+    if(status.eql?"pickedup")
+
+      p " in sending insta mojo"
+      params = {}
+      ps = PaymentsService.new(params)
+
+      order = SenderOrder.where(:order_id => order_id).first
+
+      user = User.where(:uid=>order.sender_id).first
+
+      ps.faraday_generate_payments(user,order.grand_total)
+
+
+    end
     ActiveRecord::Base.transaction do
 
       @order_transaction = OrderTransactionHistory.where(:order_id=>order_id).first
