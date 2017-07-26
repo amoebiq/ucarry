@@ -81,6 +81,8 @@ Rails.application.routes.draw do
 
     post 'orchestrator/order/verify_completion' , :to => 'orchestrator#verify_completion_pin', :defaults => {:format => 'json'}
 
+    post 'orchestrator/customer_support' , :to => 'orchestrator#create_issue', :defaults => {:format => 'json'}
+
 
 
     ##################################### reciever ##########################
