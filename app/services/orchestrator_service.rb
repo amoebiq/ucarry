@@ -771,19 +771,26 @@ class OrchestratorService
 
     end
 
-    def check_mobile_login u
+    def check_mobile_login u,provider
 
       p 'in check mobile login'
-
-
+      id = nil
+      if provider.eql?"facebook"
+        id = u.id
+      else
+        id = u["sub"]
+      end
       ActiveRecord::Base.transaction do
 
 
-        @user = User.where(:uid=>u.id).first
+        @user = User.where(:uid=>id).first
         p @user
         if(@user.nil?)
           @new_user = User.new
           p "No user ava"
+          if provider.eql?"facebook"
+
+
           @new_user.uid = u.id
           @new_user.email = u.email unless u.email.nil?
           @new_user.name = u.name unless u.name.nil?
@@ -791,6 +798,15 @@ class OrchestratorService
 
 
           @new_user.save!
+          else
+
+            @new_user.uid = u["sub"]
+            @new_user.email = u["email"] unless u["email"].nil?
+            @new_user.name = u["name"] unless u["name"].nil?
+            @new_user.image = u["picture"] unless u["picture"].nil?
+            @new_user.save!
+          end
+
 
           return @new_user,201
 

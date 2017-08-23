@@ -62,6 +62,8 @@ gem 'certified'
 
 gem 'fb_graph2'
 
+gem 'google-api-client'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

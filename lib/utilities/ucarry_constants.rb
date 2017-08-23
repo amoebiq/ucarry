@@ -9,4 +9,9 @@ module UcarryConstants
   NOT_TYPE_ORDER_CREATED = "ORDER_CREATED"
   NOT_TYPE_SCHEDULE_CREATED = "SCHEDULE_CREATED"
 
+  SUPPORT_EMAIL = "support@crowdcarry.com"
+  ADMIN_EMAIL = "admin@crowdcarry.com"
+
+
+
 end
